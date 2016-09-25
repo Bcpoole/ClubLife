@@ -276,7 +276,7 @@ button {
 
 button,
 select {
-  text-transform: none;
+text-transform: none;
 }
 
 /**
@@ -517,8 +517,8 @@ aside#sidebar p.repo-owner a {
 }
 
 a.button {
-  width: 134px;
-  height: 58px;
+  width: 205px;
+  height: 80px;
   padding-top: 22px;
   padding-left: 68px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
@@ -538,7 +538,7 @@ header a.button {
 }
 aside a.button {
   display: block;
-  width: 138px;
+  width: 200px;
   padding-left: 64px;
   margin-bottom: 20px;
   font-size: 21px;
