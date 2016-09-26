@@ -59,23 +59,28 @@ class OrganizationScraper:
     def __init__(self, url):
         url = url if str.startswith(url, "http") else COLLEGIATELINK_URL + url
         self.url = url
-        log("OrganizationScraper initialized for url: {0}".format(url))
+        conditionalLog(self.url,containsACM,"OrganizationScraper initialized for url: {0}".format(url))
         self.mainsoup = BeautifulSoup(requests.get(url).text, "html.parser")
         self.aboutsoup = BeautifulSoup(requests.get(url+"/about").text,"html.parser")
         self.json = self._scrapeResults()
 
-    def _scrapeResults(self):
-        d = {} # dictionary to fill
-        # Gather information from the org's main page
+    def _getMainDictionary(self):
+        d = {}
+        ########
+        # Name
         d["name"] = str(self.mainsoup.find("h2").string).strip()
+
+        ########
+        # Image
         theImg = self.mainsoup.find(class_="img__orgavatar")
+        imgstylestring = ""
         if theImg is not None:
             try:
                 imgstylestring = str(self.mainsoup.find(class_="img__orgavatar")["style"])
-            except KeyError:
+            except Exception:
+                log("[ERROR] finding img_orgavatar for url "+self.url)
                 imgstylestring = ""
-        else:
-            imgstylestring = ""
+        # Image is in the background-url of the style.
         if ".png" in imgstylestring:
             if "https://" in imgstylestring:
                 d["img"] = "https://{0}.png".format("".join(imgstylestring.split("https://")[1:]).split(".png")[0])
@@ -86,50 +91,83 @@ class OrganizationScraper:
                 d["img"] = "https://{0}.jpg".format("".join(imgstylestring.split("https://")[1:]).split(".jpg")[0])
             elif "http://" in imgstylestring:
                 d["img"] = "http://{0}.jpg".format("".join(imgstylestring.split("http://")[1:]).split(".jpg")[0])
+        # If the image is not PNG or JPG, d["img"] will not be set.
+
+        ########
+        # Full Summary
         try:
             d["full summary"] = str(self.mainsoup.find(class_="container-orgabout").find(
                 "p").string).strip()
-        except AttributeError:
-            print("Attribute error for URL {0} when finding after find container-orgabout".format(self.url))
-            logging.error("Attribute error for URL {0} when finding after find container-orgabout".format(self.url))
+        except Exception:
+            log("[ERROR] for URL {0} when finding after find container-orgabout for full summary".format(self.url))
+
+        ########
+        # Primary Contact
         try:
             d["primary contact"] = str(self.mainsoup.find(class_="container-orgcontact").find_all(
                 "li")[1].string).strip()
-        except AttributeError:
-            print("Attribute error for URL {0} when finding after find container-orgcontact".format(self.url))
-            d["primary contact"] = "LOL AN ERROR"
-            logging.error("Attribute error for URL {0} when finding after find container-orgcontact".format(self.url))
-        # Gather information from the org's about page
+        except Exception:
+            log("[ERROR] for URL {0} when finding after find container-orgcontact for primary contact".format(self.url))
+
+        return d
+
+    def _getAboutDictionary(self):
         about = {}
-        node = self.aboutsoup.find(class_="content-main").find("section").find(class_="col-sm-8")
+        # Fetch the content node.
         try:
-            about["Parent Organization"] = ":".join(node.find("em").text.split(":")[1:]).strip()
-        except AttributeError:
-            about["Parent Organization"] = "LOL AN ERROR"
+            node = self.aboutsoup.find(class_="content-main").find("section").find(class_="col-sm-8")
+        except Exception:
+            log("[ERROR] Could not fetch about content node for URL {0}".format(self.url))
+            return {}
+
+        ########
+        # Parent Org
         try:
-            about["Full Summary"] = str(node.find_all("p")[1].string).strip()
+            parentOrg = ":".join(node.find("em").text.split(":")[1:]).strip()
+            about["Parent Organization"] = parentOrg
         except AttributeError:
-            about["Full Summary"] = "LOL AN ERROR"
+            log("[ERROR] AttributeError when getting parent org for "+self.url)
+        except Exception:
+            log("[ERROR] Exception when getting parent org for "+self.url)
+
+        ########
+        # Full Summary
+        try:
+            fullSummary = ":".join(node.find("em").text.split(":")[1:]).strip()
+            about["Full Summary"] = fullSummary
+        except AttributeError:
+            log("[ERROR] AttributeError when getting full summary for "+self.url)
+        except Exception:
+            log("[ERROR] Exception when getting full summary for "+self.url)
+
+        ########
+        # Additional Information
+
+        # Ideally, each title of the "additional information" is to be captured as a key
+        # and each description is to be captured as the content for that key.
+
         try:
             node = node.find(class_="additionalInformation")
-            try:
-                titles = [n for n in node.find_all("strong") if not n.find("span")]
-                contents = [str(n.string).replace("<em>","").replace("</em>","").strip() for n in node.find_all("p")]
-                for i in range(len(titles)):
-                    about[str(titles[i].string)] = contents[i]
-            except AttributeError:
-                pass
-        except AttributeError:
-            pass
-        d["about"] = about
-        return d
+        except Exception:
+            log("[ERROR] Could not find additional information node for {0}".format(self.url))
+        try:
+            titles = [n for n in node.find_all("strong") if not n.find("span")]
+            contents = [str(n.string).replace("<em>","").replace("</em>","").strip() for n in node.find_all("p")]
+            for i in range(len(titles)):
+                about[str(titles[i].string)] = contents[i]
+        except Exception:
+            log("[ERROR] Something messed up happened when getting the additional information for "+self.url)
+        return about
+
+    def _scrapeResults(self):
+        return {**(self._getMainDictionary()), **(self._getAboutDictionary())}
 
     def getData(self):
         return self.json
 
 class OrganizationListScraper:
     def __init__(self, url=ORGANIZATIONS_URL):
-        log("OrganizationListScraper initialized for url: {0}".format(url))
+        #log("OrganizationListScraper initialized for url: {0}".format(url))
         self.soup = BeautifulSoup(requests.get(url).text, "html.parser")
         self.countNode = self.soup.find(class_="pageHeading-count")
     def getResultsPerPage(self):
