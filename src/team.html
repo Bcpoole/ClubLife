@@ -11,7 +11,9 @@
             <img src.bind="user.avatar_url" crossorigin ref="image"/>
           </div>
           <div class="content">
-            <p class="name">${user.login}</p>
+            <p class="name">${user.name}</p>
+            <p class="username">${user.login}</p>
+            <p>${user.testProp}</p>            
             <p><a target="_blank" class="btn btn-default" href.bind="user.html_url">Contact</a></p>
           </div>
         </div>
