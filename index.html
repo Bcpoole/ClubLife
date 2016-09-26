@@ -1,71 +1,34 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Aurelia</title>
+    <!--The FontAwesome version is locked at 4.6.3 in the package.json file to keep this from breaking.-->
+    <link rel="stylesheet" href="jspm_packages/npm/font-awesome@4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
 
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <!-- CSS
-		================================================== -->
-  <!-- Bootstrap  -->
-  <link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-  <link type="text/css" rel="stylesheet" href="font-awesome/css/font-awesome.min.css">  
-  <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen">
-
-  <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-  <title>ClubLife by Bcpoole</title>
-</head>
-
-<body>
-  <header>
-    <div>
-      <nav class="navbar navbar-default" role="banner">
-        <div class="navbar-header">
-          <img src="/assets/img/icon.png"/> <!-- currently doesn't exist -->
-        </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav pull-right">
-            <li><a href="deliverables.html">Deliverables</a></li>
-            <li><a href="team.html">Team</a></li>
-          </ul>
-        </div>
-      </nav>
+  <body aurelia-app="main">
+    <div class="splash">
+      <div class="message">
+          ClubLife
+          <br />
+          <div class="submessage">Connecting Students and Student Organization Clubs</div>
+      </div>
+      <i class="fa fa-first-order fa-spin fa-5x"></i>
     </div>
-  </header>
 
-
-
-
-
-
-  <div id="content-wrapper">
-    <div class="inner clearfix">
-      <section id="main-content">
-        <h3>Goals</h3>
-      </section>
-
-      <aside id="sidebar">
-        <div align="center">
-          <a href="https://github.com/Bcpoole/ClubLife" class="fa fa-github fa-5x fa-fw" style="text-decoration: none"></a>
-        </div>
-        <div class="dl-btn">
-          <a href="https://github.com/Bcpoole/ClubLife/zipball/master">
-            Download .zip file
-          </a>    
-        </div>
-        <div class="dl-btn">
-          <a href="https://github.com/Bcpoole/ClubLife/tarball/master">
-            Download .tar.gz file
-          </a>    
-        </div>
-      </aside>
-    </div>
-  </div>
-</body>
-
+    <!-- The bluebird version is locked at 4.6.3 in the package.json file to keep this from breaking -->
+    <!-- We include bluebird to bypass Edge's very slow Native Promise implementation. The Edge team -->
+    <!-- has fixed the issues with their implementation with these fixes being distributed with the  -->
+    <!-- Windows 10 Anniversary Update on 2 August 2016. Once that update has pushed out, you may    -->
+    <!-- consider removing bluebird from your project and simply using native promises if you do     -->
+    <!-- not need to support Internet Explorer.                                                      -->
+    <script src="jspm_packages/npm/bluebird@3.4.1/js/browser/bluebird.min.js"></script>
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script>
+      System.import('aurelia-bootstrapper');
+    </script>
+  </body>
 </html>
