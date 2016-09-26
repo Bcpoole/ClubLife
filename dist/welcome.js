@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 System.register([], function (_export, _context) {
   "use strict";
@@ -14,13 +14,14 @@ System.register([], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
-      _export('Welcome', Welcome = function Welcome() {
+      _export("Welcome", Welcome = function Welcome() {
         _classCallCheck(this, Welcome);
 
         this.heading = 'ClubLife';
+        this.goals = "Major goals include developing the app to be cross-platform through the use of Xamarin, providing user-centered functionality that make it actually worth using, and having an easy-to-adopt setup for clubs.";
       });
 
-      _export('Welcome', Welcome);
+      _export("Welcome", Welcome);
     }
   };
 });
