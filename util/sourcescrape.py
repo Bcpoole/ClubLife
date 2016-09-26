@@ -94,9 +94,9 @@ class OrganizationScraper:
         # If the image is not PNG or JPG, d["img"] will not be set.
 
         ########
-        # Full Summary
+        # Main Summary
         try:
-            d["full summary"] = str(self.mainsoup.find(class_="container-orgabout").find(
+            d["Main Summary"] = str(self.mainsoup.find(class_="container-orgabout").find(
                 "p").string).strip()
         except Exception:
             log("[ERROR] for URL {0} when finding after find container-orgabout for full summary".format(self.url))
@@ -131,14 +131,14 @@ class OrganizationScraper:
             log("[ERROR] Exception when getting parent org for "+self.url)
 
         ########
-        # Full Summary
+        # About Summary
         try:
-            fullSummary = ":".join(node.find("em").text.split(":")[1:]).strip()
-            about["Full Summary"] = fullSummary
+            aboutSummary = ":".join(node.find("em").text.split(":")[1:]).strip()
+            about["About Summary"] = aboutSummary
         except AttributeError:
-            log("[ERROR] AttributeError when getting full summary for "+self.url)
+            log("[ERROR] AttributeError when getting about summary for "+self.url)
         except Exception:
-            log("[ERROR] Exception when getting full summary for "+self.url)
+            log("[ERROR] Exception when getting about summary for "+self.url)
 
         ########
         # Additional Information
