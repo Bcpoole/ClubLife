@@ -23,7 +23,8 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'fetch'], function
           _classCallCheck(this, Users);
 
           this.heading = 'ClubLife Team';
-          this.users = [];
+          this.collaborators = ['bcpoole', 'JonathanMerklin', 'llamallove12', 'GravDragoon'];
+          this.team = [];
 
           http.configure(function (config) {
             config.useStandardConfiguration().withBaseUrl('https://api.github.com/');
@@ -33,12 +34,18 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'fetch'], function
         }
 
         Users.prototype.activate = function activate() {
+          for (var i in this.collaborators) {
+            this.getUser(this.collaborators[i]);
+          }
+        };
+
+        Users.prototype.getUser = function getUser(username) {
           var _this = this;
 
-          return this.http.fetch('users').then(function (response) {
+          return this.http.fetch('users/' + username).then(function (response) {
             return response.json();
-          }).then(function (users) {
-            return _this.users = users;
+          }).then(function (user) {
+            return _this.team.push(user);
           });
         };
 

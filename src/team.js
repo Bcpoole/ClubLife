@@ -5,7 +5,8 @@ import 'fetch';
 @inject(HttpClient)
 export class Users {
   heading = 'ClubLife Team';
-  users = [];
+  collaborators = ['bcpoole', 'JonathanMerklin', 'llamallove12', 'GravDragoon'];
+  team = [];
 
   constructor(http) {
     http.configure(config => {
@@ -18,8 +19,14 @@ export class Users {
   }
 
   activate() {
-    return this.http.fetch('users')
+    for (let i in this.collaborators) {
+      this.getUser(this.collaborators[i]);
+    }
+  }
+
+  getUser(username) {
+    return this.http.fetch('users/' + username)
       .then(response => response.json())
-      .then(users => this.users = users);
+      .then(user => this.team.push(user));
   }
 }
