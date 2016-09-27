@@ -3,11 +3,15 @@ export class Welcome {
   heading = 'ClubLife';
 
   constructor() {
-    this.setGoals();
-  }
+    let localVersion = '/assets/logo_transparent.png';
+    let prodVersion = '/ClubLife/assets/logo_transparent.png';
+    if (this.UrlExists(localVersion)) {
+      this.logo = localVersion;
+    } else {
+      this.logo = prodVersion;
+    }
 
-  activate() {
-    
+    this.setGoals();
   }
 
   setGoals() {
@@ -16,5 +20,12 @@ export class Welcome {
       'User-centered functionality that make it actually worth using',
       'Easy-to-adopt setup for clubs'
     ];
+  }
+
+  UrlExists(url) {
+      let httpChecker = new XMLHttpRequest();
+      httpChecker.open('HEAD', url, false);
+      httpChecker.send();
+      return httpChecker.status != 404;
   }
 }
