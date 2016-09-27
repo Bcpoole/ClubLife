@@ -22,39 +22,12 @@ export class Users {
     for (let i in this.collaborators) {
       this.getUser(this.collaborators[i]);
     }
-
-    this.addDescriptions();
   }
 
   getUser(username) {
     let userr = null;
     this.http.fetch('users/' + username)
       .then(response => response.json())
-      .then(user => {
-        switch (user.login) {
-          case 'Bcpoole':
-            user.testProp = 'Hello World';
-            break;
-          case 'JonathanMerklin':
-            user.testProp = 'Hello World 1';
-            break;
-          case 'llamallove12':
-            user.testProp = 'Hello World 2';
-            break;
-          case 'GravDragoon':
-            user.testProp = 'Hello World 3';
-            break;
-          default:
-            break;
-        }
-        this.team.push(user);
-      });
-  }
-
-  addDescriptions() {
-    for (user in this.team) {
-      console.log("USER");
-      console.log(user);
-    }
+      .then(user => this.team.push(user));
   }
 }
