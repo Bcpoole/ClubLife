@@ -22,6 +22,6 @@ describe('ClubLife', function() {
 
   it('should navigate to users page', () => {
     poSkeleton.navigateTo('#/users');
-    expect(poSkeleton.getCurrentPageTitle()).toBe('Github Users | ClubLife');
+    expect(poSkeleton.getCurrentPageTitle()).toBe('Team | ClubLife');
   });
 });

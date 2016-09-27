@@ -1,4 +1,4 @@
-import {Users} from '../../src/users';
+import {Team} from '../../src/team';
 
 class HttpStub {
   fetch(url) {
@@ -13,7 +13,7 @@ class HttpStub {
   }
 }
 
-describe('the Users module', () => {
+describe('the Team module', () => {
   it('sets fetch response to users', (done) => {
     var http = new HttpStub();
     var sut = new Users(http);

@@ -33,6 +33,6 @@ describe('the App module', () => {
   });
 
   it('should have a users route', () => {
-    expect(sut.router.routes).toContain({ route: 'users', name: 'users', moduleId: 'users', nav: true, title: 'Github Users' });
+    expect(sut.router.routes).toContain({ route: 'team', name: 'team', moduleId: 'team', nav: true, title: 'Team' });
   });
 });
