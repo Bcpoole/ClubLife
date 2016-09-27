@@ -104,8 +104,7 @@ class OrganizationScraper:
         ########
         # Primary Contact
         try:
-            d["primary contact"] = str(self.mainsoup.find(class_="container-orgcontact").find_all(
-                "li")[1].string).strip()
+            d["primary contact"] = "".join(self.mainsoup.find(class_="container-orgcontact").find_all("li")[1].text.split("Primary Contact")[1:]).strip()
         except Exception:
             log("[ERROR] for URL {0} when finding after find container-orgcontact for primary contact".format(self.url))
 
@@ -151,8 +150,22 @@ class OrganizationScraper:
         except Exception:
             log("[ERROR] Could not find additional information node for {0}".format(self.url))
         try:
-            titles = [n for n in node.find_all("strong") if not n.find("span")]
-            contents = [str(n.string).replace("<em>","").replace("</em>","").strip() for n in node.find_all("p")]
+            # helper function to normalize the titles.
+            def titleify(maybeTitle):
+                if maybeTitle.find("p"):
+                    return str(maybeTitle.find("p").string) #because Vice President is - for some godforsaken reason - wrapped in <p></p>.
+                elif maybeTitle.find("em"):
+                    return str(maybeTitle).split("<strong>")[1].split("<em>")[0].replace("(","").strip()
+                else:
+                    return str(maybeTitle.string)
+
+            titles = [titleify(n) for n in node.find_all("strong") if not n.find(string="Additional Contact Information")]
+
+            # helper function to normalize the contents.
+            def contentify(maybeContent):
+                return "" if maybeContent is None else maybeContent.strip()
+
+            contents = [contentify(n.next_sibling.next_sibling.string) for n in node.find_all("strong") if n.next_sibling is not None] # wat
             for i in range(len(titles)):
                 about[str(titles[i].string)] = contents[i]
         except Exception:
