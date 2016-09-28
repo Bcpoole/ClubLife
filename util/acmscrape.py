@@ -95,24 +95,6 @@ class OrganizationScraper:
         ########
         # Primary Contact
         try:
-            if "acm" in self.url:
-                a = self.mainsoup.find(class_="container-orgcontact")
-                print("~~~A~~~")
-                print(a)
-                b = a.find_all("li")
-                print("~~~B~~~")
-                print(b)
-                print("~~~BEE IN RANGE(LEN(LIST(B)))~~~")
-                for bee in range(len(list(b))):
-                    print(str(bee)+": "+str(b[bee]))
-                c = b[1]
-                print("~~~C~~~")
-                print(c)
-                e = str(c.find("a")["href"].replace("\"\"",""))
-                print("~~~E~~~")
-                print(e)
-                print("~END~")
-            #d["primary contact"] = str(((self.mainsoup.find(class_="container-orgcontact").find_all("li"))[1]).find("a").string.replace("\"\"","")).strip()
             d["primary contact"] = "".join(self.mainsoup.find(class_="container-orgcontact").find_all("li")[1].text.split("Primary Contact")[1:]).strip()
             if "acm" in self.url:
                 print(d["primary contact"])
@@ -170,16 +152,22 @@ class OrganizationScraper:
                     return str(maybeTitle).split("<strong>")[1].split("<em>")[0].replace("(","").strip()
                 else:
                     return str(maybeTitle.string)
-
+            print("Getting Titles")
             titles = [titleify(n) for n in node.find_all("strong") if not n.find(string="Additional Contact Information")]
 
             # helper function to normalize the contents.
             def contentify(maybeContent):
                 return "" if maybeContent is None else maybeContent.strip()
-
+            print("Gets Titles, Getting Contents")
             contents = [contentify(n.next_sibling.next_sibling.string) for n in node.find_all("strong") if n.next_sibling is not None] # wat
+            print("Gets Contents, Running Loop")
+            print(len(titles))
+            print(len(contents))
+            print("Loop Time")
             for i in range(len(titles)):
-                about[str(titles[i].string)] = contents[i]
+                about[str(titles[i])] = contents[i]
+            print("Loop ran")
+
         except Exception:
             log("[ERROR] Something messed up happened when getting the additional information for "+self.url)
         return about
