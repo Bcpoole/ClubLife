@@ -49,7 +49,6 @@ class OrganizationScraper:
     def __init__(self, url):
         url = url if str.startswith(url, "http") else COLLEGIATELINK_URL + url
         self.url = url
-        print(self.url)
         conditionalLog(self.url,containsACM,"OrganizationScraper initialized for url: {0}".format(url))
         self.mainsoup = BeautifulSoup(requests.get(url).text, "html.parser")
         self.aboutsoup = BeautifulSoup(requests.get(url+"/about").text,"html.parser")
@@ -96,10 +95,7 @@ class OrganizationScraper:
         # Primary Contact
         try:
             d["primary contact"] = "".join(self.mainsoup.find(class_="container-orgcontact").find_all("li")[1].text.split("Primary Contact")[1:]).strip()
-            if "acm" in self.url:
-                print(d["primary contact"])
         except Exception:
-            print(str(Exception))
             log("[ERROR] for URL {0} when finding after find container-orgcontact for primary contact".format(self.url))
 
         return d
@@ -152,22 +148,16 @@ class OrganizationScraper:
                     return str(maybeTitle).split("<strong>")[1].split("<em>")[0].replace("(","").strip()
                 else:
                     return str(maybeTitle.string)
-            print("Getting Titles")
+
             titles = [titleify(n) for n in node.find_all("strong") if not n.find(string="Additional Contact Information")]
 
             # helper function to normalize the contents.
             def contentify(maybeContent):
-                return "" if maybeContent is None else maybeContent.strip()
-            print("Gets Titles, Getting Contents")
-            contents = [contentify(n.next_sibling.next_sibling.string) for n in node.find_all("strong") if n.next_sibling is not None] # wat
-            print("Gets Contents, Running Loop")
-            print(len(titles))
-            print(len(contents))
-            print("Loop Time")
-            for i in range(len(titles)):
-                about[str(titles[i])] = contents[i]
-            print("Loop ran")
+                return "" if maybeContent is None or maybeContent.string is None else maybeContent.string.strip()
 
+            contents = [contentify(n.next_sibling.next_sibling) for n in node.find_all("strong") if not n.find(string="Additional Contact Information")]
+            for i in range(len(titles)):
+                about[titles[i]] = contents[i]
         except Exception:
             log("[ERROR] Something messed up happened when getting the additional information for "+self.url)
         return about

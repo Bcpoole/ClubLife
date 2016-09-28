@@ -163,11 +163,11 @@ class OrganizationScraper:
 
             # helper function to normalize the contents.
             def contentify(maybeContent):
-                return "" if maybeContent is None else maybeContent.strip()
+                return "" if maybeContent is None or maybeContent.string is None else maybeContent.string.strip()
 
-            contents = [contentify(n.next_sibling.next_sibling.string) for n in node.find_all("strong") if n.next_sibling is not None] # wat
+            contents = [contentify(n.next_sibling.next_sibling) for n in node.find_all("strong") if not n.find(string="Additional Contact Information")]
             for i in range(len(titles)):
-                about[str(titles[i].string)] = contents[i]
+                about[titles[i]] = contents[i]
         except Exception:
             log("[ERROR] Something messed up happened when getting the additional information for "+self.url)
         return about
