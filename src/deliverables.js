@@ -8,7 +8,12 @@ export class Team {
 
   generateFileList() {
     this.files = [
-      'P1SoftwareRequirementsDocumentSRD.docx'
+      'P1SoftwareRequirementsDocumentSRD.docx',
+      'CS495ClassDiagramFinal.png',
+      'UseCaseDiagrams.zip',
+      'ActivityDiagrams.zip',
+      'Sales Pitch.pptx',
+      'PRS-1 Requirements Slides.pptx'
     ]
   }
 }

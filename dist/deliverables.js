@@ -25,7 +25,7 @@ System.register([], function (_export, _context) {
         }
 
         Team.prototype.generateFileList = function generateFileList() {
-          this.files = ['P1SoftwareRequirementsDocumentSRD.docx'];
+          this.files = ['P1SoftwareRequirementsDocumentSRD.docx', 'CS495ClassDiagramFinal.png', 'UseCaseDiagrams.zip', 'ActivityDiagrams.zip', 'Sales Pitch.pptx', 'PRS-1 Requirements Slides.pptx'];
         };
 
         return Team;
