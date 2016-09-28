@@ -1,7 +1,8 @@
 <template>
-  <require from="blur-image"></require>
-
   <section class="au-animate">
     <h2>${heading}</h2>
+    <ul repeat.for="file of files">
+      <li><a href.bind="path + file" download>${file}</a></li>
+    </ul>
   </section>
 </template>

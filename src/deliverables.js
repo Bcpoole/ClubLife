@@ -1,8 +1,14 @@
-import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-fetch-client';
-import 'fetch';
-
-@inject(HttpClient)
 export class Team {
   heading = 'Deliverables';
+  path = 'https://bcpoole.github.io/ClubLife/deliverables/';
+
+  constructor() {
+    this.generateFileList();
+  }
+
+  generateFileList() {
+    this.files = [
+      'P1SoftwareRequirementsDocumentSRD.docx'
+    ]
+  }
 }

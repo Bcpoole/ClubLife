@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['aurelia-framework', 'aurelia-fetch-client', 'fetch'], function (_export, _context) {
+System.register([], function (_export, _context) {
   "use strict";
 
-  var inject, HttpClient, _dec, _class, Team;
+  var Team;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -12,17 +12,24 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'fetch'], function
   }
 
   return {
-    setters: [function (_aureliaFramework) {
-      inject = _aureliaFramework.inject;
-    }, function (_aureliaFetchClient) {
-      HttpClient = _aureliaFetchClient.HttpClient;
-    }, function (_fetch) {}],
+    setters: [],
     execute: function () {
-      _export('Team', Team = (_dec = inject(HttpClient), _dec(_class = function Team() {
-        _classCallCheck(this, Team);
+      _export('Team', Team = function () {
+        function Team() {
+          _classCallCheck(this, Team);
 
-        this.heading = 'Deliverables';
-      }) || _class));
+          this.heading = 'Deliverables';
+          this.path = 'https://bcpoole.github.io/ClubLife/deliverables/';
+
+          this.generateFileList();
+        }
+
+        Team.prototype.generateFileList = function generateFileList() {
+          this.files = ['P1SoftwareRequirementsDocumentSRD.docx'];
+        };
+
+        return Team;
+      }());
 
       _export('Team', Team);
     }
