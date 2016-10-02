@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using ClubLifeASP.Models;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,10 @@ namespace ClubLifeASP.Context {
             var client = new MongoClient(settings);
 
             database = client.GetDatabase("clublife-db");
+        }
+
+        public IEnumerable<Organization> GetOrganizations() {
+            return database.GetCollection<Organization>("organizations").AsQueryable().ToList();
         }
     }
 }
