@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace ClubLifeASP.Controllers
 {
+    [RoutePrefix("api/organizations")]
     public class OrganizationsController : ApiController
     {
         MongoContext mongoContext;
@@ -26,6 +27,15 @@ namespace ClubLifeASP.Controllers
                 return NotFound();
             }
             return Ok(org);
+        }
+
+        [Route("tag")]
+        public IHttpActionResult GetOrganizationByTag(string tag) {
+            var orgs= mongoContext.FindOrganizationByTag(tag);
+            if (orgs == null) {
+                return NotFound();
+            }
+            return Ok(orgs);
         }
     }
 }
