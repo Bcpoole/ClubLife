@@ -29,6 +29,24 @@ namespace ClubLifeASP.Controllers
             return Ok(org);
         }
 
+        [Route("name")]
+        public IHttpActionResult GetOrganizationByName(string name) {
+            var orgs = mongoContext.FindOrganizationByName(name);
+            if (orgs == null) {
+                return NotFound();
+            }
+            return Ok(orgs);
+        }
+
+        [Route("meetingTime")]
+        public IHttpActionResult GetOrganizationByMeetingTime(string day, string time) {
+            var orgs = mongoContext.FindOrganizationByDayAndTime(day, time);
+            if (orgs == null) {
+                return NotFound();
+            }
+            return Ok(orgs);
+        }
+
         [Route("tag")]
         public IHttpActionResult GetOrganizationByTag(string tag) {
             var orgs= mongoContext.FindOrganizationByTag(tag);
