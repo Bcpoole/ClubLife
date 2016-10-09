@@ -28,6 +28,11 @@ namespace ClubLifeASP.Context {
             return database.GetCollection<Organization>("organizations").AsQueryable();
         }
 
+        public Organization GetOrganization(string id) {
+            var orgs = GetAllOrganizations();
+            return orgs.Where(x => x.Id.ToString() == id).FirstOrDefault();
+        }
+
         public IEnumerable<Organization> FindOrganizationByName(string name) {
             var orgs = GetAllOrganizations();
             return orgs.Where(x => x.name.ToLower().Contains(name.ToLower()));
