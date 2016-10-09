@@ -24,19 +24,19 @@ namespace ClubLifeASP.Context {
             database = client.GetDatabase("clublife-db");
         }
 
-        public IEnumerable<Organization> GetOrganizations() {
+        public IEnumerable<Organization> GetAllOrganizations() {
             return database.GetCollection<Organization>("organizations").AsQueryable();
         }
 
         public IEnumerable<Organization> FindOrganizationByName(string name) {
-            var orgs = GetOrganizations();
+            var orgs = GetAllOrganizations();
             return orgs.Where(x => x.name.ToLower().Contains(name.ToLower()));
         }
 
         //TODO: Make day into an Enumerable
         //TODO: clean up the "Organization Meeting Time" on Mongo then fix this function
         public IEnumerable<Organization> FindOrganizationByDayAndTime(string day, string time = null) {
-            var orgs = GetOrganizations();
+            var orgs = GetAllOrganizations();
 
             //Just by day of week
             if (time == null) {

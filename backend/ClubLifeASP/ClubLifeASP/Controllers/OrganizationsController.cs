@@ -17,7 +17,7 @@ namespace ClubLifeASP.Controllers
         }
 
         public IEnumerable<Organization> GetAllOrganizations() {
-            return mongoContext.GetOrganizations();
+            return mongoContext.GetAllOrganizations();
         }
     }
 }
