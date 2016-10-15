@@ -100,7 +100,7 @@ def cleanTime(time):
     """
     Clean the time of string, returns an object.
     """
-    return "TODO: THIS"
+    return {"TODO": "THIS"}
 
 def main():
     with open(RESULTS_FILE,"r") as f:
