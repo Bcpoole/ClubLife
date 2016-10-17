@@ -93,5 +93,150 @@ def getResultsFromSpecialCaseDay(string):
     srMap = {name.strip().upper() : val for name,val in srMap.items()}
     return srMap[string]
 
-def getResultsFromSpecialCaseTime(string):
-    pass
+def getResultsFromSpecialCaseTime(uncapitalizedString):
+    srMap = {
+        "Tue 7pm-9pm / Wed 7pm-9pm / Thu 6pm-8pm": {
+            "ResultsByDay": {
+                2: {
+                    "IntervalStarts": {"Hours": 19, "Minutes": 0},
+                    "IntervalEnds": {"Hours": 21, "Minutes": 0}
+                },
+                3: {
+                    "IntervalStarts": {"Hours": 19, "Minutes": 0},
+                    "IntervalEnds": {"Hours": 21, "Minutes": 0}
+                },
+                4: {
+                    "IntervalStarts": {"Hours": 18, "Minutes": 0},
+                    "IntervalEnds": {"Hours": 20, "Minutes": 0}
+                }
+            }
+        },
+        "7:00pm-8:45pm": {"IntervalStarts": {"Hours": 19, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 45}},
+        "5:00am": {"Starts": {"Hours": 5, "Minutes": 0}},
+        "4-6 PM": {"IntervalStarts": {"Hours": 16, "Minutes": 0}, "IntervalEnds": {"Hours": 18, "Minutes": 0}},
+        "6:45 p.m.": {"Starts": {"Hours": 18, "Minutes": 45}},
+        "6-8 PM": {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "Evening": {"Varies": True},
+        "2:45-5pm": {"IntervalStarts": {"Hours": 14, "Minutes": 45}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "3:30-5:30": {"IntervalStarts": {"Hours": 15, "Minutes": 30}, "IntervalEnds": {"Hours": 17, "Minutes": 30}},
+        "3-6 pm": {"IntervalStarts": {"Hours": 15, "Minutes": 0}, "IntervalEnds": {"Hours": 18, "Minutes": 0}},
+        "1800": {"Starts": {"Hours": 18, "Minutes": 0}},
+        "18:30": {"Starts": {"Hours": 18, "Minutes": 30}},
+        "7-8 PM": {"IntervalStarts": {"Hours": 19, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "5:00 - 7:00 P.M.": {"IntervalStarts": {"Hours": 17, "Minutes": 0}, "IntervalEnds": {"Hours": 19, "Minutes": 0}},
+        "5:15": {"Starts": {"Hours": 17, "Minutes": 15}},
+        "6:00 - 7:00 PM (Manga) ; 7:00 PM - 10:00 PM (Anime)": {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 22, "Minutes": 0}},
+        "Tues: 5:15 pm Thurs: 7:00 pm": {"ResultsByDay": {
+            2: {"Starts": {"Hours": 17, "Minutes": 15}},
+            4: {"Starts": {"Hours": 19, "Minutes": 0}}
+        }},
+        "6:00 P.M. - 8:00 P.M.": {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "4-5p": {"IntervalStarts": {"Hours": 16, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "3-5": {"IntervalStarts": {"Hours": 15, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "5:00 pm - 6:00 pm": {"IntervalStarts": {"Hours": 17, "Minutes": 0}, "IntervalEnds": {"Hours": 18, "Minutes": 0}},
+        "5:45": {"Starts": {"Hours": 17, "Minutes": 45}},
+        "7-8pm": {"IntervalStarts": {"Hours": 19, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "Evening": {"Varies": True},
+        "7-8": {"IntervalStarts": {"Hours": 19, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "8 and 9 PM": {"Starts": {"Hours": 20, "Minutes": 0}}, #Let's pretend we can't have multiple starting times for now
+        "12:00 - 1:00 pm": {"IntervalStarts": {"Hours": 12, "Minutes": 0}, "IntervalEnds": {"Hours": 13, "Minutes": 0}},
+        "2:00-4:30": {"IntervalStarts": {"Hours": 14, "Minutes": 0}, "IntervalEnds": {"Hours": 16, "Minutes": 30}},
+        "3:15": {"Starts": {"Hours": 15, "Minutes": 15}},
+        "5:00 p.m. - 6:00 p.m.": {"IntervalStarts": {"Hours": 17, "Minutes": 0}, "IntervalEnds": {"Hours": 18, "Minutes": 0}},
+        "12:15 PM": {"Starts": {"Hours": 12, "Minutes": 15}},
+        "6:00 - 10:00": {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 22, "Minutes": 0}},
+        "6:00 PM - 8:00 PM": {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "6-10pm Saturdays; 3-5pm Sundays": {"ResultsByDay": {
+            0: {"IntervalStarts": {"Hours": 15, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+            6: {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 22, "Minutes": 0}}
+        }},
+        "7:00 P.M. CST": {"Starts": {"Hours": 19, "Minutes": 0}},
+        "6:30-8:00": {"IntervalStarts": {"Hours": 18, "Minutes": 30}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "5:15pm": {"Starts": {"Hours": 17, "Minutes": 15}},
+        "8am-5pm": {"IntervalStarts": {"Hours": 8, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "September 13, 2016, 6:30 PM | October 2016, 6:30 PM | November 15, 2016, 6:30 PM": {"Starts": {"Hours": 18, "Minutes": 30}},
+        "3:30 PM - 4:30 PM": {"IntervalStarts": {"Hours": 15, "Minutes": 30}, "IntervalEnds": {"Hours": 16, "Minutes": 30}},
+        "8am-10pm": {"IntervalStarts": {"Hours": 8, "Minutes": 0}, "IntervalEnds": {"Hours": 22, "Minutes": 0}},
+        "8:00am-5:00pm": {"IntervalStarts": {"Hours": 8, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "6:00pm-7:00pm": {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 19, "Minutes": 0}},
+        "7:45pm-9:00pm": {"IntervalStarts": {"Hours": 19, "Minutes": 45}, "IntervalEnds": {"Hours": 21, "Minutes": 0}},
+        "7-8": {"IntervalStarts": {"Hours": 19, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "6:15pm": {"Starts": {"Hours": 18, "Minutes": 15}},
+        "3-6pm": {"IntervalStarts": {"Hours": 15, "Minutes": 0}, "IntervalEnds": {"Hours": 18, "Minutes": 0}},
+        "03.00pm -04.00pm": {"IntervalStarts": {"Hours": 15, "Minutes": 0}, "IntervalEnds": {"Hours": 16, "Minutes": 0}},
+        "8pm & 12pm": {"Starts": {"Hours": 20, "Minutes": 0}}, #again, let's play pretend...if the reqs change or we change our minds, TODO: fix this
+        "6:45pm": {"Starts": {"Hours": 18, "Minutes": 45}},
+        "6:30 to 8:00": {"IntervalStarts": {"Hours": 18, "Minutes": 30}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "Friday - 3:00pm; Tuesdays 6:30": {"ResultsByDay": {
+            2: {"Starts": {"Hours": 18, "Minutes": 30}},
+            5: {"Starts": {"Hours": 15, "Minutes": 0}}
+        }},
+        "8 PM on Tuesday, 6 PM on Thursday": {"ResultsByDay": {
+            2: {"Starts": {"Hours": 20, "Minutes": 0}},
+            5: {"Starts": {"Hours": 18, "Minutes": 0}}
+        }},
+        "5:30 - 6:30 PM": {"IntervalStarts": {"Hours": 17, "Minutes": 30}, "IntervalEnds": {"Hours": 18, "Minutes": 30}},
+        "5:15": {"Starts": {"Hours": 17, "Minutes": 15}},
+        "6-7 PM": {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 19, "Minutes": 0}},
+        "8-9 p.m.": {"IntervalStarts": {"Hours": 20, "Minutes": 0}, "IntervalEnds": {"Hours": 21, "Minutes": 0}},
+        "1-3 and by appointment": {"IntervalStarts": {"Hours": 13, "Minutes": 0}, "IntervalEnds": {"Hours": 15, "Minutes": 0}},
+        "4-5 pm": {"IntervalStarts": {"Hours": 16, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "9:15": {"Starts": {"Hours": 21, "Minutes": 15}},
+        "6:30-7:30pm": {"IntervalStarts": {"Hours": 18, "Minutes": 30}, "IntervalEnds": {"Hours": 19, "Minutes": 30}},
+        "12-1pm": {"IntervalStarts": {"Hours": 12, "Minutes": 0}, "IntervalEnds": {"Hours": 13, "Minutes": 0}},
+        "5:30 p.m. to 7:00 p.m.": {"IntervalStarts": {"Hours": 17, "Minutes": 30}, "IntervalEnds": {"Hours": 19, "Minutes": 0}},
+        "6:15 p.m.": {"Starts": {"Hours": 18, "Minutes": 15}},
+        "3:30-4:45 p.m.": {"IntervalStarts": {"Hours": 15, "Minutes": 30}, "IntervalEnds": {"Hours": 16, "Minutes": 45}},
+        "9:00pm-11:00pm": {"IntervalStarts": {"Hours": 21, "Minutes": 0}, "IntervalEnds": {"Hours": 23, "Minutes": 0}},
+        "6:00 and 7:30": {"Starts": {"Hours": 18, "Minutes": 0}}, #again play pretend
+        "7:20pm": {"Starts": {"Hours": 19, "Minutes": 20}},
+        "7:15 PM": {"Starts": {"Hours": 19, "Minutes": 15}},
+        "6:00am on Wednesday and 6:30am on Sunday": {"ResultsByDay": {
+            0: {"Starts": {"Hours": 6, "Minutes": 30}},
+            3: {"Starts": {"Hours": 6, "Minutes": 0}}
+        }},
+        "6:30-7:30": {"IntervalStarts": {"Hours": 18, "Minutes": 30}, "IntervalEnds": {"Hours": 19, "Minutes": 30}},
+        "2pm-3pm": {"IntervalStarts": {"Hours": 14, "Minutes": 0}, "IntervalEnds": {"Hours": 15, "Minutes": 0}},
+        "Evenings": {"Varies": True},
+        "5-6pm": {"IntervalStarts": {"Hours": 17, "Minutes": 0}, "IntervalEnds": {"Hours": 18, "Minutes": 0}},
+        "7:15 PM": {"Starts": {"Hours": 19, "Minutes": 15}},
+        "18:00 (non-routine)": {"Starts": {"Hours": 18, "Minutes": 0}},
+        "7:oo PM": {"Starts": {"Hours": 19, "Minutes": 0}},
+        "7:00 PM (EST)": {"Starts": {"Hours": 19, "Minutes": 0}},
+        "8-5": {"IntervalStarts": {"Hours": 8, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "3-5": {"IntervalStarts": {"Hours": 15, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "6:30-8:00": {"IntervalStarts": {"Hours": 18, "Minutes": 30}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "8:15": {"Starts": {"Hours": 20, "Minutes": 15}},
+        "Sun. 4-6 pm, Tue. 7-9 pm, Thur. 8-10 pm": {"ResultsByDay": {
+            0: {"IntervalStarts": {"Hours": 16, "Minutes": 0}, "IntervalEnds": {"Hours": 18, "Minutes": 0}},
+            2: {"IntervalStarts": {"Hours": 19, "Minutes": 0}, "IntervalEnds": {"Hours": 21, "Minutes": 0}},
+            4: {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}}
+        }},
+        "3:30-4:45pm": {"IntervalStarts": {"Hours": 15, "Minutes": 30}, "IntervalEnds": {"Hours": 16, "Minutes": 45}},
+        "6-8 PM": {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "5:15 P.M.": {"Starts": {"Hours": 17, "Minutes": 15}},
+        "2pm-4pm (Sun) & 4pm-6pm (Fri)": {"ResultsByDay": {
+            0: {"IntervalStarts": {"Hours": 14, "Minutes": 0}, "IntervalEnds": {"Hours": 16, "Minutes": 0}},
+            5: {"IntervalStarts": {"Hours": 16, "Minutes": 0}, "IntervalEnds": {"Hours": 18, "Minutes": 0}}
+        }},
+        "1-3 p.m.": {"IntervalStarts": {"Hours": 13, "Minutes": 0}, "IntervalEnds": {"Hours": 15, "Minutes": 0}},
+        "8:00am-4:45pm": {"IntervalStarts": {"Hours": 8, "Minutes": 0}, "IntervalEnds": {"Hours": 16, "Minutes": 45}},
+        "Monday 6-8 pm; Tuesday 6-8 pm, Thursday 8-10 pm": {"ResultsByDay": {
+            1: {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+            2: {"IntervalStarts": {"Hours": 18, "Minutes": 0}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+            4: {"IntervalStarts": {"Hours": 20, "Minutes": 0}, "IntervalEnds": {"Hours": 22, "Minutes": 0}}
+        }},
+        "Typically, social and informal discussions 5:30 pm, business meeting 6 pm for regular monthly meetings": {"Starts": {"Hours": 17, "Minutes": 30}},
+        "Sun: 9 AM Mon: 7:30 PM, Wed: 8 PM": {"ResultsByDay": {
+            0: {"Starts": {"Hours": 9, "Minutes": 0}},
+            1: {"Starts": {"Hours": 19, "Minutes": 30}},
+            3: {"Starts": {"Hours": 20, "Minutes": 0}}
+        }},
+        "8-9:30": {"IntervalStarts": {"Hours": 20, "Minutes": 0}, "IntervalEnds": {"Hours": 21, "Minutes": 30}},
+        "7:00PMPM": {"Starts": {"Hours": 19, "Minutes": 0}},
+        "6:30-8pm": {"IntervalStarts": {"Hours": 18, "Minutes": 30}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+        "8am-5pm": {"IntervalStarts": {"Hours": 8, "Minutes": 0}, "IntervalEnds": {"Hours": 17, "Minutes": 0}},
+        "6:45 AM-8:45 AM": {"IntervalStarts": {"Hours": 6, "Minutes": 45}, "IntervalEnds": {"Hours": 8, "Minutes": 45}},
+        "10:30 AM": {"Starts": {"Hours": 10, "Minutes": 30}},
+    }
+    return srMap[uncapitalizedString]

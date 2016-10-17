@@ -100,7 +100,97 @@ def cleanTime(time):
     """
     Clean the time of string, returns an object.
     """
-    return {"TODO": "THIS"}
+    results = {}
+    t = time.strip().upper().replace(".","") #but maintain original time variable for special case handling
+    nospacePMs = [str(i)+":00PM" for i in [12]+list(range(1,12,1))]
+    spacePMs = [str(i)+":00 PM" for i in [12]+list(range(1,12,1))]
+    nospace30PMs = [str(i)+":30PM" for i in [12]+list(range(1,12,1))]
+    space30PMs = [str(i)+":30 PM" for i in [12]+list(range(1,12,1))]
+    hcolon00s = [str(i)+":00" for i in list(range(10,13))+list(range(1,10))]
+    hcolon30s = [str(i)+":30" for i in list(range(10,13))+list(range(1,10))]
+    nocolons = [str(i)+"AM" for i in [12]+list(range(1,12))]+[str(i)+"PM" for i in [12]+list(range(1,12))]
+    nocolonsWithSpaces = [str(i)+" AM" for i in [12]+list(range(1,12))]+[str(i)+" PM" for i in [12]+list(range(1,12))]
+    pureNumbers = [str(i) for i in list(range(10,13,1))+list(range(1,10,1))]
+    noons = ["NOON","12","12 NOON"]
+
+    notApplicables = ["","N/A","NA","DSF","ASD","SAD","ADF","FSDF","SD","DSFDSF","SDFDSF","SDF","CONTACT US","DEF","CMROWEN@SAUAEDU","FOR MEMBERS ONLY"]
+
+    variesStrings = ["VARIES","VARIABLE","VARIOUS","ALTERNATES EACH MONTH TO AC",
+        "MULTIPLE MEETINGS EACH WEEK","ANYTIME","NOT REGULAR", "ANNOUNCED IN EMAILS",
+        "AUGUST-MAY","(LOOK ON OUR","SEE WRC","AS REQUIRED",
+        "DATE DETERMINED ON A MONTH-BY-MONTH BASIS", "AS NEEDED","ONCE PER MONTH","TWICE A MONTH","FLEXIBLE DEPENDING ON GROUP",
+        "ONCE PER MONTH FOR A MEETING OR EVENT", "JAN ~ DEC", "WILL ANNOUNCE THROUGH EMA","ONCE A MONTH","VARY","FLEXIBLE","DIFFERENTIATE","AFTERNOON OR EVENING",
+        "ANNOUNCED ON LISTSERV"]
+    def isVaries():
+        for s in variesStrings:
+            if s in t:
+                return True
+        return False
+
+    if t in nospacePMs:
+        results["Starts"] = {
+            "Hours": 12 + nospacePMs.index(t),
+            "Minutes": 0
+        }
+    elif t in spacePMs:
+        results["Starts"] = {
+            "Hours": 12 + spacePMs.index(t),
+            "Minutes": 0
+        }
+    elif t in nospace30PMs:
+        results["Starts"] = {
+            "Hours": 12 + nospace30PMs.index(t),
+            "Minutes": 0
+        }
+    elif t in space30PMs:
+        results["Starts"] = {
+            "Hours": 12 + space30PMs.index(t),
+            "Minutes": 0
+        }
+    elif t in hcolon00s:
+        results["Starts"] = {
+            "Hours": 10+hcolon00s.index(t),
+            "Minutes": 0
+        }
+    elif t in hcolon30s:
+        results["Starts"] = {
+            "Hours": 10+hcolon30s.index(t),
+            "Minutes": 0
+        }
+    elif t in nocolons:
+        results["Starts"] = {
+            "Hours": nocolons.index(t),
+            "Minutes": 0
+        }
+    elif t in nocolonsWithSpaces:
+        results["Starts"] = {
+            "Hours": nocolonsWithSpaces.index(t),
+            "Minutes": 0
+        }
+    elif t in pureNumbers:
+        results["Starts"] = {
+            "Hours": 10+pureNumbers.index(t),
+            "Minutes": 0
+        }
+    elif t in noons:
+        results["Starts"] = {
+            "Hours": 12,
+            "Minutes": 0
+        }
+    elif t in notApplicables:
+        results["TimeNotApplicable"] = True
+    elif "TBA" in t or "TBD" in t or "TO BE DETERMINED" in t:
+        results["TBD"] = True
+    elif isVaries():
+        results["Varies"] = True
+    else:
+        try:
+            results = specialcases.getResultsFromSpecialCaseTime(time)
+        except KeyError:
+            print("KeyError "+time)
+            results = {}
+
+    return results
 
 def main():
     with open(RESULTS_FILE,"r") as f:
@@ -111,9 +201,9 @@ def main():
             time = club["Organization Meeting Time"]
             club["CleanDayResults"] = cleanDay(day)
             club["CleanTimeResults"] = cleanTime(time)
-            #if len(r.keys()) == 0:
-            #    print(day)
-            #    specialCaseCount += 1
+            #if len(club["CleanTimeResults"].keys()) == 0:
+                #print(time)
+                #specialCaseCount += 1
         with open(OUTPUT_FILE,"w") as g:
             g.write(json.dumps(clubs))
         #print(specialCaseCount)
