@@ -25,8 +25,19 @@ Club is:
         "Varies": True,
         "TBD": True
     },
-    "CleanTimeResults": {
-        "TODO": "THIS"
-    }
+    "CleanTimeResults":
+        # ONE OF THE FOLLOWING:
+        {"Starts": {"Hours": 0-23, "Minutes": 0-59}}
+        {"IntervalStarts": {"Hours": m, "Minutes": n}}
+        {"Varies": True}
+        {"TimeNotApplicable": True}
+        {"TBD": True}
+        ###### OR, IT COULD HAVE DIFFERENT RESULTS FOR EACH DAY, IN WHICH CASE THE RESULTS LOOKS LIKE:
+        {"ResultsByDay": {
+            # this nested object has keys equal to days 0,1,2,3,4,5,6, and the values are like nested results objects
+            # so e.g.
+            2: {"IntervalStarts": {"Hours": 18, "Minutes": 30}, "IntervalEnds": {"Hours": 20, "Minutes": 0}},
+            5: {"Starts": {"Hours": 16, "Minutes": 20}}
+        }}
 }
 ```
