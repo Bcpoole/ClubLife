@@ -8,3 +8,6 @@ This is an ASP.NET Core web project pre-configured for building a .NET backend a
 
 ## Mobile
 Xamarin cross-platform app configured for Android, iOS, and UWP.
+
+## Util
+Python scripts for scrapping and formatting data. Only to be run to get data to throw into database.
