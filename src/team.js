@@ -25,7 +25,6 @@ export class Users {
   }
 
   getUser(username) {
-    let userr = null;
     this.http.fetch('users/' + username)
       .then(response => response.json())
       .then(user => this.team.push(user));

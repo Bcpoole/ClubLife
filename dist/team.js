@@ -42,7 +42,6 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'fetch'], function
         Users.prototype.getUser = function getUser(username) {
           var _this = this;
 
-          var userr = null;
           this.http.fetch('users/' + username).then(function (response) {
             return response.json();
           }).then(function (user) {
