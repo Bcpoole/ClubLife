@@ -6,18 +6,28 @@ export const homepage = {
     backgroundColor: '#F5FCFF',
   },
   ClubLife: {
-    fontSize: 20,
+    fontSize: 100,
     textAlign: 'center',
     margin: 10,
     color: 'white',
     backgroundColor: 'black',
   },
   announcements: {
-    fontSize: 15,
+    fontSize: 20,
     textAlign: 'center',
     margin: 15,
     color: 'black',
     backgroundColor: '#F5FCFF',
+  },
+  BottomBar: {
+    fontSize: 8,
+    color: 'white',
+    backgroundColor: 'black',
+  },
+  description: {
+      fontSize: 10,
+      textAlign: 'center',
+      color: '#FFFFFF'
   },
 
 };
