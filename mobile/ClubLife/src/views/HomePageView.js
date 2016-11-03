@@ -8,7 +8,16 @@ export default class HomePage extends Component {
       <View>
         <Text style={styles.ClubLife}>Club Life</Text>
         <Text style={styles.announcements}>Announcements</Text>
-        <View style={{width: 375, height: 420, backgroundColor: 'powderblue'}} />
+        <View style={{width: 375, height: 370, backgroundColor: 'powderblue'}}>
+            <Text style={styles.newsFeed, styles.bold}>Video Game Development Club Meeting</Text>
+            <Text style={styles.newsFeed, styles.newsFeedPadding}>Thursday, Nov. 3rd, 5:30pm - 7:30pm, SERC 3048</Text>
+            <Text style={styles.newsFeed, styles.bold}>ABXY Riverside Night</Text>
+            <Text style={styles.newsFeed, styles.newsFeedPadding}>Friday, Nov. 4th, 6:00pm - 8:00pm, RCC</Text>
+            <Text style={styles.newsFeed, styles.bold}>ACM Object Oriented Programming Workshop</Text>
+            <Text style={styles.newsFeed, styles.newsFeedPadding}>Tuesday, Nov. 8th, 5:15pm - 7:00pm, SERC 1014</Text>
+            <Text style={styles.newsFeed, styles.bold}>Thanksgiving Break</Text>
+            <Text style={styles.newsFeed, styles.newsFeedPadding}>Wednesday-Sunday, Nov. 23rd - 27th</Text>
+        </View>
         <View style={{width: 375, height: 65, backgroundColor: 'skyblue'}}>
             <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 5, paddingRight: 15, paddingTop: 3}}>
                 <Image style={styles.bottomIcon} source={require('./Home-Icon.jpg')} />
@@ -36,25 +45,28 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
-    },
+  },
   ClubLife: {
       fontSize: 50,
       textAlign: 'center',
       color: 'white',
       backgroundColor: 'black',
-    },
+      fontWeight: 'bold',
+  },
   announcements: {
-      fontSize: 20,
+      fontSize: 30,
       textAlign: 'center',
       color: 'black',
       backgroundColor: 'powderblue',
       paddingTop: 10,
-    },
+      paddingBottom: 30,
+      fontWeight: 'bold',
+  },
   BottomBar: {
       fontSize: 12,
       color: 'black',
       backgroundColor: 'skyblue',
-    },
+  },
   bottomIcon: {
       width: 25,
       height: 25,
@@ -65,5 +77,18 @@ const styles = StyleSheet.create({
       fontSize: 10,
       textAlign: 'center',
       color: '#FFFFFF'
-    },
+  },
+  newsFeed: {
+      fontSize: 25,
+      textAlign: 'center',
+      justifyContent: 'center',
+      color: 'black',
+      backgroundColor: 'powderblue',
+  },
+  bold: {
+      fontWeight: 'bold',
+  },
+  newsFeedPadding: {
+      paddingBottom: 20,
+  },
 });
