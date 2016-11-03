@@ -11,6 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
+import HomePage from './src/views/HomePageView'
 
 export default class ClubLife extends Component {
   render() {
@@ -50,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('ClubLife', () => ClubLife);
+AppRegistry.registerComponent('ClubLife', () => HomePage);
