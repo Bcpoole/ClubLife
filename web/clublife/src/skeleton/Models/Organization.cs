@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace skeleton.Models
 {
+    [BsonIgnoreExtraElements]
     public class Organization {
         public ObjectId Id { get; set; }
         [BsonElement("Secondary Advisor Department")]
