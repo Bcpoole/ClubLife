@@ -12,8 +12,8 @@ import {
   TouchableOpacity, 
 } from 'react-native';
 
-import TabNavigator from 'react-native-tab-navigator';
-import Communications from 'react-native-communications';
+//import TabNavigator from 'react-native-tab-navigator';
+//import Communications from 'react-native-communications';
 
 class Club extends Component {
     constructor(props){
