@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Navigator, Text, StyleSheet } from 'react-native';
+import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback } from 'react-native';
+import HomePage from '../views/HomePageView';
+var Login =require('../views/login');
 import TestPage from '../views/testpage';
 import OtherTestPage from '../views/othertestpage';
+import Club from '../views/club';
+import Profile from '../views/profile';
+
+var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
 
 export default class ClubLifeNavigator extends Component {
@@ -15,7 +21,7 @@ export default class ClubLifeNavigator extends Component {
     render() {
         //initial route for navigation
         var initialRoute = this.props.initialRoute || {
-            type: 'testpage',
+            type: 'login',
             index: 0
         }
 
@@ -24,9 +30,59 @@ export default class ClubLifeNavigator extends Component {
             var scene = "";
             switch(route.type) {
                 case "login":
+
                     scene = (
                         <Login
                             navigator={navigator}
+                            onSuccessfulLogin={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "homepage",
+                                    index: leIndex,
+                                    userId: "1"
+                                })
+                            }}
+                        />
+                    );
+                    break;
+                case "homepage":
+                    scene = (
+                        <HomePage
+                            onGoHome={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "homepage",
+                                    index: leIndex,
+                                })
+                            }}
+                            onGoProfile={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    "type": "profile",
+                                    index: leIndex
+                                })
+                            }}
+                            onGoEvents={()=>{
+                                const leIndsex = route.index + 1;
+                                navigator.push({
+                                    "type": "testpage",
+                                    index: leIndsex
+                                })
+                            }}
+                        />
+                    );
+                    break;
+                case "club":
+                    scene = (
+                        <Club
+
+                        />
+                    ); //TODO later: integrate props in meaningful fashion
+                    break;
+                case "profile":
+                    scene = (
+                        <Profile
+
                         />
                     );
                     break;
@@ -47,7 +103,7 @@ export default class ClubLifeNavigator extends Component {
                                 }
                             }}
                             onGoForward={()=>{
-
+                                
                             }}
                         />
                     );
@@ -121,8 +177,12 @@ var navbar = (
                                 <Text></Text> //empty
                             );
                             break;
+                        case "profile":
+                            button = (
+                                <TouchableElement onPress={()=>{navigator.pop()}}><Text>BABYGOTBACK</Text></TouchableElement>
+                            );
                         default:
-                            button = <Text>oh</Text>; //empty
+                            button = <Text>⚾</Text>;
 
                 }
                 return button;

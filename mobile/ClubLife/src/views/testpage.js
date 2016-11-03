@@ -29,8 +29,14 @@ export default class TestPage extends Component {
                             Go other
                         </Text>
                     </TouchableHighlight>
+                    <TouchableHighlight onPress={this.magic}style={styles.go}>
+                        <Text>PRESS ME TO SEE THE MAGIC HAPPEN</Text>
+                    </TouchableHighlight>
                 </View>
         );
+    }
+    magic() {
+
     }
 }
 

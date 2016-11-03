@@ -1,5 +1,5 @@
 
- 
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -7,43 +7,45 @@ import {
   Text,
   View,
   TextInput,
-  TouchableNativeFeedback 
+  TouchableNativeFeedback
 } from 'react-native';
 
 
- 
+
 module.exports = React.createClass({
+
+    //TODO: 4 spaces are better than 2
  render() {
-    
+
     var TouchableElement = TouchableNativeFeedback;
-    
-    
+
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
          Login:
         </Text>
-        <TextInput 
+        <TextInput
             style={styles.textEdit}
             onChangeText={(moreText) => this.setState({moreText})}
             placeholder="email">
         </TextInput>
-          <TextInput 
+          <TextInput
             style={styles.textEdit}
             onChangeText={(moreText) => this.setState({moreText})}
             placeholder="password">
         </TextInput>
-        <TouchableElement style = {styles.button} onPress = {()=>{alert("u")}}>
+        <TouchableElement style = {styles.button} onPress = {this.props.onSuccessfulLogin}>
             <View><Text>Submit</Text></View>
         </TouchableElement>
-        
+
       </View>
     );
     }
  });
-  
-  
- 
+
+
+
 
 
 const styles = StyleSheet.create({
@@ -66,17 +68,13 @@ const styles = StyleSheet.create({
   button: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,  
+    marginBottom: 5,
   },
   textEdit: {
-    height: 40, 
+    height: 40,
     width: 200,
-    borderColor: 'grey', 
+    borderColor: 'grey',
     backgroundColor: 'white',
     borderWidth: 1
   },
 });
-
-
-
- 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, Image, StyleSheet } from 'react-native';
+import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight } from 'react-native';
 
 
 export default class HomePage extends Component {
@@ -18,11 +18,11 @@ export default class HomePage extends Component {
                 <Image style={styles.bottomIcon} source={require('./Profile-Icon.jpeg')} />
             </View>
             <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
-                <Text style={styles.BottomBar}>Home</Text>
-                <Text style={styles.BottomBar}>My Clubs</Text>
-                <Text style={styles.BottomBar}>Search</Text>
-                <Text style={styles.BottomBar}>My Events</Text>
-                <Text style={styles.BottomBar}>My Profile</Text>
+                <TouchableHighlight onPress={this.props.onGoHome}><Text style={styles.BottomBar}>Home</Text></TouchableHighlight>
+                <TouchableHighlight><Text style={styles.BottomBar}>My Clubs</Text></TouchableHighlight>
+                <TouchableHighlight><Text style={styles.BottomBar}>Search</Text></TouchableHighlight>
+                <TouchableHighlight onPress={this.props.onGoEvents}><Text style={styles.BottomBar}>My Events</Text></TouchableHighlight>
+                <TouchableHighlight onPress={this.props.onGoProfile}><Text style={styles.BottomBar}>My Profile</Text></TouchableHighlight>
             </View>
         </View>
       </View>
