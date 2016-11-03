@@ -5,9 +5,19 @@ export const homepage = {
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  clublfie: {
+  ClubLife: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    color: 'white',
+    backgroundColor: 'black',
   },
+  announcements: {
+    fontSize: 15,
+    textAlign: 'center',
+    margin: 15,
+    color: 'black',
+    backgroundColor: '#F5FCFF',
+  },
+
 };
