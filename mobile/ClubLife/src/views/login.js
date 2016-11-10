@@ -38,6 +38,9 @@ module.exports = React.createClass({
         <TouchableElement style = {styles.button} onPress = {this.props.onSuccessfulLogin}>
             <View><Text>Submit</Text></View>
         </TouchableElement>
+        <TouchableElement style = {styles.button} onPress = {this.props.onGoSignup}>
+            <View><Text>Not currently registered? Sign up!</Text></View>
+        </TouchableElement>
 
       </View>
     );
