@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback } from 'react-native';
+
+
 import HomePage from '../views/HomePageView';
+import Signup from '../views/signup';
 var Login =require('../views/login');
 import TestPage from '../views/testpage';
 import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
 import Profile from '../views/profile';
+//import FindAClub from '../views/findaclub';
+//import FindAClubResults from '../views/findaclubresults';
+//import FindAnEvent from '../views/findanevent';
+//import FindAnEventResults from '../views/findaneventresults';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -14,7 +21,7 @@ export default class ClubLifeNavigator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: ""
+            userId: ""
         };
     }
 
@@ -29,17 +36,40 @@ export default class ClubLifeNavigator extends Component {
         var renderScene = (route, navigator) => {
             var scene = "";
             switch(route.type) {
+                case "signup":
+                    scene = (
+                        <Signup
+                            navigator={navigator}
+                            onSignup={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "login",
+                                    index: leIndex
+                                });
+                            }}
+                        />
+                    );
+                    break;
                 case "login":
 
                     scene = (
                         <Login
                             navigator={navigator}
-                            onSuccessfulLogin={()=>{
+                            callBackOnSuccessfulLogin={(userId)=>{
                                 const leIndex = route.index+1;
+                                this.setState({
+                                    userId: userId
+                                });
                                 navigator.push({
                                     "type": "homepage",
-                                    index: leIndex,
-                                    userId: "1"
+                                    index: leIndex
+                                });
+                            }}
+                            onGoSignup={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "signup",
+                                    index: leIndex
                                 })
                             }}
                         />
@@ -52,7 +82,7 @@ export default class ClubLifeNavigator extends Component {
                                 const leIndex = route.index+1;
                                 navigator.push({
                                     "type": "homepage",
-                                    index: leIndex,
+                                    index: leIndex
                                 })
                             }}
                             onGoProfile={()=>{
@@ -62,10 +92,17 @@ export default class ClubLifeNavigator extends Component {
                                     index: leIndex
                                 })
                             }}
-                            onGoEvents={()=>{
+                            onGoFindAnEvent={()=>{
                                 const leIndsex = route.index + 1;
                                 navigator.push({
-                                    "type": "testpage",
+                                    "type": "findanevent",
+                                    index: leIndsex
+                                })
+                            }}
+                            onGoFindAClub={()=>{
+                                const leIndsex = route.index + 1;
+                                navigator.push({
+                                    "type": "findaclub",
                                     index: leIndsex
                                 })
                             }}
@@ -82,6 +119,20 @@ export default class ClubLifeNavigator extends Component {
                 case "profile":
                     scene = (
                         <Profile
+
+                        />
+                    );
+                    break;
+                case "findaclub":
+                    scene = (
+                        <FindAClub
+
+                        />
+                    );
+                    break;
+                case "findanevent":
+                    scene = (
+                        <FindAnEvent
 
                         />
                     );
@@ -103,7 +154,7 @@ export default class ClubLifeNavigator extends Component {
                                 }
                             }}
                             onGoForward={()=>{
-                                
+
                             }}
                         />
                     );
