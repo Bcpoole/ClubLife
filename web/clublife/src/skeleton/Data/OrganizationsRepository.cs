@@ -12,10 +12,9 @@ namespace skeleton.Data {
     public OrganizationsRepository() {
       var credential = Credentials.mongoCredential;
       var settings = new MongoClientSettings {
-        Credentials = new[]
-          {
-                    credential
-                },
+        Credentials = new[] {
+          credential
+        },
         Server = new MongoServerAddress(Credentials.mongoURL, Credentials.mongoPort)
       };
 
