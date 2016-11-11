@@ -3,59 +3,69 @@ using System.Collections.Generic;
 using System.Linq;
 using skeleton.Models;
 using MongoDB.Driver;
+using MongoDB.Bson;
 
-namespace skeleton.Data
-{
-    public class OrganizationsRepository : IOrganizationsRepository
-    {
-        private IMongoDatabase database;
+namespace skeleton.Data {
+  public class OrganizationsRepository : IOrganizationsRepository {
+    private IMongoDatabase database;
 
-        public OrganizationsRepository() {
-            var credential = Credentials.mongoCredential;
-            var settings = new MongoClientSettings {
-                Credentials = new[]
-                {
+    public OrganizationsRepository() {
+      var credential = Credentials.mongoCredential;
+      var settings = new MongoClientSettings {
+        Credentials = new[]
+          {
                     credential
                 },
-                Server = new MongoServerAddress(Credentials.mongoURL, Credentials.mongoPort)
-            };
+        Server = new MongoServerAddress(Credentials.mongoURL, Credentials.mongoPort)
+      };
 
-            var client = new MongoClient(settings);
+      var client = new MongoClient(settings);
 
-            database = client.GetDatabase("clublife-db"); 
-        }
-
-        public IEnumerable<Organization> GetAllOrganizations() {
-            return database.GetCollection<Organization>("organizations").AsQueryable();
-        }
-
-        public Organization GetOrganizationById(string id) {
-            var orgs = GetAllOrganizations();
-            return orgs.Where(x => x.Id.ToString() == id).FirstOrDefault();
-        }
-
-        public IEnumerable<Organization> FindOrganizationByName(string name) {
-            var orgs = GetAllOrganizations();
-            return orgs.Where(x => x.name.ToLower().Contains(name.ToLower()));
-        }
-
-        //TODO: Make day into an Enumerable
-        //TODO: clean up the "Organization Meeting Time" on Mongo then fix this function
-        public IEnumerable<Organization> FindOrganizationByDayAndTime(string day, string time = null) {
-            var orgs = GetAllOrganizations();
-
-            //Just by day of week
-            if (time == null) {
-                return orgs.Where(x => x.OrganizationMeetingDay.Contains(day));
-            } else { //day and time
-                var orgsOnDay = orgs.Where(x => x.OrganizationMeetingDay.Contains(day));
-                return orgsOnDay.Where(x => x.OrganizationMeetingTime.Contains(time));
-            }
-        }
-
-        public IEnumerable<Organization> FindOrganizationByTag(string tag) {
-            var orgs = database.GetCollection<Organization>("organizations").AsQueryable().ToList();
-            return orgs.Where(x => x.MainSummary.ToLower().Contains(tag.ToLower()));
-        }
+      database = client.GetDatabase("clublife-db");
     }
+
+    public IEnumerable<Organization> GetAllOrganizations() {
+      return database.GetCollection<Organization>("organizations").AsQueryable();
+    }
+
+    public Organization GetOrganizationById(ObjectId id) {
+      return GetAllOrganizations().Where(x => x.Id == id).FirstOrDefault();
+    }
+
+    public IEnumerable<Organization> FindOrganizationByName(string name) {
+      return GetAllOrganizations().Where(x => x.name.ToLower().Contains(name.ToLower()));
+    }
+
+    //TODO: Make day into an Enumerable
+    //TODO: clean up the "Organization Meeting Time" on Mongo then fix this function
+    public IEnumerable<Organization> FindOrganizationByDayAndTime(string day, string time = null) {
+      var orgs = GetAllOrganizations();
+
+      //Just by day of week
+      if (time == null) {
+        return orgs.Where(x => x.OrganizationMeetingDay.Contains(day));
+      } else { //day and time
+        var orgsOnDay = orgs.Where(x => x.OrganizationMeetingDay.Contains(day));
+        return orgsOnDay.Where(x => x.OrganizationMeetingTime.Contains(time));
+      }
+    }
+
+    public IEnumerable<Organization> FindOrganizationByTag(string tag) {
+      return GetAllOrganizations().Where(x => x.MainSummary.ToLower().Contains(tag.ToLower()));
+    }
+
+    public IEnumerable<Post> FindPostsByOrganization(ObjectId id) {
+      var postIds = GetOrganizationById(id).Posts;
+      return database.GetCollection<Post>("posts").AsQueryable().Where(x => postIds.Contains(x.Id));
+    }
+
+    public IEnumerable<Event> FindEventsByOrganization(ObjectId id) {
+      var eventIds = GetOrganizationById(id).Events;
+      return database.GetCollection<Event>("events").AsQueryable().Where(x => eventIds.Contains(x.Id));
+    }
+
+    public IEnumerable<Event> FindPublicEvents() {
+      return database.GetCollection<Event>("events").AsQueryable().Where(x => x.IsPublic);
+    }
+  }
 }
