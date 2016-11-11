@@ -50,7 +50,7 @@ namespace skeleton {
       // Add application services.
 
       services.AddSingleton<IOrganizationsRepository, OrganizationsRepository>();
-      services.AddSingleton<IUserRepository, UserRepository>();
+      services.AddSingleton<IUsersRepository, UsersRepository>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
