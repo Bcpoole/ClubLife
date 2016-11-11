@@ -1,8 +1,8 @@
 export class App {
   configureRouter(config, router) {
-    config.title = 'Aurelia';
+    config.title = 'ClubLife';
     config.map([
-      { route: '', name: 'welcome',      moduleId: 'welcome',      nav: true, title: 'Welcome' }
+      { route: '', name: 'welcome',      moduleId: 'welcome',      nav: false, title: 'Welcome' }
     ]);
 
     this.router = router;
