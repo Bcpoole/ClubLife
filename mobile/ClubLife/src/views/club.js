@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   TextInput,
   TouchableNativeFeedback,
   Image,
@@ -25,6 +26,7 @@ class Club extends Component {
     render() {
         var TouchableElement = TouchableNativeFeedback;
         var officer = true; // figure this out later
+        var member = false;
         
         var offOps = <Text></Text>;
         if (officer){
@@ -34,28 +36,52 @@ class Club extends Component {
                 </TouchableElement>;
         }
         
+        var memberOps =  <TouchableElement style = {styles.button} onPress = {() =>Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'This person wants to join club','please let me join, i love club.')}>
+                <View><Text>   Click to Join!</Text></View>
+            </TouchableElement>;
+        if (member){
+            memberOps = <Text></Text>;
+            
+        }
         
-        // Club 
+        // Club Variables:
+        
+        var picURL = 'https://images.collegiatelink.net/clink/images/f5b2dc13-7aab-4a95-ab24-adcfa884d90e57a54f72-e5a6-43f1-aa48-942c176ef3b2.png';
+        var name = 'ACM';
+        
         
         return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.box}>
-                <Image style = {styles.profilepic} source={require('./kk.jpeg')} />
+                
+                <Image source={{uri: picURL}} style={{flex:1, height: 375, width: 375}} />
+                
+                
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
-                    Krusty Krab Cooks
+                    {name}
                     </Text>
-                    <Text style = {styles.instructions}>  "We cook krabby patties with style"</Text>
-
-
+ 
                 </View>
                 
+                
+                
+                <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
+                <TouchableElement onPress={this.props.onGoClubList}>
+                    <View><Text style={styles.button}>Events</Text></View>
+                </TouchableElement>
+                <TouchableElement style = {styles.button} onPress = {this.props.onGoClubInfo}>
+                    <View><Text style = {styles.button}>Info</Text></View>
+                </TouchableElement>
+                {memberOps}
+                {offOps}
             </View>
-            <TouchableElement style = {styles.button} onPress = {() =>Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'This person wants to join club','please let me join, i love club.')}>
-                <View><Text>   Click to Join!</Text></View>
-            </TouchableElement>
+                
+                
+            </View>
+           
             
-            {offOps}
+
             
             <TouchableElement style = {styles.button} onPress = {this.props.onGoClubInfo}>
                 <View><Text style = {styles.welcome}>Info</Text></View>
@@ -70,12 +96,10 @@ class Club extends Component {
                 <Image style = {styles.edit} source={require('./pat.jpeg')} />
                 <Text style = {styles.instructions}> Patrick: Vote for me in tomorrow's elections!</Text>
             </View>
-            <Text style = {styles.welcome}>Events:</Text>
-            <Text style = {styles.instructions}>Fry Cook Olympics: Tues at 7:00 am</Text>
-            <Text style = {styles.instructions}>Next Meeting: Wed</Text>
+         
 
 
-        </View>
+        </ScrollView>
 
 
         );
@@ -115,6 +139,16 @@ const styles = StyleSheet.create({
       height: 100,
       width: 100
 
+  },
+    BottomBar: {
+      fontSize: 12,
+      color: 'black',
+      backgroundColor: 'skyblue',
+  },
+  bottomIcon: {
+      width: 25,
+      height: 25,
+      backgroundColor: 'skyblue',
   },
   pad: {
       justifyContent: 'center',
