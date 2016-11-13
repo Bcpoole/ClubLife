@@ -23,7 +23,7 @@ namespace skeleton.Controllers {
 
     // GET api/organizations/581b77c29534b37d50c51b6c
     [HttpGet("{id}")]
-    [Route("{id}", Name = "GetOrganizationItemByIdRoute")]
+    [Route("{id}")]
     public Organization Get(string id) {
       return Repo.GetOrganizationById(new ObjectId(id));
     }
