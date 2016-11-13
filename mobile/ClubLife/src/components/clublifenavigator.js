@@ -190,11 +190,16 @@ export default class ClubLifeNavigator extends Component {
                     );
                     break;
                     
-                case "ClubInfo":
+                case "clubInfo":
                     scene = (
                         <ClubInfo
-                        //TODO
-                        
+                            onGoClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    type: "club",
+                                    index: leIndex
+                                })
+                            }}
                         />
                     );
                     break;                    

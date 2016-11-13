@@ -14,7 +14,7 @@ import {
 
 
 //import TabNavigator from 'react-native-tab-navigator';
-//import Communications from 'react-native-communications';
+import Communications from 'react-native-communications';
 
 
 class Club extends Component {

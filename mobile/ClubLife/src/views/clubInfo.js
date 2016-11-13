@@ -37,7 +37,7 @@ class ClubInfo extends Component {
            
               <Text>{vals[i]}:  </Text>
              
-             // put actual vals here
+             
              
              
                </View>);
