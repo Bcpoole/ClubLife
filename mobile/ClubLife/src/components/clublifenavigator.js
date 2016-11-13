@@ -4,7 +4,7 @@ import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback } from 'reac
 
 import HomePage from '../views/HomePageView';
 import Signup from '../views/signup';
-var Login =require('../views/login');
+var Login = require('../views/login');
 import TestPage from '../views/testpage';
 import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
@@ -13,6 +13,7 @@ import Profile from '../views/profile';
 //import FindAClubResults from '../views/findaclubresults';
 //import FindAnEvent from '../views/findanevent';
 //import FindAnEventResults from '../views/findaneventresults';
+import AllViews from '../views/allviews.js';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -51,7 +52,6 @@ export default class ClubLifeNavigator extends Component {
                     );
                     break;
                 case "login":
-
                     scene = (
                         <Login
                             navigator={navigator}
@@ -182,6 +182,26 @@ export default class ClubLifeNavigator extends Component {
 
                     );
                     break;
+                case "allviews":
+                    //link to all views debug page
+                    scene = (
+                        <AllViews
+                            views={[{
+                                name: "login",
+                                pressCallback: ()=> {navigator.resetTo({type: 'login', index: 0});}
+                            }, {
+                                name: "signup",
+                                pressCallback: ()=> {navigator.resetTo({type: "signup", index: 0});}
+                            }, {
+                                name: "homepage",
+                                pressCallback: ()=> {navigator.resetTo({type: "homepage", index: 0});}
+                            }, {
+                                name: "findaclub",
+                                pressCallback: ()=> {navigator.resetTo({type: "findaclub", index: 0});}
+                            }]}
+                        />
+                    );
+                    break;
                 default:
                     //oh shi-
                     scene = (
@@ -239,7 +259,19 @@ var navbar = (
                 return button;
             },
             RightButton: (route, navigator, index, navState) => {
-                return (<Text>☃</Text>);
+                var button = "";
+                switch(route.type) {
+                    case "login":
+                         button = (
+                             <TouchableElement onPress={()=>{navigator.resetTo({type: "allviews", index: 0})}}><View><Text>ALLVIEWS</Text></View></TouchableElement>
+                         );
+                         break;
+                    default:
+                        button = (
+                            <Text>☃</Text>
+                        )
+                }
+                return button;
             },
             Title: (route, navigator, index, navState) => {
                 return (<Text style={{flex: 1, justifyContent: 'center'}}>ClubLife</Text>);
