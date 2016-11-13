@@ -14,6 +14,9 @@ import Profile from '../views/profile';
 //import FindAnEvent from '../views/findanevent';
 //import FindAnEventResults from '../views/findaneventresults';
 import AllViews from '../views/allviews.js';
+import EditClub from '../views/EditClub';
+import ClubPage from '../views/clubPage';
+import ClubInfo from '../views/clubInfo';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -99,6 +102,13 @@ export default class ClubLifeNavigator extends Component {
                                     index: leIndsex
                                 })
                             }}
+                            onGoClubList={()=>{
+                                const leIndsex = route.index + 1;
+                                navigator.push({
+                                    "type": "clubPage",
+                                    index: leIndsex
+                                })
+                            }}
                             onGoFindAClub={()=>{
                                 const leIndsex = route.index + 1;
                                 navigator.push({
@@ -112,8 +122,22 @@ export default class ClubLifeNavigator extends Component {
                 case "club":
                     scene = (
                         <Club
-
+                            onGoEditClub={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "EditClub",
+                                    index: leIndex,
+                                })
+                            }}
+                            onGoClubInfo={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "clubInfo",
+                                    index: leIndex,
+                                })
+                            }}
                         />
+                      
                     ); //TODO later: integrate props in meaningful fashion
                     break;
                 case "profile":
@@ -202,6 +226,52 @@ export default class ClubLifeNavigator extends Component {
                         />
                     );
                     break;
+                case "clubPage":
+                    scene = (
+                        <ClubPage
+                            navigator = {navigator}
+                            onGoClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    type: "club",
+                                    index: leIndex
+                                })
+                            }}
+                        />
+                        
+                    );
+                    break;  
+                    
+                case "EditClub":
+                    scene = (
+                        <EditClub
+                            navigator = {navigator}
+                            onGoClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    type: "club",
+                                    index: leIndex
+                                })
+                            }}
+                        />
+                        
+                    );
+                    break;
+                    
+                case "clubInfo":
+                    scene = (
+                        <ClubInfo
+                            onGoClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    type: "club",
+                                    index: leIndex
+                                })
+                            }}
+                        />
+                    );
+                    break;     
+                
                 default:
                     //oh shi-
                     scene = (
