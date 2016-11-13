@@ -55,7 +55,7 @@ export default class ClubLifeNavigator extends Component {
                     scene = (
                         <Login
                             navigator={navigator}
-                            callBackOnSuccessfulLogin={(userId)=>{
+                            callbackOnSuccessfulLogin={(userId)=>{
                                 const leIndex = route.index+1;
                                 this.setState({
                                     userId: userId
