@@ -129,5 +129,32 @@ namespace skeleton.Models {
           throw new System.Exception("Invalid day index. Index must be between 0-6");
       }
     }
+
+    public string GetMeetingTime() {
+      string key = MeetingTime[0].Key;
+      var val = MeetingTime[0].Value;
+
+      //Commented out until we decide to add in calendar search feature or not
+      //      if (key == "Starts") {
+      //        // {"Starts": {"Hours": 0-23, "Minutes": 0-59}}
+      //      } else if (key == "IntervalStarts") {
+      //        // {"IntervalStarts": {"Hours": m, "Minutes": n}}
+      //      } else if (key == "ResultsByDay") {
+      ////        {
+      ////          "ResultsByDay": {
+      ////            # this nested object has keys equal to days 0,1,2,3,4,5,6, and the values are like nested results objects
+      ////            # so e.g.
+      ////            2: { "IntervalStarts": { "Hours": 18, "Minutes": 30}, "IntervalEnds": { "Hours": 20, "Minutes": 0} },
+      ////            5: { "Starts": { "Hours": 16, "Minutes": 20} }
+      ////          }
+      ////        }
+      if (key == "Starts" || key == "IntervalStarts" || key == "ResultsByDay") {
+        return OrganizationMeetingDay;
+      } else if (key == "Varies") {
+        return "Varies";
+      } else {
+        return "TBD";
+      }
+    }
   }
 }
