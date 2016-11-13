@@ -18,6 +18,7 @@ module.exports = React.createClass({
  render() {
 
     var TouchableElement = TouchableNativeFeedback;
+    //TODO: successful login callback has a static user ID of "Glorybound". We'll eventually do some hacky user auth stuff and pass a real value
 
 
     return (
@@ -28,6 +29,7 @@ module.exports = React.createClass({
         <TextInput
             style={styles.textEdit}
             onChangeText={(moreText) => this.setState({moreText})}
+            keyboardType="email-address"
             placeholder="email">
         </TextInput>
           <TextInput
@@ -35,8 +37,11 @@ module.exports = React.createClass({
             onChangeText={(moreText) => this.setState({moreText})}
             placeholder="password">
         </TextInput>
-        <TouchableElement style = {styles.button} onPress = {this.props.onSuccessfulLogin}>
+        <TouchableElement style = {styles.button} onPress = {() => {this.props.callbackOnSuccessfulLogin("Glorybound")}}>
             <View><Text>Submit</Text></View>
+        </TouchableElement>
+        <TouchableElement style = {styles.button} onPress = {this.props.onGoSignup}>
+            <View><Text>Not currently registered? Sign up!</Text></View>
         </TouchableElement>
 
       </View>

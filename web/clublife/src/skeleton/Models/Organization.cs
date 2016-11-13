@@ -1,5 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Collections.Generic;
 
 namespace skeleton.Models
 {
@@ -56,5 +57,18 @@ namespace skeleton.Models
         public string name { get; set; }
         [BsonElement("President Name")]
         public string PresidentName { get; set; }
-    }
+
+        [BsonElement("leaders")]
+        public string[] Leaders { get; set; }
+        [BsonElement("officers")]
+        public string[] Officers { get; set; }
+        [BsonElement("members")]
+        public string[] Members { get; set; }
+        [BsonElement("events")]
+        public List<ObjectId> Events { get; set; }
+        [BsonElement("posts")]
+        public List<ObjectId> Posts { get; set; }
+        [BsonElement("pendingRequests")]
+        public List<ObjectId> PendingRequests { get; set; }
+  }
 }
