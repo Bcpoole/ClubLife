@@ -74,5 +74,60 @@ namespace skeleton.Models {
     public dynamic MeetingDay { get; set; }
     [BsonElement("CleanTimeResults")]
     public dynamic MeetingTime { get; set; }
+
+    public string GetMeetingDay() {
+      string key = MeetingDay[0].Key;
+      var val = MeetingDay[0].Value;
+
+      if (key == "Day") {
+        return GetDayByIndex(val);
+      } else if (key == "Days") {
+        var days = "";
+        foreach (var day in val) {
+          days += day + ", ";
+        }
+        return days.Substring(0, days.Length - 2);
+      } else if (key == "DatesOfMonth") {
+        string suffix = "";
+
+        char suffixVal = val.ToString().Last();
+        if (suffixVal == '1') {
+          suffix = "st";
+        } else if (suffixVal == '2') {
+          suffix = "nd";
+        } else if (suffixVal == '3') {
+          suffix = "rd";
+        } else {
+          suffix = "th";
+        }
+
+        return $"{val}{suffix} day of each each month";
+      } else if (key == "Varies" || key == "DaysOfMonth" || key == "DaysOfMonthFrequency") {
+        return "Varies";
+      } else { //TBD, a date, or worthless data
+        return "TBD";
+      }
+    }
+
+    private string GetDayByIndex(int idx) {
+      switch (idx) {
+        case 0:
+          return "Sun";
+        case 1:
+          return "Mon";
+        case 2:
+          return "Tue";
+        case 3:
+          return "Wed";
+        case 4:
+          return "Thu";
+        case 5:
+          return "Fri";
+        case 6:
+          return "Sat";
+        default:
+          throw new System.Exception("Invalid day index. Index must be between 0-6");
+      }
+    }
   }
 }
