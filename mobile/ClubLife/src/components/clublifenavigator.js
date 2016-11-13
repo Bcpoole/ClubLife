@@ -7,6 +7,8 @@ import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
 import Profile from '../views/profile';
 import EditClub from '../views/EditClub';
+import ClubPage from '../views/clubPage';
+import ClubInfo from '../views/clubInfo';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -70,13 +72,14 @@ export default class ClubLifeNavigator extends Component {
                                     index: leIndsex
                                 })
                             }}
-                             onGoClub={()=>{
+                             onGoClubList={()=>{
                                 const leIndsex = route.index + 1;
                                 navigator.push({
-                                    "type": "club",
+                                    "type": "clubPage",
                                     index: leIndsex
                                 })
                             }}
+                            
                         />
                     );
                     break;
@@ -87,6 +90,13 @@ export default class ClubLifeNavigator extends Component {
                                 const leIndex = route.index+1;
                                 navigator.push({
                                     "type": "EditClub",
+                                    index: leIndex,
+                                })
+                            }}
+                            onGoClubInfo={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "clubInfo",
                                     index: leIndex,
                                 })
                             }}
@@ -147,6 +157,22 @@ export default class ClubLifeNavigator extends Component {
 
                     );
                     break;
+                
+                case "clubPage":
+                    scene = (
+                        <ClubPage
+                            navigator = {navigator}
+                            onGoClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    type: "club",
+                                    index: leIndex
+                                })
+                            }}
+                        />
+                        
+                    );
+                    break;  
                     
                 case "EditClub":
                     scene = (
@@ -163,6 +189,18 @@ export default class ClubLifeNavigator extends Component {
                         
                     );
                     break;
+                    
+                case "ClubInfo":
+                    scene = (
+                        <ClubInfo
+                        //TODO
+                        
+                        />
+                    );
+                    break;                    
+                    
+                 
+                      
                     
                 default:
                     //oh shi-

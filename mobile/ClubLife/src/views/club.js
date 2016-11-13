@@ -34,6 +34,9 @@ class Club extends Component {
                 </TouchableElement>;
         }
         
+        
+        // Club 
+        
         return (
         <View style={styles.container}>
             <View style={styles.box}>
@@ -53,16 +56,10 @@ class Club extends Component {
             </TouchableElement>
             
             {offOps}
-            <Text style = {styles.welcome}>Info:</Text>
-            <View style={[styles.box, styles.pad]}>
-                <Text style = {styles.instructions}>President: SpongeBob </Text>
-                <TouchableElement style = {styles.button} onPress={() => Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'hey','test im so tiredzzz')}> 
-
-                    <View><Image style = {styles.edit} source={require('./contact.png')} /></View>
-                </TouchableElement>
-            </View>
-            <Text style = {styles.instructions}>Meeting Times: MWF at 7:00 am</Text>
-            <Text style = {styles.instructions}>Meeting Location: Krusty Krab </Text>
+            
+            <TouchableElement style = {styles.button} onPress = {this.props.onGoClubInfo}>
+                <View><Text style = {styles.welcome}>Info</Text></View>
+            </TouchableElement>
 
             <Text style = {styles.welcome}>Messages:</Text>
             <View style = {[styles.box,  styles.message]}>

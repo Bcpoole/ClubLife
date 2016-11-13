@@ -18,7 +18,7 @@ import {
 //import Communications from 'react-native-communications';
 
 
-class EditClub extends Component {
+class ClubInfo extends Component {
     constructor(props){
         super(props);
         this.state = {selectedTab: 'home'};
@@ -36,10 +36,10 @@ class EditClub extends Component {
               returnValue.push(<View style = {styles.boxSpace}>
            
               <Text>{vals[i]}:  </Text>
-              <TextInput
-               style={styles.textEdit}>
-            
-               </TextInput>
+             
+             // put actual vals here
+             
+             
                </View>);
           }
           return returnValue;
@@ -70,7 +70,7 @@ class EditClub extends Component {
 
 }
 
-   module.exports = EditClub;
+   module.exports = ClubInfo;
 
 
 
