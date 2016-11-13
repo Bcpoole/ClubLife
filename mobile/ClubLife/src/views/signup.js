@@ -63,6 +63,7 @@ class Signup extends Component {
                     style={{height: 40}}
                     onChangeText={(text)=>{this.setState({email: text})}}
                     value={this.state.email}
+                    keyboardType={"email-address"}
                 />
                 <Text>Password:</Text>
                 <TextInput
