@@ -29,6 +29,7 @@ module.exports = React.createClass({
         <TextInput
             style={styles.textEdit}
             onChangeText={(moreText) => this.setState({moreText})}
+            keyboardType="email-address"
             placeholder="email">
         </TextInput>
           <TextInput
