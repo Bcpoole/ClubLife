@@ -12,6 +12,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+
+//import TabNavigator from 'react-native-tab-navigator';
+import Communications from 'react-native-communications';
+
+
 class Club extends Component {
     constructor(props){
         super(props);
@@ -19,6 +24,19 @@ class Club extends Component {
     }
     render() {
         var TouchableElement = TouchableNativeFeedback;
+        var officer = true; // figure this out later
+        
+        var offOps = <Text></Text>;
+        if (officer){
+            offOps = 
+                <TouchableElement style = {styles.button} onPress = {this.props.onGoEditClub}>
+                    <View><Text>   Edit Club Info</Text></View>
+                </TouchableElement>;
+        }
+        
+        
+        // Club 
+        
         return (
         <View style={styles.container}>
             <View style={styles.box}>
@@ -31,21 +49,17 @@ class Club extends Component {
 
 
                 </View>
-
+                
             </View>
             <TouchableElement style = {styles.button} onPress = {() =>Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'This person wants to join club','please let me join, i love club.')}>
                 <View><Text>   Click to Join!</Text></View>
             </TouchableElement>
-            <Text style = {styles.welcome}>Info:</Text>
-            <View style={[styles.box, styles.pad]}>
-                <Text style = {styles.instructions}>President: SpongeBob </Text>
-                <TouchableElement style = {styles.button} onPress={() => Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'hey','test im so tiredzzz')}> 
-
-                    <View><Image style = {styles.edit} source={require('./contact.png')} /></View>
-                </TouchableElement>
-            </View>
-            <Text style = {styles.instructions}>Meeting Times: MWF at 7:00 am</Text>
-            <Text style = {styles.instructions}>Meeting Location: Krusty Krab </Text>
+            
+            {offOps}
+            
+            <TouchableElement style = {styles.button} onPress = {this.props.onGoClubInfo}>
+                <View><Text style = {styles.welcome}>Info</Text></View>
+            </TouchableElement>
 
             <Text style = {styles.welcome}>Messages:</Text>
             <View style = {[styles.box,  styles.message]}>

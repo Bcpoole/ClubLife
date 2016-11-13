@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback } from 'react-native';
-
-
 import HomePage from '../views/HomePageView';
-import Signup from '../views/signup';
-var Login = require('../views/login');
+var Login =require('../views/login');
 import TestPage from '../views/testpage';
 import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
 import Profile from '../views/profile';
-//import FindAClub from '../views/findaclub';
-//import FindAClubResults from '../views/findaclubresults';
-//import FindAnEvent from '../views/findanevent';
-//import FindAnEventResults from '../views/findaneventresults';
-import AllViews from '../views/allviews.js';
+import EditClub from '../views/EditClub';
+import ClubPage from '../views/clubPage';
+import ClubInfo from '../views/clubInfo';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -22,7 +17,7 @@ export default class ClubLifeNavigator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: ""
+            user: ""
         };
     }
 
@@ -37,39 +32,17 @@ export default class ClubLifeNavigator extends Component {
         var renderScene = (route, navigator) => {
             var scene = "";
             switch(route.type) {
-                case "signup":
-                    scene = (
-                        <Signup
-                            navigator={navigator}
-                            onSignup={()=>{
-                                const leIndex = route.index+1;
-                                navigator.push({
-                                    "type": "login",
-                                    index: leIndex
-                                });
-                            }}
-                        />
-                    );
-                    break;
                 case "login":
+
                     scene = (
                         <Login
                             navigator={navigator}
-                            callbackOnSuccessfulLogin={(userId)=>{
+                            onSuccessfulLogin={()=>{
                                 const leIndex = route.index+1;
-                                this.setState({
-                                    userId: userId
-                                });
                                 navigator.push({
                                     "type": "homepage",
-                                    index: leIndex
-                                });
-                            }}
-                            onGoSignup={()=>{
-                                const leIndex = route.index+1;
-                                navigator.push({
-                                    "type": "signup",
-                                    index: leIndex
+                                    index: leIndex,
+                                    userId: "1"
                                 })
                             }}
                         />
@@ -82,7 +55,7 @@ export default class ClubLifeNavigator extends Component {
                                 const leIndex = route.index+1;
                                 navigator.push({
                                     "type": "homepage",
-                                    index: leIndex
+                                    index: leIndex,
                                 })
                             }}
                             onGoProfile={()=>{
@@ -92,47 +65,49 @@ export default class ClubLifeNavigator extends Component {
                                     index: leIndex
                                 })
                             }}
-                            onGoFindAnEvent={()=>{
+                            onGoEvents={()=>{
                                 const leIndsex = route.index + 1;
                                 navigator.push({
-                                    "type": "findanevent",
+                                    "type": "testpage",
                                     index: leIndsex
                                 })
                             }}
-                            onGoFindAClub={()=>{
+                             onGoClubList={()=>{
                                 const leIndsex = route.index + 1;
                                 navigator.push({
-                                    "type": "findaclub",
+                                    "type": "clubPage",
                                     index: leIndsex
                                 })
                             }}
+                            
                         />
                     );
                     break;
                 case "club":
                     scene = (
                         <Club
-
+                            onGoEditClub={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "EditClub",
+                                    index: leIndex,
+                                })
+                            }}
+                            onGoClubInfo={()=>{
+                                const leIndex = route.index+1;
+                                navigator.push({
+                                    "type": "clubInfo",
+                                    index: leIndex,
+                                })
+                            }}
                         />
                     ); //TODO later: integrate props in meaningful fashion
                     break;
+             
+                
                 case "profile":
                     scene = (
                         <Profile
-
-                        />
-                    );
-                    break;
-                case "findaclub":
-                    scene = (
-                        <FindAClub
-
-                        />
-                    );
-                    break;
-                case "findanevent":
-                    scene = (
-                        <FindAnEvent
 
                         />
                     );
@@ -154,7 +129,7 @@ export default class ClubLifeNavigator extends Component {
                                 }
                             }}
                             onGoForward={()=>{
-
+                                
                             }}
                         />
                     );
@@ -182,26 +157,56 @@ export default class ClubLifeNavigator extends Component {
 
                     );
                     break;
-                case "allviews":
-                    //link to all views debug page
+                
+                case "clubPage":
                     scene = (
-                        <AllViews
-                            views={[{
-                                name: "login",
-                                pressCallback: ()=> {navigator.resetTo({type: 'login', index: 0});}
-                            }, {
-                                name: "signup",
-                                pressCallback: ()=> {navigator.resetTo({type: "signup", index: 0});}
-                            }, {
-                                name: "homepage",
-                                pressCallback: ()=> {navigator.resetTo({type: "homepage", index: 0});}
-                            }, {
-                                name: "findaclub",
-                                pressCallback: ()=> {navigator.resetTo({type: "findaclub", index: 0});}
-                            }]}
+                        <ClubPage
+                            navigator = {navigator}
+                            onGoClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    type: "club",
+                                    index: leIndex
+                                })
+                            }}
                         />
+                        
+                    );
+                    break;  
+                    
+                case "EditClub":
+                    scene = (
+                        <EditClub
+                            navigator = {navigator}
+                            onGoClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    type: "club",
+                                    index: leIndex
+                                })
+                            }}
+                        />
+                        
                     );
                     break;
+                    
+                case "clubInfo":
+                    scene = (
+                        <ClubInfo
+                            onGoClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    type: "club",
+                                    index: leIndex
+                                })
+                            }}
+                        />
+                    );
+                    break;                    
+                    
+                 
+                      
+                    
                 default:
                     //oh shi-
                     scene = (
@@ -259,19 +264,7 @@ var navbar = (
                 return button;
             },
             RightButton: (route, navigator, index, navState) => {
-                var button = "";
-                switch(route.type) {
-                    case "login":
-                         button = (
-                             <TouchableElement onPress={()=>{navigator.resetTo({type: "allviews", index: 0})}}><View><Text>ALLVIEWS</Text></View></TouchableElement>
-                         );
-                         break;
-                    default:
-                        button = (
-                            <Text>☃</Text>
-                        )
-                }
-                return button;
+                return (<Text>☃</Text>);
             },
             Title: (route, navigator, index, navState) => {
                 return (<Text style={{flex: 1, justifyContent: 'center'}}>ClubLife</Text>);

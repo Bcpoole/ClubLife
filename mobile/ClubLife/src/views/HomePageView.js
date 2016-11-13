@@ -28,7 +28,7 @@ export default class HomePage extends Component {
             </View>
             <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
                 <TouchableHighlight onPress={this.props.onGoHome}><Text style={styles.BottomBar}>Home</Text></TouchableHighlight>
-                <TouchableHighlight><Text style={styles.BottomBar}>My Clubs</Text></TouchableHighlight>
+                <TouchableHighlight onPress={this.props.onGoClubList}><Text style={styles.BottomBar}>My Clubs</Text></TouchableHighlight>
                 <TouchableHighlight><Text style={styles.BottomBar}>Search</Text></TouchableHighlight>
                 <TouchableHighlight onPress={this.props.onGoEvents}><Text style={styles.BottomBar}>My Events</Text></TouchableHighlight>
                 <TouchableHighlight onPress={this.props.onGoProfile}><Text style={styles.BottomBar}>My Profile</Text></TouchableHighlight>
