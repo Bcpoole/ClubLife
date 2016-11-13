@@ -9,7 +9,7 @@ import TestPage from '../views/testpage';
 import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
 import Profile from '../views/profile';
-//import FindAClub from '../views/findaclub';
+import FindAClub from '../views/findaclub';
 //import FindAClubResults from '../views/findaclubresults';
 //import FindAnEvent from '../views/findanevent';
 //import FindAnEventResults from '../views/findaneventresults';
