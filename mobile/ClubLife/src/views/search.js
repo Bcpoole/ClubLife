@@ -20,31 +20,52 @@ class Search extends Component {
     }
     render() {
         var TouchableElement = TouchableNativeFeedback;
-        var xyz = [];
+        var xyz = "hi";
                 
         function getJSON() {
-            var xyz = [];
-            return fetch('http://skeleton20161103012840.azurewebsites.net/api/organizations/')
+            xyz = "bo";           
+            return fetch('http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name=machinery')
             //.then((response) => response.text())
             .then((responseText) => {
                 
-                xyz = responseText;
-                return JSON.stringify(xyz);
+                //xyz = responseText;
+                //console.log(JSON.stringify(responseText));
+                //console.log(responseText.getJSONObject("id").getString("presidentEmail"));
+                //var json = JSON.parse(responseText);
+                //return responseText.getJSONObject("id").getString("presidentEmail");
+                //xyz = "yay";
+                
+                //return "yay";
+                //return JSON.stringify(xyz);
                 
             })
             .catch((error) => {
                 xyz = "boo";
-                return "blah";
+                
             });
+            
         }
-       console.log(JSON.stringify(xyz));
-       console.log(JSON.stringify(getJSON()));
+        
+        var data = '{"name":"sasha"}';
+        var json = JSON.parse(data);
+        console.log(json.name);
+        
+        async function something(){
+            const blah = await getJSON();
+            console.log(blah);
+            return JSON.stringify(blah);
+            
+        }
+      // console.log(JSON.stringify(xyz));
+       //getJSON();
+       //something();
+      // console.log(JSON.stringify(getJSON()));
        //var hey = fetch('https://facebook.github.io/react-native/movies.json');
         
         return (
             
             <View style={styles.container}>
-                <Text>Hey {JSON.stringify(xyz)}</Text>
+                <Text>Hey {something()} </Text>
             
             </View>
         

@@ -1,5 +1,5 @@
 
- 
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -7,13 +7,15 @@ import {
   Text,
   View,
   TextInput,
-  TouchableNativeFeedback, 
+  TouchableNativeFeedback,
   Image,
-  TouchableOpacity, 
+  TouchableOpacity,
 } from 'react-native';
+
 
 //import TabNavigator from 'react-native-tab-navigator';
 //import Communications from 'react-native-communications';
+
 
 class Club extends Component {
     constructor(props){
@@ -22,6 +24,16 @@ class Club extends Component {
     }
     render() {
         var TouchableElement = TouchableNativeFeedback;
+        var officer = true; // figure this out later
+        
+        var offOps = <Text></Text>;
+        if (officer){
+            offOps = 
+                <TouchableElement style = {styles.button} onPress = {this.props.onGoEditClub}>
+                    <View><Text>   Edit Club Info</Text></View>
+                </TouchableElement>;
+        }
+        
         return (
         <View style={styles.container}>
             <View style={styles.box}>
@@ -31,25 +43,27 @@ class Club extends Component {
                     Krusty Krab Cooks
                     </Text>
                     <Text style = {styles.instructions}>  "We cook krabby patties with style"</Text>
+
+
+                </View>
                 
-                
-                </View>         
-            
             </View>
             <TouchableElement style = {styles.button} onPress = {() =>Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'This person wants to join club','please let me join, i love club.')}>
                 <View><Text>   Click to Join!</Text></View>
             </TouchableElement>
+            
+            {offOps}
             <Text style = {styles.welcome}>Info:</Text>
             <View style={[styles.box, styles.pad]}>
                 <Text style = {styles.instructions}>President: SpongeBob </Text>
-                <TouchableElement style = {styles.button} onPress={() => Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'hey','test im so tired')}> 
+                <TouchableElement style = {styles.button} onPress={() => Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'hey','test im so tiredzzz')}> 
 
                     <View><Image style = {styles.edit} source={require('./contact.png')} /></View>
                 </TouchableElement>
-            </View>       
-            <Text style = {styles.instructions}>Meeting Times: MWF at 7:00 am</Text>       
+            </View>
+            <Text style = {styles.instructions}>Meeting Times: MWF at 7:00 am</Text>
             <Text style = {styles.instructions}>Meeting Location: Krusty Krab </Text>
-            
+
             <Text style = {styles.welcome}>Messages:</Text>
             <View style = {[styles.box,  styles.message]}>
                 <Image style = {styles.edit} source={require('./krab.png')} />
@@ -60,18 +74,18 @@ class Club extends Component {
                 <Text style = {styles.instructions}> Patrick: Vote for me in tomorrow's elections!</Text>
             </View>
             <Text style = {styles.welcome}>Events:</Text>
-            <Text style = {styles.instructions}>Fry Cook Olympics: Tues at 7:00 am</Text>       
+            <Text style = {styles.instructions}>Fry Cook Olympics: Tues at 7:00 am</Text>
             <Text style = {styles.instructions}>Next Meeting: Wed</Text>
-         
-                                   
+
+
         </View>
-        
- 
+
+
         );
         }
- 
-  
-  
+
+
+
 }
 
    module.exports = Club;
@@ -98,17 +112,17 @@ const styles = StyleSheet.create({
   button: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,  
+    marginBottom: 5,
   },
   profilepic: {
       height: 100,
       width: 100
-      
+
   },
   pad: {
       justifyContent: 'center',
       alignItems: 'center',
-      
+
   },
   message: {
       borderWidth: 1,
@@ -116,27 +130,23 @@ const styles = StyleSheet.create({
   edit: {
       height: 25,
       width: 25,
-      
+
   },
   textEdit: {
-    height: 40, 
+    height: 40,
     width: 200,
-    borderColor: 'grey', 
+    borderColor: 'grey',
     backgroundColor: 'white',
     borderWidth: 1
   },
   box: {
-      
+
       flexDirection: 'row',
       flexWrap: 'wrap'
-      
+
   },
   longBox: {
       height: 125
-      
+
   }
 });
-
-
-
- 

@@ -24,14 +24,15 @@ namespace skeleton.Controllers
             return Repo.GetAllOrganizations();
         }
 
-        // GET api/organizations/2
+        // GET api/organizations/57edc4179534b37d50c50d17
         [HttpGet("{id}")]
         [Route("{id}", Name = "GetOrganizationItemByIdRoute")]
         public Organization Get(string id)
         {
             return Repo.GetOrganizationById(id);
         }
-   
+
+        // GET api/organizations/name?name=japan
         [Route("name")]
         public IActionResult GetOrganizationByName(string name) {
             var orgs = Repo.FindOrganizationByName(name);
@@ -41,6 +42,7 @@ namespace skeleton.Controllers
             return Ok(orgs);
         }
 
+        // TODO: look at Jonthan's Cleandate proprty, add that to the model, and do fancy stuff
         [Route("meetingTime")]
         public IActionResult GetOrganizationByMeetingTime(string day, string time) {
             var orgs = Repo.FindOrganizationByDayAndTime(day, time);
@@ -50,6 +52,7 @@ namespace skeleton.Controllers
             return Ok(orgs);
         }
 
+        // GET api/organizations/tag?tag=computer
         [Route("tag")]
         public IActionResult GetOrganizationByTag(string tag) {
             var orgs= Repo.FindOrganizationByTag(tag);
