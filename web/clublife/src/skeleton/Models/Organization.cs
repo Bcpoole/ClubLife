@@ -70,14 +70,30 @@ namespace skeleton.Models {
     [BsonElement("pendingRequests")]
     public List<ObjectId> PendingRequests { get; set; }
 
+    private dynamic meetingDay;
     [BsonElement("CleanDayResults")]
-    public dynamic MeetingDay { get; set; }
-    [BsonElement("CleanTimeResults")]
-    public dynamic MeetingTime { get; set; }
+    public dynamic MeetingDay {
+      get {
+        return GetMeetingDay();
+      } set {
+        meetingDay = value;
+      }
+    }
 
-    public string GetMeetingDay() {
-      string key = MeetingDay[0].Key;
-      var val = MeetingDay[0].Value;
+    private dynamic meetingTime;
+    [BsonElement("CleanTimeResults")]
+    public dynamic MeetingTime {
+      get {
+        return GetMeetingTime();
+      }
+      set {
+        meetingTime = value;
+      }
+    }
+
+    private string GetMeetingDay() {
+      string key = meetingDay[0].Key;
+      var val = meetingDay[0].Value;
 
       if (key == "Day") {
         return GetDayByIndex(val);
