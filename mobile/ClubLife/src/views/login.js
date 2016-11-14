@@ -84,7 +84,7 @@ export default class Login extends Component {
     render() {
 
         var TouchableElement = TouchableNativeFeedback;
-        //TODO: successful login callback has a static user ID of "Glorybound". We'll eventually do some hacky user auth stuff and pass a real value
+        //TODO: successful login callback has a static user ID of "bcpoole@crimson.ua.edu". We'll eventually do some hacky user auth stuff and pass a real value
 
         var authenticationStatus = '';
         if(this.state.authenticated) {
