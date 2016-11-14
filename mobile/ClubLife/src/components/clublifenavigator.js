@@ -17,6 +17,7 @@ import AllViews from '../views/allviews.js';
 import EditClub from '../views/EditClub';
 import ClubPage from '../views/clubPage';
 import ClubInfo from '../views/clubInfo';
+import EditProfile from '../views/editProfile';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -114,7 +115,14 @@ export default class ClubLifeNavigator extends Component {
                                 navigator.push({
                                     "type": "findaclub",
                                     index: leIndsex
-                                })
+                                });
+                            }}
+                            onGoEvents={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    "type": "testpage",
+                                    index: leIndex
+                                });
                             }}
                         />
                     );
@@ -137,13 +145,30 @@ export default class ClubLifeNavigator extends Component {
                                 })
                             }}
                         />
-                      
+
                     ); //TODO later: integrate props in meaningful fashion
                     break;
                 case "profile":
                     scene = (
                         <Profile
-
+                            onGoEditProfile={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    "type": "editProfile",
+                                    index: leIndex
+                                })
+                            }}
+                        />
+                    );
+                    break;
+                case "editProfile":
+                    scene = (
+                        <EditProfile
+                            onGoProfile={()=>{
+                                if(route.index > 0) {
+                                    navigator.pop();
+                                }
+                            }}
                         />
                     );
                     break;
@@ -238,10 +263,10 @@ export default class ClubLifeNavigator extends Component {
                                 })
                             }}
                         />
-                        
+
                     );
-                    break;  
-                    
+                    break;
+
                 case "EditClub":
                     scene = (
                         <EditClub
@@ -254,10 +279,10 @@ export default class ClubLifeNavigator extends Component {
                                 })
                             }}
                         />
-                        
+
                     );
                     break;
-                    
+
                 case "clubInfo":
                     scene = (
                         <ClubInfo
@@ -270,8 +295,8 @@ export default class ClubLifeNavigator extends Component {
                             }}
                         />
                     );
-                    break;     
-                
+                    break;
+
                 default:
                     //oh shi-
                     scene = (
