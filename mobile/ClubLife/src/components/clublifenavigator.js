@@ -6,6 +6,7 @@ import TestPage from '../views/testpage';
 import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
 import Profile from '../views/profile';
+import EditProfile from '../views/editProfile';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -63,10 +64,10 @@ export default class ClubLifeNavigator extends Component {
                                 })
                             }}
                             onGoEvents={()=>{
-                                const leIndsex = route.index + 1;
+                                const leIndex = route.index + 1;
                                 navigator.push({
                                     "type": "testpage",
-                                    index: leIndsex
+                                    index: leIndex
                                 })
                             }}
                         />
@@ -82,7 +83,24 @@ export default class ClubLifeNavigator extends Component {
                 case "profile":
                     scene = (
                         <Profile
-
+                            onGoEditProfile={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    "type": "editProfile",
+                                    index: leIndex
+                                })
+                            }}
+                        />
+                    );
+                    break;
+                case "editProfile":
+                    scene = (
+                        <EditProfile
+                            onGoProfile={()=>{
+                                if(route.index > 0) {
+                                    navigator.pop();
+                                }
+                            }}
                         />
                     );
                     break;
