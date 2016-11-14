@@ -64,12 +64,8 @@ export default class FindAnEvent extends Component {
                     {data.map(event => {
                         return (
                             <View key={event.name} style={{flex: 1, flexDirection: 'row'}}>
-                                <Image
-                                    source={{uri: event.img || defaultImg}}
-                                    style={{height: 40, width: 40}}
-                                />
                                 <Text>
-                                    {event.name+" PresidentName: "+event.presidentName}
+                                    {event.name+" EventTime: "+event.startTime}
                                 </Text>
                             </View>
                         );
@@ -99,7 +95,7 @@ export default class FindAnEvent extends Component {
     }
 
     componentDidMount() {
-        const url = "http://skeleton20161103012840.azurewebsites.net/api/api/organizations/publicEvents";
+        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/publicEvents";
         fetch(url)
             .then(res=>res.json())
             .then(json => {
