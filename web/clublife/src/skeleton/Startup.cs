@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using skeleton.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace skeleton {
   public class Startup {
@@ -45,6 +47,10 @@ namespace skeleton {
 
       services.AddApplicationInsightsTelemetry(Configuration);
 
+      services.AddAuthentication(options => {
+        options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+      });
+
       services.AddMvc();
 
       // Add application services.
@@ -67,7 +73,17 @@ namespace skeleton {
 
       app.UseStaticFiles();
 
-      // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+      app.UseCookieAuthentication(new CookieAuthenticationOptions {
+        AutomaticAuthenticate = true,
+        AutomaticChallenge = true,
+        LoginPath = new PathString("/signin"),
+        LogoutPath = new PathString("/signout")
+      });
+
+      app.UseGoogleAuthentication(new GoogleOptions {
+        ClientId = Credentials.GoogleClientId,
+        ClientSecret = Credentials.ClientSecret
+      });
 
       app.UseMvc(routes => {
         routes.MapRoute(

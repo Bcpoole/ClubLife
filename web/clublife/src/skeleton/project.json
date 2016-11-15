@@ -38,7 +38,8 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "MongoDB.Driver": "2.3.0"
+    "MongoDB.Driver": "2.3.0",
+    "Microsoft.AspNetCore.Authentication.Google": "1.0.0"
   },
   "tools": {
     "Microsoft.AspNetCore.Razor.Tools": {
