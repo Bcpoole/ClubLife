@@ -9,7 +9,8 @@ import {
   TextInput,
   TouchableNativeFeedback, 
   Image,
-  TouchableOpacity, 
+  TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 
 
@@ -34,9 +35,9 @@ class Profile extends Component {
                 </View>         
             
             </View>
-            <TouchableElement style = {styles.button} onPress = {()=>{alert("u")}}>
+            <TouchableHighlight onPress={this.props.onGoEditProfile}>
                 <View><Image style = {styles.edit} source={require('./edit.png')} /></View>
-            </TouchableElement>
+            </TouchableHighlight>
             <Text style = {styles.welcome}>Clubs:</Text>
             <Text style = {styles.instructions}>Krusty Krab Cooks</Text>       
             <Text style = {styles.instructions}>Bubble Blowers</Text>       
