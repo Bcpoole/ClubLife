@@ -27,6 +27,12 @@ namespace skeleton.Controllers {
     public User Get(string id) {
       return Repo.GetUserById(new ObjectId(id));
     }
+    // POST api/users/5824e62917b44627c34fa66e
+    [HttpPost("{id}")]
+    [Route("{id}")]
+    public void Post(string id) {
+      //Repo.UpdateUserName(new ObjectId(id), "Bob");
+    }
 
     // GET api/users/username?username=bcpoole
     [Route("username")]
