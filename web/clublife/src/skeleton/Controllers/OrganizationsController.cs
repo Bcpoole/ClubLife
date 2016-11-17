@@ -42,7 +42,6 @@ namespace skeleton.Controllers {
       throw new NotImplementedException();
       //Repo.CreateNewOrganization();
     }
-
     // POST api/organizations/581b77c29534b37d50c51b6c
     /// <param name="id">club id</param>
     [HttpPost("{id}")]
