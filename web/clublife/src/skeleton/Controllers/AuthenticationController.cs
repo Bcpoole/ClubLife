@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using skeleton.Extensions;
+using System;
+using System.Security.Claims;
+using System.Linq;
 
 namespace skeleton.Controllers {
   public class AuthenticationController : Controller {

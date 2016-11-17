@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using skeleton.Data;
 using skeleton.Models;
 using MongoDB.Bson;
+using System.Security.Claims;
+using System.Linq;
 
 namespace skeleton.Controllers {
   [Route("api/[controller]")]
@@ -56,6 +58,18 @@ namespace skeleton.Controllers {
         return NotFound();
       }
       return Ok(events);
+    }
+
+    // GET api/users/currentUser
+    [Route("currentUser")]
+    public IActionResult GetCurrentUser() {
+      var principal = HttpContext.Authentication.HttpContext.User;
+      var user = principal.Claims.Where(x => x.Type.Contains("emailaddress")).FirstOrDefault()?.Value;
+
+      if (user == null) {
+        return Ok("");
+      }
+      return Ok(user);
     }
   }
 }

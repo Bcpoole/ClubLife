@@ -80,6 +80,14 @@ namespace skeleton {
         LogoutPath = new PathString("/signout")
       });
 
+      //app.UseCookieAuthentication(new CookieAuthenticationOptions() {
+      //  AuthenticationScheme = "MyCookieMiddlewareInstance",
+      //  LoginPath = new PathString("/Account/Unauthorized/"),
+      //  AccessDeniedPath = new PathString("/Account/Forbidden/"),
+      //  AutomaticAuthenticate = true,
+      //  AutomaticChallenge = true
+      //});
+
       app.UseGoogleAuthentication(new GoogleOptions {
         ClientId = Credentials.GoogleClientId,
         ClientSecret = Credentials.ClientSecret
