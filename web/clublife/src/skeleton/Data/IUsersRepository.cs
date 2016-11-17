@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using skeleton.Models;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace skeleton.Data {
     IEnumerable<User> FindUserByName(string name);
     IEnumerable<User> FindUserByUsername(string username);
     IEnumerable<User> FindUsersInClubById(ObjectId id);
+
+    void UpdateUser(ObjectId id);
   }
 }

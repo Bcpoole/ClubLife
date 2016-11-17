@@ -27,6 +27,20 @@ namespace skeleton.Controllers {
     public User Get(string id) {
       return Repo.GetUserById(new ObjectId(id));
     }
+    // PUT api/users/newUser
+    [HttpPost("newUser")]
+    public void CreateNewUser() {
+      throw new NotImplementedException();
+      //Repo.CreateNewUser(");
+    }
+    // POST api/users/5824e62917b44627c34fa66e
+    /// <param name="id">user id</param>
+    [HttpPost("{id}")]
+    [Route("{id}")]
+    public void UpdateUser(string id) {
+      throw new NotImplementedException();
+      //Repo.UpdateUserName();
+    }
 
     // GET api/users/username?username=bcpoole
     [Route("username")]
