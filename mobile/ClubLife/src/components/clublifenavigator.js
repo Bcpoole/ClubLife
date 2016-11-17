@@ -10,9 +10,7 @@ import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
 import Profile from '../views/profile';
 import FindAClub from '../views/findaclub';
-//import FindAClubResults from '../views/findaclubresults';
 //import FindAnEvent from '../views/findanevent';
-//import FindAnEventResults from '../views/findaneventresults';
 import AllViews from '../views/allviews.js';
 import EditClub from '../views/EditClub';
 import ClubPage from '../views/clubPage';
@@ -175,7 +173,8 @@ export default class ClubLifeNavigator extends Component {
                 case "findaclub":
                     scene = (
                         <FindAClub
-
+                            navigator={navigator}
+                            route={route}
                         />
                     );
                     break;
@@ -337,39 +336,40 @@ var navbar = (
         routeMapper={{
             LeftButton: (route, navigator, index, navState) => {
                 var button = "";
-                switch(route.type) {
-                        case "login":
-                            button = (
-                                <Text></Text> //empty
-                            );
-                            break;
-                        case "profile":
-                            button = (
-                                <TouchableElement onPress={()=>{navigator.pop()}}><Text>BABYGOTBACK</Text></TouchableElement>
-                            );
-                        default:
-                            button = <Text>⚾</Text>;
-
-                }
+                button = (route.index ?
+                    <TouchableElement onPress={()=>{navigator.pop()}}>
+                        <View>
+                            <Text>⤾</Text>
+                        </View>
+                    </TouchableElement> :
+                    <View>
+                        <Text>⚾</Text>
+                    </View>
+                );
                 return button;
             },
             RightButton: (route, navigator, index, navState) => {
                 var button = "";
                 switch(route.type) {
                     case "login":
+                        // if we're on the login page, the snowman button takes you to allviews aka merk's super secret sexy debug menu
                          button = (
-                             <TouchableElement onPress={()=>{navigator.resetTo({type: "allviews", index: 0})}}><View><Text>ALLVIEWS</Text></View></TouchableElement>
+                            <TouchableElement onPress={()=>{navigator.resetTo({type: "allviews", index: 0})}}>
+                                <View>
+                                    <Text>☃</Text>
+                                </View>
+                            </TouchableElement>
                          );
                          break;
                     default:
                         button = (
-                            <Text>☃</Text>
+                            <View><Text>☃</Text></View>
                         )
                 }
                 return button;
             },
             Title: (route, navigator, index, navState) => {
-                return (<Text style={{flex: 1, justifyContent: 'center'}}>ClubLife</Text>);
+                return (<View><Text>ClubLife</Text></View>);
             },
         }}
         style={styles.navbar}
