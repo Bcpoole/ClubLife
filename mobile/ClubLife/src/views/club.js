@@ -40,6 +40,7 @@ class Club extends Component {
         var TouchableElement = TouchableNativeFeedback;
         var officer = true; // figure this out later
         var member = false;
+        var data = this.state.data;
         
         var offOps = <Text></Text>;
         if (officer){
@@ -49,7 +50,7 @@ class Club extends Component {
                 </TouchableElement>;
         }
         
-        var memberOps =  <TouchableElement onPress = {() =>Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'This person wants to join club','please let me join, i love club.')}>
+        var memberOps =  <TouchableElement onPress = {() =>Communications.email([data.organizationEmail, 'avhedges@crimson.ua.edu'],null,null,'This person wants to join club','please let me join, i love club.')}>
                 <View><Text style = {styles.button}>Join Club</Text></View>
             </TouchableElement>;
         if (member){
@@ -60,7 +61,7 @@ class Club extends Component {
         
         var picURL = 'https://images.collegiatelink.net/clink/images/f5b2dc13-7aab-4a95-ab24-adcfa884d90e57a54f72-e5a6-43f1-aa48-942c176ef3b2.png';
         var name = 'ACM';
-        var data = this.state.data;
+        
         
         
         return (
@@ -97,12 +98,8 @@ class Club extends Component {
             </View>
            
            
-            {data.map(club=> {
-                return (
-                    <View><Text>{club.name}</Text></View>
-                );
-            })}
-            <Text>{data.name}</Text>
+         
+            
 
             <Text style = {styles.welcome}>Messages:</Text>
             <View style = {[styles.box,  styles.message]}>

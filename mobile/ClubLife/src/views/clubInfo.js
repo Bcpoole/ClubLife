@@ -69,9 +69,7 @@ class ClubInfo extends Component {
             
             {clubValue()}
             
-            <TouchableElement style = {styles.button} onPress = {()=>{alert("yo")}}>
-                <View><Text>Submit</Text></View>
-            </TouchableElement>
+         
             <TouchableElement style = {styles.button} onPress = {this.props.onGoClub}>
                 <View><Text>Back</Text></View>
             </TouchableElement>
