@@ -42,7 +42,7 @@ namespace skeleton.Data {
     }
 
     public IEnumerable<User> FindUsersInClubById(ObjectId id) {
-      return GetAllUsers().Where(x => x.Clubs.Contains(id));
+      return GetAllUsers().Where(x => x.Clubs.Contains(id.ToString()));
     }
     #endregion
 
