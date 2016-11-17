@@ -29,7 +29,7 @@ namespace skeleton.Controllers {
       return Repo.GetOrganizationById(new ObjectId(id));
     }
 
-    //TODO Not sure how to go about this ATM
+    //TODO Not sure how to handle paramters ATM, json in request header? Will check when not tired
     // PUT api/organizations/newOrganization
     [HttpPut("newOrganization")]
     public void CreateNewOrganization() {
