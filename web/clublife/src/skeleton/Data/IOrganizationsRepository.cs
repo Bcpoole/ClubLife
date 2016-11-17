@@ -10,8 +10,11 @@ namespace skeleton.Data {
     IEnumerable<Organization> FindOrganizationByDayAndTime(string day, string time = null);
     IEnumerable<Organization> FindOrganizationByTag(string tag);
 
+    Post GetPost(ObjectId id);
     IEnumerable<Post> FindPostsByOrganization(ObjectId id);
     IEnumerable<Event> FindEventsByOrganization(ObjectId id);
+
+    Event GetEvent(ObjectId id);
     IEnumerable<Event> FindPublicEvents();
   }
 }

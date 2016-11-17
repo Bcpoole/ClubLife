@@ -23,6 +23,7 @@ namespace skeleton.Data {
       database = client.GetDatabase("clublife-db");
     }
 
+    #region Organizations
     public IEnumerable<Organization> GetAllOrganizations() {
       return database.GetCollection<Organization>("organizations").AsQueryable();
     }
@@ -52,10 +53,22 @@ namespace skeleton.Data {
     public IEnumerable<Organization> FindOrganizationByTag(string tag) {
       return GetAllOrganizations().Where(x => x.MainSummary.ToLower().Contains(tag.ToLower()));
     }
+    #endregion
+
+    #region Posts
+    public Post GetPost(ObjectId id) {
+      return database.GetCollection<Post>("posts").AsQueryable().Where(x => x.Id == id).FirstOrDefault();
+    }
 
     public IEnumerable<Post> FindPostsByOrganization(ObjectId id) {
       var postIds = GetOrganizationById(id).Posts;
       return database.GetCollection<Post>("posts").AsQueryable().Where(x => postIds.Contains(x.Id));
+    }
+    #endregion
+
+    #region Events
+    public Event GetEvent(ObjectId id) {
+      return database.GetCollection<Event>("events").AsQueryable().Where(x => x.Id == id).FirstOrDefault();
     }
 
     public IEnumerable<Event> FindEventsByOrganization(ObjectId id) {
@@ -66,5 +79,6 @@ namespace skeleton.Data {
     public IEnumerable<Event> FindPublicEvents() {
       return database.GetCollection<Event>("events").AsQueryable().Where(x => x.IsPublic);
     }
+    #endregion
   }
 }
