@@ -15,6 +15,7 @@ namespace skeleton.Controllers {
       Repo = repo;
     }
 
+    #region Organizations
     // GET api/organizations
     [HttpGet]
     public IEnumerable<Organization> Get() {
@@ -26,6 +27,28 @@ namespace skeleton.Controllers {
     [Route("{id}")]
     public Organization Get(string id) {
       return Repo.GetOrganizationById(new ObjectId(id));
+    }
+
+    //TODO Not sure how to handle paramters ATM, json in request header? Will check when not tired
+    // PUT api/organizations/newOrganization
+    [HttpPut("newOrganization")]
+    public void CreateNewOrganization() {
+      throw new NotImplementedException();
+      //Repo.CreateNewOrganization();
+    }
+    // PUT api/organizations/newOrganization?org=someJsonObject???
+    [HttpPut("newOrganization")]
+    public void CreateNewOrganization(Organization org) {
+      throw new NotImplementedException();
+      //Repo.CreateNewOrganization();
+    }
+    // POST api/organizations/581b77c29534b37d50c51b6c
+    /// <param name="id">club id</param>
+    [HttpPost("{id}")]
+    [Route("{id}")]
+    public void UpdateOrganization(string id) {
+      throw new NotImplementedException();
+      //Repo.UpateOrganization(new ObjectId(id));
     }
 
     // GET api/organizations/name?name=japan
@@ -57,8 +80,22 @@ namespace skeleton.Controllers {
       }
       return Ok(orgs);
     }
+    #endregion
+
+    #region Posts
+    // GET api/organizations/posts/5824ebbb17b44627c34fa678
+    /// <param name="id">post id</param>
+    [HttpGet("posts/{id}")]
+    public IActionResult GetPost(string id) {
+      var post = Repo.GetPost(new ObjectId(id));
+      if (post == null) {
+        return NotFound();
+      }
+      return Ok(post);
+    }
 
     // GET api/organizations/posts?id=581b77c29534b37d50c51b6c
+    /// <param name="id">club id</param>
     [Route("posts")]
     public IActionResult GetPostsByOrganization(string id) {
       var posts = Repo.FindPostsByOrganization(new ObjectId(id));
@@ -66,6 +103,37 @@ namespace skeleton.Controllers {
         return NotFound();
       }
       return Ok(posts);
+    }
+    // PUT api/organizations/posts?id=581b77c29534b37d50c51b6c
+    /// <param name="id">club id</param>
+    [HttpPut("posts")]
+    public void CreateNewPost(string id) {
+      throw new NotImplementedException();
+      //Repo.CreateNewPost(new ObjectId(id));
+    }
+    // POST api/organizations/posts?id=5824ebbb17b44627c34fa678
+    /// <param name="id">post id</param>
+    [HttpPost("posts")]
+    //public void UpdatePost(string id) {
+    //public void UpdatePost(string jsonList) {
+    //public void UpdatePost([FromBody]dynamic value) {
+    //public void UpdatePost([FromBody]Newtonsoft.Json.Linq.JObject value) {
+    public void UpdatePost(Post post) {
+      throw new NotImplementedException();
+      //Repo.UpatePost(new ObjectId(id));
+    }
+    #endregion
+
+    #region Events
+    // GET api/organizations/events/5824ebbb17b44627c34fa678
+    /// <param name="id">event id</param>
+    [HttpGet("posts/{id}")]
+    public IActionResult GetEvent(string id) {
+      var @event = Repo.GetEvent(new ObjectId(id));
+      if (@event == null) {
+        return NotFound();
+      }
+      return Ok(@event);
     }
 
     // GET api/organizations/events?id=581b77c29534b37d50c51b6c
@@ -77,6 +145,20 @@ namespace skeleton.Controllers {
       }
       return Ok(events);
     }
+    // PUT api/organizations/events?id=581b77c29534b37d50c51b6c
+    /// <param name="id">club id</param>
+    [HttpPut("events")]
+    public void CreateNewEvent(string id) {
+      throw new NotImplementedException();
+      //Repo.CreateNewEvent(new ObjectId(id));
+    }
+    // POST api/organizations/events?id=5824eb7817b44627c34fa676
+    /// <param name="id">event id</param>
+    [HttpPost("events")]
+    public void UpdateEvent(string id) {
+      throw new NotImplementedException();
+      //Repo.UpateEvent(new ObjectId(id));
+    }
 
     // GET api/organizations/publicEvents
     [Route("publicEvents")]
@@ -87,5 +169,6 @@ namespace skeleton.Controllers {
       }
       return Ok(events);
     }
+    #endregion
   }
 }

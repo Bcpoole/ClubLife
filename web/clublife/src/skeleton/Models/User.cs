@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace skeleton.Models {
   [BsonIgnoreExtraElements]
@@ -11,6 +12,11 @@ namespace skeleton.Models {
     [BsonElement("name")]
     public string Name { get; set; }
     [BsonElement("clubs")]
-    public IEnumerable<ObjectId> Clubs { get; set; }
+    private IEnumerable<ObjectId> clubs { get; set; }
+    public IEnumerable<string> Clubs {
+      get {
+        return clubs.Select(x => x.ToString());
+      }
+    }
   }
 }

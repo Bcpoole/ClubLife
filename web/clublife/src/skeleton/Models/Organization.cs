@@ -1,6 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace skeleton.Models {
   [BsonIgnoreExtraElements]
@@ -70,60 +71,60 @@ namespace skeleton.Models {
     [BsonElement("pendingRequests")]
     public List<ObjectId> PendingRequests { get; set; }
 
-    private dynamic meetingDay;
-    [BsonElement("CleanDayResults")]
-    public dynamic MeetingDay {
-      get {
-        return GetMeetingDay();
-      } set {
-        meetingDay = value;
-      }
-    }
+    //private dynamic meetingDay;
+    //[BsonElement("CleanDayResults")]
+    //public dynamic MeetingDay {
+    //  get {
+    //    return GetMeetingDay();
+    //  } set {
+    //    meetingDay = value;
+    //  }
+    //}
 
-    private dynamic meetingTime;
-    [BsonElement("CleanTimeResults")]
-    public dynamic MeetingTime {
-      get {
-        return GetMeetingTime();
-      }
-      set {
-        meetingTime = value;
-      }
-    }
+    //private dynamic meetingTime;
+    //[BsonElement("CleanTimeResults")]
+    //public dynamic MeetingTime {
+    //  get {
+    //    return GetMeetingTime();
+    //  }
+    //  set {
+    //    meetingTime = value;
+    //  }
+    //}
 
-    private string GetMeetingDay() {
-      string key = meetingDay[0].Key;
-      var val = meetingDay[0].Value;
+    //private string GetMeetingDay() {
+    //  string key = Enumerable.First(meetingDay).Key;
+    //  var val = Enumerable.First(meetingDay).Value;
 
-      if (key == "Day") {
-        return GetDayByIndex(val);
-      } else if (key == "Days") {
-        var days = "";
-        foreach (var day in val) {
-          days += day + ", ";
-        }
-        return days.Substring(0, days.Length - 2);
-      } else if (key == "DatesOfMonth") {
-        string suffix = "";
+    //  if (key == "Day") {
+    //    return GetDayByIndex(val);
+    //  } else if (key == "Days") {
+    //    var days = "";
+    //    foreach (var day in val) {
+    //      days += day + ", ";
+    //    }
+    //    return days.Substring(0, days.Length - 2);
+    //  } else if (key == "DatesOfMonth") {
+    //    string suffix = "";
 
-        char suffixVal = val.ToString().Last();
-        if (suffixVal == '1') {
-          suffix = "st";
-        } else if (suffixVal == '2') {
-          suffix = "nd";
-        } else if (suffixVal == '3') {
-          suffix = "rd";
-        } else {
-          suffix = "th";
-        }
+    //    char suffixVal = val.ToString().Last();
+    //    if (suffixVal == '1') {
+    //      suffix = "st";
+    //    } else if (suffixVal == '2') {
+    //      suffix = "nd";
+    //    } else if (suffixVal == '3') {
+    //      suffix = "rd";
+    //    } else {
+    //      suffix = "th";
+    //    }
 
-        return $"{val}{suffix} day of each each month";
-      } else if (key == "Varies" || key == "DaysOfMonth" || key == "DaysOfMonthFrequency") {
-        return "Varies";
-      } else { //TBD, a date, or worthless data
-        return "TBD";
-      }
-    }
+    //    return $"{val}{suffix} day of each each month";
+    //  } else if (key == "Varies" || key == "DaysOfMonth" || key == "DaysOfMonthFrequency") {
+    //    return "Varies";
+    //  } else { //TBD, a date, or worthless data
+    //    return "TBD";
+    //  }
+    //}
 
     private string GetDayByIndex(int idx) {
       switch (idx) {
@@ -146,31 +147,31 @@ namespace skeleton.Models {
       }
     }
 
-    public string GetMeetingTime() {
-      string key = MeetingTime[0].Key;
-      var val = MeetingTime[0].Value;
+    //public string GetMeetingTime() {
+    //  string key = Enumerable.First(MeetingTime).Key;
+    //  var val = Enumerable.First(MeetingTime).Value;
 
-      //Commented out until we decide to add in calendar search feature or not
-      //      if (key == "Starts") {
-      //        // {"Starts": {"Hours": 0-23, "Minutes": 0-59}}
-      //      } else if (key == "IntervalStarts") {
-      //        // {"IntervalStarts": {"Hours": m, "Minutes": n}}
-      //      } else if (key == "ResultsByDay") {
-      ////        {
-      ////          "ResultsByDay": {
-      ////            # this nested object has keys equal to days 0,1,2,3,4,5,6, and the values are like nested results objects
-      ////            # so e.g.
-      ////            2: { "IntervalStarts": { "Hours": 18, "Minutes": 30}, "IntervalEnds": { "Hours": 20, "Minutes": 0} },
-      ////            5: { "Starts": { "Hours": 16, "Minutes": 20} }
-      ////          }
-      ////        }
-      if (key == "Starts" || key == "IntervalStarts" || key == "ResultsByDay") {
-        return OrganizationMeetingDay;
-      } else if (key == "Varies") {
-        return "Varies";
-      } else {
-        return "TBD";
-      }
-    }
+    //  //Commented out until we decide to add in calendar search feature or not
+    //  //      if (key == "Starts") {
+    //  //        // {"Starts": {"Hours": 0-23, "Minutes": 0-59}}
+    //  //      } else if (key == "IntervalStarts") {
+    //  //        // {"IntervalStarts": {"Hours": m, "Minutes": n}}
+    //  //      } else if (key == "ResultsByDay") {
+    //  ////        {
+    //  ////          "ResultsByDay": {
+    //  ////            # this nested object has keys equal to days 0,1,2,3,4,5,6, and the values are like nested results objects
+    //  ////            # so e.g.
+    //  ////            2: { "IntervalStarts": { "Hours": 18, "Minutes": 30}, "IntervalEnds": { "Hours": 20, "Minutes": 0} },
+    //  ////            5: { "Starts": { "Hours": 16, "Minutes": 20} }
+    //  ////          }
+    //  ////        }
+    //  if (key == "Starts" || key == "IntervalStarts" || key == "ResultsByDay") {
+    //    return OrganizationMeetingTime;
+    //  } else if (key == "Varies") {
+    //    return "Varies";
+    //  } else {
+    //    return "TBD";
+    //  }
+    //}
   }
 }
