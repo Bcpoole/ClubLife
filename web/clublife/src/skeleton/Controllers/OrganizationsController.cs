@@ -15,6 +15,7 @@ namespace skeleton.Controllers {
       Repo = repo;
     }
 
+    #region Organizations
     // GET api/organizations
     [HttpGet]
     public IEnumerable<Organization> Get() {
@@ -26,6 +27,29 @@ namespace skeleton.Controllers {
     [Route("{id}")]
     public Organization Get(string id) {
       return Repo.GetOrganizationById(new ObjectId(id));
+    }
+
+    //TODO Not sure how to go about this ATM
+    // PUT api/organizations/newOrganization
+    [HttpPut("newOrganization")]
+    public void CreateNewOrganization() {
+      throw new NotImplementedException();
+      //Repo.CreateNewOrganization();
+    }
+    // PUT api/organizations/newOrganization?org=someJsonObject???
+    [HttpPut("newOrganization")]
+    public void CreateNewOrganization(Organization org) {
+      throw new NotImplementedException();
+      //Repo.CreateNewOrganization();
+    }
+
+    // POST api/organizations/581b77c29534b37d50c51b6c
+    /// <param name="id">club id</param>
+    [HttpPost("{id}")]
+    [Route("{id}")]
+    public void UpdateOrganization(string id) {
+      throw new NotImplementedException();
+      //Repo.UpateOrganization(new ObjectId(id));
     }
 
     // GET api/organizations/name?name=japan
@@ -57,6 +81,7 @@ namespace skeleton.Controllers {
       }
       return Ok(orgs);
     }
+    #endregion
 
     #region Posts
     // GET api/organizations/posts?id=581b77c29534b37d50c51b6c
