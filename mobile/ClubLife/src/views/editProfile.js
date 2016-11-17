@@ -46,19 +46,19 @@ class EditProfile extends Component {
             <View style = {styles.clubs}>
                 <Text style = {styles.instructions}>Krusty Krab Cooks</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Club?", "Are you sure you want to leave this club?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./delete.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
                 </TouchableHighlight>
             </View>
             <View style = {styles.clubs}>
                 <Text style = {styles.instructions}>Bubble Blowers</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Club?", "Are you sure you want to leave this club?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./delete.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
                 </TouchableHighlight>
             </View>
             <View style = {styles.clubs}>
                 <Text style = {styles.instructions}>Jellyfishing</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Club?", "Are you sure you want to leave this club?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./delete.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
                 </TouchableHighlight>
             </View>
 
@@ -67,14 +67,14 @@ class EditProfile extends Component {
                 <Text style = {styles.instructions}>Jellyfishing Practice</Text>
                 <Text style = {styles.instructions}>[Tues. 6:00 pm]</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Event?", "Are you sure you want to leave this event?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./delete.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
                 </TouchableHighlight>
             </View>
             <View style = {styles.events}>
                 <Text style = {styles.instructions}>Bubble Party</Text>
                 <Text style = {styles.instructions}>[Fri. 8:00 pm]</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Event?", "Are you sure you want to leave this event?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./delete.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
                 </TouchableHighlight>
             </View>
 

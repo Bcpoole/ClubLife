@@ -21,27 +21,43 @@ import {
 class ClubInfo extends Component {
     constructor(props){
         super(props);
-        this.state = {selectedTab: 'home'};
-    }
+        this.state = {
+            hasData: false,
+            data: []
+
+        };
+        
+    }   
     render() {
         var TouchableElement = TouchableNativeFeedback;
         var officer = true; // figure this out later
-        var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
-        //image
+        var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','image url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
+        var data = this.state.data;
+        
         function clubValue(){
            
            var returnValue = [];
-           //var html = 
-          for (var i=0;i<vals.length;i++){
-              returnValue.push(<View style = {styles.boxSpace}>
+                    
            
-              <Text>{vals[i]}:  </Text>
-             
-             
-             
-             
-               </View>);
-          }
+            
+           data.map(club=> {
+               var i = 0;
+               for (let prop in club){
+                    
+                    if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
+                        continue;
+                    }
+                    
+                    returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
+                    i++;
+               }
+               
+               
+              
+                
+               
+            })
+      
           return returnValue;
             
         }
@@ -49,7 +65,7 @@ class ClubInfo extends Component {
         
         
         return (
-        <ScrollView>
+        <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
             
             {clubValue()}
             
@@ -64,6 +80,25 @@ class ClubInfo extends Component {
 
 
         );
+        }
+        
+        
+        // Jonathan's component code
+        // hard coded to acm
+        componentDidMount() {
+            const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name=UA+Association+for+Computing+Machinery";
+            fetch(url)
+                .then(res=>res.json())
+                .then(json => {
+                    this.setState({
+                        hasData: true,
+                        data: json
+                    })
+                })
+                .catch(e => {
+                    console.error(e);
+                    //TODO: figure out how to navigate back out if something went wrong
+                })
         }
 
 
@@ -83,13 +118,16 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+    //textAlign: 'center',
+    //margin: 10,
+    paddingLeft:10
   },
   instructions: {
-    textAlign: 'center',
+    //textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    paddingLeft: 10,
+    paddingBottom: 10
+    //marginBottom: 5,
   },
   button: {
     textAlign: 'center',
