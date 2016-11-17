@@ -56,5 +56,9 @@ namespace skeleton.Data {
       var update = Builders<User>.Update.Set(x => x.Name, name);
       await col.UpdateOneAsync(filter, update);
     }
+
+    public void UpdateUser(ObjectId id) {
+      throw new NotImplementedException();
+    }
   }
 }
