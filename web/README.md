@@ -19,8 +19,24 @@ Case insensitive and does string contains.
 
     api/organizations/tag?tag=computer
 
+## Posts
+
+### Get Post by Id
+    api/organizations/posts/5824ebbb17b44627c34fa678
+
+### Put New Post
+    api/organizations/posts/newPost?id=581b77c29534b37d50c51b6c
+
 ### Get Posts by Organization
     api/organizations/posts?id=581b77c29534b37d50c51b6c
+
+## Events
+
+### Get Event by Id
+    api/organizations/events/5824eba317b44627c34fa677
+
+### Put New Event
+    api/organizations/events/newEvent?id=581b77c29534b37d50c51b6c
 
 ### Get Events by Organization
     api/organizations/events?id=581b77c29534b37d50c51b6c
@@ -33,7 +49,7 @@ Case insensitive and does string contains.
 ### Get All Users
     api/users
 
-### Get User by Id
+### Get, Post User by Id
     api/users/5824e62917b44627c34fa66e
 
 ### Get User by UserName
@@ -50,3 +66,6 @@ Case insensitive and does string contains.
 Using ACM (581b77c29534b37d50c51b6c)
 
     api/users/club?id=581b77c29534b37d50c51b6c
+
+### Put New User
+    api/users/newUser
