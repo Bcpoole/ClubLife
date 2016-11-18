@@ -57,13 +57,47 @@ namespace skeleton.Data {
     public async void UpdateOrganizationAsync(Organization org) {
       var coll = database.GetCollection<Organization>("organizations");
 
-      throw new NotImplementedException();
+      var filter = Builders<Organization>.Filter.Eq(x => x.Id, org.Id);
+      var update = Builders<Organization>.Update.
+      var update = Builders<Organization>.Update
+        .Set(x => x.url, org.url)
+        .Set(x => x.VicePresidentName, org.VicePresidentName)
+        .Set(x => x.SecretaryEmail, org.SecretaryEmail)
+        .Set(x => x.img, org.img)
+        .Set(x => x.SecondaryAdvisorEmail, org.SecondaryAdvisorEmail)
+        .Set(x => x.OrganizationEmail, org.OrganizationEmail)
+        .Set(x => x.name, org.name)
+        .Set(x => x.AdvisorDepartment, org.AdvisorDepartment)
+        .Set(x => x.ParentOrganization, org.ParentOrganization)
+        .Set(x => x.OrganizationMeetingDay, org.OrganizationMeetingDay)
+        .Set(x => x.OrganizationMeetingLocation, org.OrganizationMeetingLocation)
+        //.Set(x => x.MeetingDay, org.MeetingDay)
+        .Set(x => x.SecondaryAdvisorNameAndTitle, org.SecondaryAdvisorNameAndTitle)
+        .Set(x => x.primarycontact, org.primarycontact)
+        .Set(x => x.AdvisorNameAndTitle, org.AdvisorNameAndTitle)
+        .Set(x => x.SecondaryAdvisorPhone, org.SecondaryAdvisorPhone)
+        .Set(x => x.OrganizationMeetingTime, org.OrganizationMeetingTime)
+        .Set(x => x.PresidentEmail, org.PresidentEmail)
+        .Set(x => x.MainSummary, org.MainSummary)
+        .Set(x => x.AdvisorPhone, org.AdvisorPhone)
+        .Set(x => x.SecondaryAdvisorDepartment, org.SecondaryAdvisorDepartment)
+        .Set(x => x.AdvisorEmail, org.AdvisorEmail)
+        .Set(x => x.SecretaryName, org.SecretaryName)
+        .Set(x => x.summary, org.summary)
+        .Set(x => x.AboutSummary, org.AboutSummary)
+        .Set(x => x.VicePresidentEmail, org.VicePresidentEmail)
+        //.Set(x => x.MeetingTime, org.MeetingTime)
+        .Set(x => x.PresidentName, org.PresidentName)
+        .Set(x => x.TreasurerEmail, org.TreasurerEmail)
+        //.Set(x => x.TreasurerName, org.TreasurerName);
+        .Set(x => x.Leaders, org.Leaders)
+        .Set(x => x.Officers, org.Officers)
+        .Set(x => x.Members, org.Members)
+        .Set(x => x.Posts, org.Posts)
+        .Set(x => x.Events, org.Events)
+        .Set(x => x.PendingRequests, org.PendingRequests);
 
-      //var filter = Builders<Post>.Filter.Eq(x => x.Id, org.Id);
-      //var update = Builders<Post>.Update
-      //  .Set(x => x.Content, org.Content)
-      //  .Set(x => x.Subject, org.Subject);
-      //await coll.UpdateOneAsync(filter, update);
+      await coll.UpdateOneAsync(filter, update);
     }
 
     public async void CreateNewOrganizationAsync(Organization org) {
