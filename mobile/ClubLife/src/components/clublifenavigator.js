@@ -10,12 +10,13 @@ import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
 import Profile from '../views/profile';
 import FindAClub from '../views/findaclub';
-//import FindAnEvent from '../views/findanevent';
+import FindAnEvent from '../views/findAnEvent';
 import AllViews from '../views/allviews.js';
 import EditClub from '../views/EditClub';
 import ClubPage from '../views/clubPage';
 import ClubInfo from '../views/clubInfo';
 import EditProfile from '../views/editProfile';
+import ChooseSearch from '../views/chooseSearch';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -25,7 +26,8 @@ export default class ClubLifeNavigator extends Component {
         super(props);
         this.state = {
             userId: "",
-            clubList: null
+            clubList: null,
+            eventList: null
         };
     }
 
@@ -115,24 +117,31 @@ export default class ClubLifeNavigator extends Component {
                                 })
                             }}
                             onGoFindAnEvent={()=>{
-                                const leIndsex = route.index + 1;
+                                const leIndex = route.index + 1;
                                 navigator.push({
                                     "type": "findanevent",
-                                    index: leIndsex
+                                    index: leIndex
                                 })
                             }}
                             onGoClubList={()=>{
-                                const leIndsex = route.index + 1;
+                                const leIndex = route.index + 1;
                                 navigator.push({
                                     "type": "clubPage",
-                                    index: leIndsex
+                                    index: leIndex
+                                })
+                            }}
+                            onGoChooseSearch={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    "type": "choosesearch",
+                                    index: leIndex
                                 })
                             }}
                             onGoFindAClub={()=>{
-                                const leIndsex = route.index + 1;
+                                const leIndex = route.index + 1;
                                 navigator.push({
                                     "type": "findaclub",
-                                    index: leIndsex
+                                    index: leIndex
                                 });
                             }}
                             onGoEvents={()=>{
@@ -191,6 +200,26 @@ export default class ClubLifeNavigator extends Component {
                         />
                     );
                     break;
+                case "choosesearch":
+                    scene = (
+                        <ChooseSearch
+                            onGoFindAClub={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                     "type": "findaclub",
+                                     index: leIndex
+                                });
+                            }}
+                            onGoFindAnEvent={()=>{
+                                const leIndex = route.index + 1;
+                                navigator.push({
+                                    "type": "findanevent",
+                                    index: leIndex
+                                });
+                            }}
+                        />
+                        );
+                    break;
                 case "findaclub":
                     scene = (
                         <FindAClub
@@ -203,7 +232,9 @@ export default class ClubLifeNavigator extends Component {
                 case "findanevent":
                     scene = (
                         <FindAnEvent
-
+                            navigator={navigator}
+                            route={route}
+                            eventList={this.state.eventList}
                         />
                     );
                     break;
