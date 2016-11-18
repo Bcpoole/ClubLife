@@ -97,8 +97,7 @@ namespace skeleton.Controllers {
     /// <param name="id">post id</param>
     [HttpPost("posts/{id}")]
     public void UpdatePost([FromBody] Post post) {
-      throw new NotImplementedException();
-      //Repo.UpatePost(new ObjectId(id));
+      Repo.UpdatePost(post);
     }
 
     // PUT api/organizations/581b77c29534b37d50c51b6c/posts/new

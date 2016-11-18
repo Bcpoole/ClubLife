@@ -13,6 +13,7 @@ namespace skeleton.Data {
     Post GetPost(ObjectId id);
     IEnumerable<Post> FindPostsByOrganization(ObjectId id);
     IEnumerable<Event> FindEventsByOrganization(ObjectId id);
+    void UpdatePost(Post post);
 
     Event GetEvent(ObjectId id);
     IEnumerable<Event> FindPublicEvents();

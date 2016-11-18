@@ -65,6 +65,16 @@ namespace skeleton.Data {
 
       return database.GetCollection<Post>("posts").AsQueryable().Where(x => postIds.Contains(x.Id));
     }
+
+    public async void UpdatePost(Post post) {
+      var coll = database.GetCollection<Post>("posts");
+
+      var filter = Builders<Post>.Filter.Eq(x => x.Id, post.Id);
+      var update = Builders<Post>.Update
+        .Set(x => x.Content, post.Content)
+        .Set(x => x.Subject, post.Subject);
+      await coll.UpdateOneAsync(filter, update);
+    }
     #endregion
 
     #region Events
