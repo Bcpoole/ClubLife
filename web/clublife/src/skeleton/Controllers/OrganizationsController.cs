@@ -24,35 +24,24 @@ namespace skeleton.Controllers {
 
     // GET api/organizations/581b77c29534b37d50c51b6c
     [HttpGet("{id}")]
-    [Route("{id}")]
     public Organization Get(string id) {
       return Repo.GetOrganizationById(new ObjectId(id));
     }
 
-    //TODO Not sure how to handle paramters ATM, json in request header? Will check when not tired
-    // PUT api/organizations/newOrganization
-    [HttpPut("newOrganization")]
-    public void CreateNewOrganization() {
-      throw new NotImplementedException();
-      //Repo.CreateNewOrganization();
-    }
-    // PUT api/organizations/newOrganization?org=someJsonObject???
-    [HttpPut("newOrganization")]
-    public void CreateNewOrganization(Organization org) {
-      throw new NotImplementedException();
-      //Repo.CreateNewOrganization();
+    // PUT api/organizations/new
+    [HttpPut("new")]
+    public void CreateNewOrganization([FromBody] Organization org) {
+      Repo.CreateNewOrganizationAsync(org);
     }
     // POST api/organizations/581b77c29534b37d50c51b6c
     /// <param name="id">club id</param>
     [HttpPost("{id}")]
-    [Route("{id}")]
-    public void UpdateOrganization(string id) {
-      throw new NotImplementedException();
-      //Repo.UpateOrganization(new ObjectId(id));
+    public void UpdateOrganization([FromBody] Organization org) {
+      Repo.UpdateOrganizationAsync(org);
     }
 
     // GET api/organizations/name?name=japan
-    [Route("name")]
+    [HttpGet("name")]
     public IActionResult GetOrganizationByName(string name) {
       var orgs = Repo.FindOrganizationByName(name);
       if (orgs == null) {
@@ -62,7 +51,7 @@ namespace skeleton.Controllers {
     }
 
     // TODO: look at Jonthan's Cleandate proprty, add that to the model, and do fancy stuff
-    [Route("meetingTime")]
+    [HttpGet("meetingTime")]
     public IActionResult GetOrganizationByMeetingTime(string day, string time) {
       var orgs = Repo.FindOrganizationByDayAndTime(day, time);
       if (orgs == null) {
@@ -72,7 +61,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/organizations/tag?tag=computer
-    [Route("tag")]
+    [HttpGet("tag")]
     public IActionResult GetOrganizationByTag(string tag) {
       var orgs = Repo.FindOrganizationByTag(tag);
       if (orgs == null) {
@@ -97,21 +86,19 @@ namespace skeleton.Controllers {
     /// <param name="id">post id</param>
     [HttpPost("posts/{id}")]
     public void UpdatePost([FromBody] Post post) {
-      throw new NotImplementedException();
-      //Repo.UpatePost(new ObjectId(id));
+      Repo.UpdatePostAsync(post);
     }
 
     // PUT api/organizations/581b77c29534b37d50c51b6c/posts/new
     /// <param name="id">club id</param>
     [HttpPut("{id}/posts/new")]
-    public void CreateNewPost(string id) {
-      throw new NotImplementedException();
-      //Repo.CreateNewPost(new ObjectId(id));
+    public void CreateNewPost([FromBody] Post post) {
+      Repo.CreateNewPostAsync(post);
     }
 
     // GET api/organizations/581b77c29534b37d50c51b6c
     /// <param name="id">club id</param>
-    [Route("{id}/posts")]
+    [HttpGet("{id}/posts")]
     public IActionResult GetPostsByOrganization(string id) {
       var posts = Repo.FindPostsByOrganization(new ObjectId(id));
       if (posts == null) {
@@ -135,21 +122,19 @@ namespace skeleton.Controllers {
     // POST api/organizations/events/5824eb7817b44627c34fa676
     /// <param name="id">event id</param>
     [HttpPost("events/{id}")]
-    public void UpdateEvent(string id) {
-      throw new NotImplementedException();
-      //Repo.UpateEvent(new ObjectId(id));
+    public void UpdateEvent([FromBody] Event @event) {
+      Repo.UpdateEventAsync(@event);
     }
 
     // PUT api/organizations/581b77c29534b37d50c51b6c/events/new
     /// <param name="id">club id</param>
     [HttpPut("{id}/events/new")]
-    public void CreateNewEvent(string id) {
-      throw new NotImplementedException();
-      //Repo.CreateNewEvent(new ObjectId(id));
+    public void CreateNewEvent([FromBody]Event @event) {
+      Repo.CreateNewEventAsync(@event);
     }
 
     // GET api/organizations/581b77c29534b37d50c51b6c/events
-    [Route("{id}/events")]
+    [HttpGet("{id}/events")]
     public IActionResult GetEventsByOrganization(string id) {
       var events = Repo.FindEventsByOrganization(new ObjectId(id));
       if (events == null) {
@@ -159,7 +144,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/organizations/publicEvents
-    [Route("publicEvents")]
+    [HttpGet("publicEvents")]
     public IActionResult GetPublicEvents() {
       var events = Repo.FindPublicEvents();
       if (events == null) {

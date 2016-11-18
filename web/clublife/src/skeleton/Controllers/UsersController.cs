@@ -23,27 +23,23 @@ namespace skeleton.Controllers {
 
     // GET api/users/5824e62917b44627c34fa66e
     [HttpGet("{id}")]
-    [Route("{id}")]
     public User Get(string id) {
       return Repo.GetUserById(new ObjectId(id));
     }
-    // PUT api/users/newUser
-    [HttpPost("newUser")]
-    public void CreateNewUser() {
-      throw new NotImplementedException();
-      //Repo.CreateNewUser(");
+    // PUT api/users/new
+    [HttpPost("new")]
+    public void CreateNewUser([FromBody] User user) {
+      Repo.CreateNewUserAsync(user);
     }
     // POST api/users/5824e62917b44627c34fa66e
     /// <param name="id">user id</param>
     [HttpPost("{id}")]
-    [Route("{id}")]
-    public void UpdateUser(string id) {
-      throw new NotImplementedException();
-      //Repo.UpdateUserName();
+    public void UpdateUser([FromBody] User user) {
+      Repo.UpdateUserAsync(user);
     }
 
     // GET api/users/username?username=bcpoole
-    [Route("username")]
+    [HttpGet("username")]
     public IActionResult GetUserByUsername(string username) {
       var orgs = Repo.FindUserByUsername(username);
       if (orgs == null) {
@@ -53,7 +49,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/users/name?name=brandon
-    [Route("name")]
+    [HttpGet("name")]
     public IActionResult GetUserByName(string name) {
       var orgs = Repo.FindUserByName(name);
       if (orgs == null) {
@@ -63,7 +59,7 @@ namespace skeleton.Controllers {
     }    
 
     // GET api/users/club?id=581b77c29534b37d50c51b6c
-    [Route("club")]
+    [HttpGet("club")]
     public IActionResult GetUsersInClubById(string id) {
       var events = Repo.FindUsersInClubById(new ObjectId(id));
       if (events == null) {
