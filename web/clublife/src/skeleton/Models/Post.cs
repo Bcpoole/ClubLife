@@ -1,9 +1,11 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using System;
 
 namespace skeleton.Models {
   public class Post : IPost {
+    [JsonConverter(typeof(ObjectIdConverter))]
     public ObjectId Id { get; set; }
     [BsonElement("subject")]
     public string Subject { get; set; }
