@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableNativeFeedback,
-  Image,
-  TouchableOpacity,
+  AppRegistry, StyleSheet, Text, View, TextInput,
+  TouchableNativeFeedback, Image, TouchableOpacity,
 } from 'react-native';
 
 const MIN_PASSWORD_LENGTH = 1;
@@ -20,7 +14,8 @@ class Signup extends Component {
             passwordPlainText: '', //not sure how else to store the state...
             confirmPasswordPlainText: ''
         };
-        this.onSignup = this._onSignup.bind(this);
+        this._onSignup = this._onSignup.bind(this);
+        this._navigateSignup = this._navigateSignup.bind(this);
     }
 
     _hashString(s){
@@ -39,10 +34,17 @@ class Signup extends Component {
         return hash+""; //Convert final result back to a string
     }
 
-    _onSignup(){
-        if(this.state.passwordPlainText && (this.state.passwordPlainText.length >= MIN_PASSWORD_LENGTH) &&
+    _navigateSignup() {
+        this.props.navigator.push({
+            "type": "login",
+            index: this.props.route.index+1
+        });
+    }
+
+    _onSignup() {
+        if((this.state.passwordPlainText.length >= MIN_PASSWORD_LENGTH) &&
             (this.state.passwordPlainText === this.state.confirmPasswordPlainText) && this.state.email) {
-                this.props.onSignup();
+                this._navigateSignup();
         }
     }
 
@@ -79,7 +81,7 @@ class Signup extends Component {
                 />
                 <Text>...</Text>
                 <Text>{validMatchingPasswordsText}</Text>
-                <TouchableElement onPress={this.onSignup}>
+                <TouchableElement onPress={()=>this._onSignup()}>
                     <View><Text>SIGN ME UP</Text></View>
                 </TouchableElement>
             </View>

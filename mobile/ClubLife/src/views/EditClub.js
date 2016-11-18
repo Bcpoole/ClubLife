@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -29,34 +27,34 @@ class EditClub extends Component {
         var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
         //image
         function clubValue(){
-           
+
            var returnValue = [];
-           //var html = 
+           //var html =
           for (var i=0;i<vals.length;i++){
               returnValue.push(<View style = {styles.boxSpace}>
-           
+
               <Text>{vals[i]}:  </Text>
               <TextInput
                style={styles.textEdit}>
-            
+
                </TextInput>
                </View>);
           }
           return returnValue;
-            
+
         }
-        
-        
-        
+
+
+
         return (
         <ScrollView>
-            
+
             {clubValue()}
-            
+
             <TouchableElement style = {styles.button} onPress = {()=>{alert("yo")}}>
                 <View><Text>Submit</Text></View>
             </TouchableElement>
-            <TouchableElement style = {styles.button} onPress = {this.props.onGoClub}>
+            <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub()}>
                 <View><Text>Back</Text></View>
             </TouchableElement>
 
@@ -66,7 +64,13 @@ class EditClub extends Component {
         );
         }
 
-
+        _onGoClub() {
+            this.props.navigator.push({
+                type: 'club',
+                index: this.props.route.index+1,
+                user: this.props.route.user
+            })
+        }
 
 }
 

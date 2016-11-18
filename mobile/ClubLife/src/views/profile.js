@@ -1,5 +1,3 @@
-
- 
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -7,12 +5,11 @@ import {
   Text,
   View,
   TextInput,
-  TouchableNativeFeedback, 
+  TouchableNativeFeedback,
   Image,
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
-
 
 class Profile extends Component {
     constructor(props){
@@ -30,43 +27,41 @@ class Profile extends Component {
                     Spongebob Squarepants
                     </Text>
                     <Text style = {styles.instructions}>sponge@bob.com</Text>
-                
-                
-                </View>         
-            
+
+
+                </View>
+
             </View>
-            <TouchableHighlight onPress={this.props.onGoEditProfile}>
+            <TouchableHighlight onPress={()=>this._onGoEditProfile()}>
                 <View><Image style = {styles.edit} source={require('./edit.png')} /></View>
             </TouchableHighlight>
             <Text style = {styles.welcome}>Clubs:</Text>
-            <Text style = {styles.instructions}>Krusty Krab Cooks</Text>       
-            <Text style = {styles.instructions}>Bubble Blowers</Text>       
+            <Text style = {styles.instructions}>Krusty Krab Cooks</Text>
+            <Text style = {styles.instructions}>Bubble Blowers</Text>
             <Text style = {styles.instructions}>Jellyfishing Club</Text>
             <Text style = {styles.welcome}>Events:</Text>
             <Text style = {styles.instructions}>Jellyfishing practice [Tues. 6:00 pm]</Text>
-            <Text style = {styles.instructions}>Bubble Party           [Fri. 8:00 pm] </Text>                                 
+            <Text style = {styles.instructions}>Bubble Party           [Fri. 8:00 pm] </Text>
         </View>
         );
         }
- 
-  
-  
+    _onGoEditProfile() {
+        this.props.navigator.push({
+            type: "editProfile",
+            index: this.props.route.index+1,
+            user: this.props.route.user
+        })
+    }
 }
 
-   module.exports = Profile;
-    
- 
-  
-    
-    
+module.exports = Profile;
 
- 
 // module.exports = React.createClass({
 //  render() {
-    
+
 //     var TouchableElement = TouchableNativeFeedback;
-    
-    
+
+
 //     return (
 //       <View style={styles.container}>
 //         <View style={styles.box}>
@@ -76,10 +71,10 @@ class Profile extends Component {
 //                 Spongebob Squarepants
 //                 </Text>
 //                 <Text style = {styles.instructions}>sponge@bob.com</Text>
-               
-            
-//             </View>         
-        
+
+
+//             </View>
+
 //         </View>
 //          <TouchableElement style = {styles.button} onPress = {()=>{alert("u")}}>
 //                     <View><Image style = {styles.edit} source={require('./edit.png')} /></View>
@@ -88,10 +83,6 @@ class Profile extends Component {
 //     );
 //     }
 //  });
-  
-  
- 
-
 
 const styles = StyleSheet.create({
   container: {
@@ -113,36 +104,32 @@ const styles = StyleSheet.create({
   button: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,  
+    marginBottom: 5,
   },
   profilepic: {
       height: 100,
       width: 100
-      
+
   },
   edit: {
       height: 25,
       width: 25,
-      
+
   },
   textEdit: {
-    height: 40, 
+    height: 40,
     width: 200,
-    borderColor: 'grey', 
+    borderColor: 'grey',
     backgroundColor: 'white',
     borderWidth: 1
   },
   box: {
       flexDirection: 'row',
       flexWrap: 'wrap'
-      
+
   },
   longBox: {
       height: 125
-      
+
   }
 });
-
-
-
- 
