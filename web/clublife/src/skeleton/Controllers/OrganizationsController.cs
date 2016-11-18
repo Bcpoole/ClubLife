@@ -24,7 +24,6 @@ namespace skeleton.Controllers {
 
     // GET api/organizations/581b77c29534b37d50c51b6c
     [HttpGet("{id}")]
-    [Route("{id}")]
     public Organization Get(string id) {
       return Repo.GetOrganizationById(new ObjectId(id));
     }
@@ -37,13 +36,12 @@ namespace skeleton.Controllers {
     // POST api/organizations/581b77c29534b37d50c51b6c
     /// <param name="id">club id</param>
     [HttpPost("{id}")]
-    [Route("{id}")]
     public void UpdateOrganization([FromBody] Organization org) {
       Repo.UpdateOrganizationAsync(org);
     }
 
     // GET api/organizations/name?name=japan
-    [Route("name")]
+    [HttpGet("name")]
     public IActionResult GetOrganizationByName(string name) {
       var orgs = Repo.FindOrganizationByName(name);
       if (orgs == null) {
@@ -53,7 +51,7 @@ namespace skeleton.Controllers {
     }
 
     // TODO: look at Jonthan's Cleandate proprty, add that to the model, and do fancy stuff
-    [Route("meetingTime")]
+    [HttpGet("meetingTime")]
     public IActionResult GetOrganizationByMeetingTime(string day, string time) {
       var orgs = Repo.FindOrganizationByDayAndTime(day, time);
       if (orgs == null) {
@@ -63,7 +61,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/organizations/tag?tag=computer
-    [Route("tag")]
+    [HttpGet("tag")]
     public IActionResult GetOrganizationByTag(string tag) {
       var orgs = Repo.FindOrganizationByTag(tag);
       if (orgs == null) {
@@ -100,7 +98,7 @@ namespace skeleton.Controllers {
 
     // GET api/organizations/581b77c29534b37d50c51b6c
     /// <param name="id">club id</param>
-    [Route("{id}/posts")]
+    [HttpGet("{id}/posts")]
     public IActionResult GetPostsByOrganization(string id) {
       var posts = Repo.FindPostsByOrganization(new ObjectId(id));
       if (posts == null) {
@@ -136,7 +134,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/organizations/581b77c29534b37d50c51b6c/events
-    [Route("{id}/events")]
+    [HttpGet("{id}/events")]
     public IActionResult GetEventsByOrganization(string id) {
       var events = Repo.FindEventsByOrganization(new ObjectId(id));
       if (events == null) {
@@ -146,7 +144,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/organizations/publicEvents
-    [Route("publicEvents")]
+    [HttpGet("publicEvents")]
     public IActionResult GetPublicEvents() {
       var events = Repo.FindPublicEvents();
       if (events == null) {

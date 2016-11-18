@@ -39,7 +39,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/users/username?username=bcpoole
-    [Route("username")]
+    [HttpGet("username")]
     public IActionResult GetUserByUsername(string username) {
       var orgs = Repo.FindUserByUsername(username);
       if (orgs == null) {
@@ -49,7 +49,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/users/name?name=brandon
-    [Route("name")]
+    [HttpGet("name")]
     public IActionResult GetUserByName(string name) {
       var orgs = Repo.FindUserByName(name);
       if (orgs == null) {
@@ -59,7 +59,7 @@ namespace skeleton.Controllers {
     }    
 
     // GET api/users/club?id=581b77c29534b37d50c51b6c
-    [Route("club")]
+    [HttpGet("club")]
     public IActionResult GetUsersInClubById(string id) {
       var events = Repo.FindUsersInClubById(new ObjectId(id));
       if (events == null) {
