@@ -114,7 +114,7 @@ namespace skeleton.Controllers {
     // POST api/organizations/posts?id=5824ebbb17b44627c34fa678
     /// <param name="id">post id</param>
     [HttpPost("posts")]
-    public void UpdatePost([FromBody] Post bodyPost) {
+    public void UpdatePost([FromBody] Post post) {
       throw new NotImplementedException();
       //Repo.UpatePost(new ObjectId(id));
     }
@@ -123,7 +123,7 @@ namespace skeleton.Controllers {
     #region Events
     // GET api/organizations/events/5824ebbb17b44627c34fa678
     /// <param name="id">event id</param>
-    [HttpGet("posts/{id}")]
+    [HttpGet("events/{id}")]
     public IActionResult GetEvent(string id) {
       var @event = Repo.GetEvent(new ObjectId(id));
       if (@event == null) {
