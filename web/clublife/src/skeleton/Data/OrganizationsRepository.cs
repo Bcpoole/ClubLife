@@ -58,7 +58,6 @@ namespace skeleton.Data {
       var coll = database.GetCollection<Organization>("organizations");
 
       var filter = Builders<Organization>.Filter.Eq(x => x.Id, org.Id);
-      var update = Builders<Organization>.Update.
       var update = Builders<Organization>.Update
         .Set(x => x.url, org.url)
         .Set(x => x.VicePresidentName, org.VicePresidentName)
