@@ -114,11 +114,7 @@ namespace skeleton.Controllers {
     // POST api/organizations/posts?id=5824ebbb17b44627c34fa678
     /// <param name="id">post id</param>
     [HttpPost("posts")]
-    //public void UpdatePost(string id) {
-    //public void UpdatePost(string jsonList) {
-    //public void UpdatePost([FromBody]dynamic value) {
-    //public void UpdatePost([FromBody]Newtonsoft.Json.Linq.JObject value) {
-    public void UpdatePost(Post post) {
+    public void UpdatePost([FromBody] Post bodyPost) {
       throw new NotImplementedException();
       //Repo.UpatePost(new ObjectId(id));
     }
