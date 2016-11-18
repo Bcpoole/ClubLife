@@ -104,9 +104,9 @@ namespace skeleton.Controllers {
       }
       return Ok(posts);
     }
-    // PUT api/organizations/posts?id=581b77c29534b37d50c51b6c
+    // PUT api/organizations/posts/newPost?id=581b77c29534b37d50c51b6c
     /// <param name="id">club id</param>
-    [HttpPut("posts")]
+    [HttpPut("posts/newPost")]
     public void CreateNewPost(string id) {
       throw new NotImplementedException();
       //Repo.CreateNewPost(new ObjectId(id));
@@ -145,9 +145,9 @@ namespace skeleton.Controllers {
       }
       return Ok(events);
     }
-    // PUT api/organizations/events?id=581b77c29534b37d50c51b6c
+    // PUT api/organizations/events/newEvent?id=581b77c29534b37d50c51b6c
     /// <param name="id">club id</param>
-    [HttpPut("events")]
+    [HttpPut("events/newEvent")]
     public void CreateNewEvent(string id) {
       throw new NotImplementedException();
       //Repo.CreateNewEvent(new ObjectId(id));

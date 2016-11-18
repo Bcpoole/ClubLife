@@ -24,7 +24,9 @@ class EditClub extends Component {
         this.state = {
             hasData: false,
             data: [],
-            stuff: 'new value'
+            newVal: '',
+            currentVal:''
+            
 
         };
     }
@@ -52,11 +54,11 @@ class EditClub extends Component {
                         continue;
                     }
                     
-                    var val = club[prop];
+                    this.setState({currentState : club[prop]});
                     if (Array.isArray(val)){
                         
                         // this should be changed? whats in the arrays?
-                        val = val[0];
+                        this.setState({currentState:club[prop][0]});
                         
                     }
                     
@@ -64,8 +66,8 @@ class EditClub extends Component {
                         
                         <TextInput 
                             style = {styles.textEdit} 
-                            value = {val}
-                            onChangeText = {(newValue)=>{this.setState({stuff: newValue});val = newValue;}}
+                            value = {this.state.curentState}
+                            onChangeText = {(newValue)=>{this.setState({stuff: newValue});}}
                             
                             
                         ></TextInput>
