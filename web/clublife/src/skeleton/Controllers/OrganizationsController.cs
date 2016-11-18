@@ -97,7 +97,7 @@ namespace skeleton.Controllers {
     /// <param name="id">post id</param>
     [HttpPost("posts/{id}")]
     public void UpdatePost([FromBody] Post post) {
-      Repo.UpdatePost(post);
+      Repo.UpdatePostAsync(post);
     }
 
     // PUT api/organizations/581b77c29534b37d50c51b6c/posts/new
@@ -134,9 +134,8 @@ namespace skeleton.Controllers {
     // POST api/organizations/events/5824eb7817b44627c34fa676
     /// <param name="id">event id</param>
     [HttpPost("events/{id}")]
-    public void UpdateEvent(string id) {
-      throw new NotImplementedException();
-      //Repo.UpateEvent(new ObjectId(id));
+    public void UpdateEvent([FromBody] Event @event) {
+      Repo.UpdateEventAsync(@event);
     }
 
     // PUT api/organizations/581b77c29534b37d50c51b6c/events/new

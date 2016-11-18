@@ -66,7 +66,7 @@ namespace skeleton.Data {
       return database.GetCollection<Post>("posts").AsQueryable().Where(x => postIds.Contains(x.Id));
     }
 
-    public async void UpdatePost(Post post) {
+    public async void UpdatePostAsync(Post post) {
       var coll = database.GetCollection<Post>("posts");
 
       var filter = Builders<Post>.Filter.Eq(x => x.Id, post.Id);
@@ -89,6 +89,20 @@ namespace skeleton.Data {
 
     public IEnumerable<Event> FindPublicEvents() {
       return database.GetCollection<Event>("events").AsQueryable().Where(x => x.IsPublic);
+    }
+
+    public async void UpdateEventAsync(Event @event) {
+      var coll = database.GetCollection<Event>("events");
+
+      var filter = Builders<Event>.Filter.Eq(x => x.Id, @event.Id);
+      var update = Builders<Event>.Update
+        .Set(x => x.Content, @event.Content)
+        .Set(x => x.Subject, @event.Subject)
+        .Set(x => x.StartTime, @event.StartTime)
+        .Set(x => x.EndTime, @event.EndTime)
+        .Set(x => x.RSVP, @event.RSVP)
+        .Set(x => x.IsPublic, @event.IsPublic);
+      await coll.UpdateOneAsync(filter, update);
     }
     #endregion
   }
