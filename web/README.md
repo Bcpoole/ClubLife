@@ -25,10 +25,10 @@ Case insensitive and does string contains.
     api/organizations/posts/5824ebbb17b44627c34fa678
 
 ### PUT New Post
-    api/organizations/posts/newPost?id=581b77c29534b37d50c51b6c
+    api/organizations/posts/581b77c29534b37d50c51b6c/posts/new
 
 ### GET Posts by Organization
-    api/organizations/posts?id=581b77c29534b37d50c51b6c
+    api/organizations/581b77c29534b37d50c51b6c/posts
 
 ## Events
 
@@ -36,10 +36,10 @@ Case insensitive and does string contains.
     api/organizations/events/5824eba317b44627c34fa677
 
 ### PUT New Event
-    api/organizations/events/newEvent?id=581b77c29534b37d50c51b6c
+    api/organizations/events/581b77c29534b37d50c51b6c/events/new
 
 ### GET Events by Organization
-    api/organizations/events?id=581b77c29534b37d50c51b6c
+    api/organizations/581b77c29534b37d50c51b6c/events
 
 ### GET Public Events
     api/organizations/publicEvents

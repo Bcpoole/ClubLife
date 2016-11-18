@@ -93,10 +93,25 @@ namespace skeleton.Controllers {
       }
       return Ok(post);
     }
+    // POST api/organizations/posts/5824ebbb17b44627c34fa678
+    /// <param name="id">post id</param>
+    [HttpPost("posts/{id}")]
+    public void UpdatePost([FromBody] Post post) {
+      throw new NotImplementedException();
+      //Repo.UpatePost(new ObjectId(id));
+    }
 
-    // GET api/organizations/posts?id=581b77c29534b37d50c51b6c
+    // PUT api/organizations/581b77c29534b37d50c51b6c/posts/new
     /// <param name="id">club id</param>
-    [Route("posts")]
+    [HttpPut("{id}/posts/new")]
+    public void CreateNewPost(string id) {
+      throw new NotImplementedException();
+      //Repo.CreateNewPost(new ObjectId(id));
+    }
+
+    // GET api/organizations/581b77c29534b37d50c51b6c
+    /// <param name="id">club id</param>
+    [Route("{id}/posts")]
     public IActionResult GetPostsByOrganization(string id) {
       var posts = Repo.FindPostsByOrganization(new ObjectId(id));
       if (posts == null) {
@@ -104,30 +119,12 @@ namespace skeleton.Controllers {
       }
       return Ok(posts);
     }
-    // PUT api/organizations/posts/newPost?id=581b77c29534b37d50c51b6c
-    /// <param name="id">club id</param>
-    [HttpPut("posts/newPost")]
-    public void CreateNewPost(string id) {
-      throw new NotImplementedException();
-      //Repo.CreateNewPost(new ObjectId(id));
-    }
-    // POST api/organizations/posts?id=5824ebbb17b44627c34fa678
-    /// <param name="id">post id</param>
-    [HttpPost("posts")]
-    //public void UpdatePost(string id) {
-    //public void UpdatePost(string jsonList) {
-    //public void UpdatePost([FromBody]dynamic value) {
-    //public void UpdatePost([FromBody]Newtonsoft.Json.Linq.JObject value) {
-    public void UpdatePost(Post post) {
-      throw new NotImplementedException();
-      //Repo.UpatePost(new ObjectId(id));
-    }
     #endregion
 
     #region Events
     // GET api/organizations/events/5824ebbb17b44627c34fa678
     /// <param name="id">event id</param>
-    [HttpGet("posts/{id}")]
+    [HttpGet("events/{id}")]
     public IActionResult GetEvent(string id) {
       var @event = Repo.GetEvent(new ObjectId(id));
       if (@event == null) {
@@ -135,29 +132,30 @@ namespace skeleton.Controllers {
       }
       return Ok(@event);
     }
+    // POST api/organizations/events/5824eb7817b44627c34fa676
+    /// <param name="id">event id</param>
+    [HttpPost("events/{id}")]
+    public void UpdateEvent(string id) {
+      throw new NotImplementedException();
+      //Repo.UpateEvent(new ObjectId(id));
+    }
 
-    // GET api/organizations/events?id=581b77c29534b37d50c51b6c
-    [Route("events")]
+    // PUT api/organizations/581b77c29534b37d50c51b6c/events/new
+    /// <param name="id">club id</param>
+    [HttpPut("{id}/events/new")]
+    public void CreateNewEvent(string id) {
+      throw new NotImplementedException();
+      //Repo.CreateNewEvent(new ObjectId(id));
+    }
+
+    // GET api/organizations/581b77c29534b37d50c51b6c/events
+    [Route("{id}/events")]
     public IActionResult GetEventsByOrganization(string id) {
       var events = Repo.FindEventsByOrganization(new ObjectId(id));
       if (events == null) {
         return NotFound();
       }
       return Ok(events);
-    }
-    // PUT api/organizations/events/newEvent?id=581b77c29534b37d50c51b6c
-    /// <param name="id">club id</param>
-    [HttpPut("events/newEvent")]
-    public void CreateNewEvent(string id) {
-      throw new NotImplementedException();
-      //Repo.CreateNewEvent(new ObjectId(id));
-    }
-    // POST api/organizations/events?id=5824eb7817b44627c34fa676
-    /// <param name="id">event id</param>
-    [HttpPost("events")]
-    public void UpdateEvent(string id) {
-      throw new NotImplementedException();
-      //Repo.UpateEvent(new ObjectId(id));
     }
 
     // GET api/organizations/publicEvents
