@@ -14,6 +14,7 @@ namespace skeleton.Data {
     IEnumerable<Post> FindPostsByOrganization(ObjectId id);
     IEnumerable<Event> FindEventsByOrganization(ObjectId id);
     void UpdatePostAsync(Post post);
+    void CreateNewPostAsync(Post post);
 
     Event GetEvent(ObjectId id);
     IEnumerable<Event> FindPublicEvents();

@@ -75,6 +75,12 @@ namespace skeleton.Data {
         .Set(x => x.Subject, post.Subject);
       await coll.UpdateOneAsync(filter, update);
     }
+
+    public async void CreateNewPostAsync(Post post) {
+      post.Id = new ObjectId();
+      post.Created = DateTime.UtcNow;
+      await database.GetCollection<Post>("posts").InsertOneAsync(post);
+    }
     #endregion
 
     #region Events

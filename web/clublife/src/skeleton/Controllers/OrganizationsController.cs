@@ -103,9 +103,8 @@ namespace skeleton.Controllers {
     // PUT api/organizations/581b77c29534b37d50c51b6c/posts/new
     /// <param name="id">club id</param>
     [HttpPut("{id}/posts/new")]
-    public void CreateNewPost(string id) {
-      throw new NotImplementedException();
-      //Repo.CreateNewPost(new ObjectId(id));
+    public void CreateNewPost([FromBody] Post post) {
+      Repo.CreateNewPostAsync(post);
     }
 
     // GET api/organizations/581b77c29534b37d50c51b6c
