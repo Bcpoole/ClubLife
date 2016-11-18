@@ -111,9 +111,9 @@ namespace skeleton.Controllers {
       throw new NotImplementedException();
       //Repo.CreateNewPost(new ObjectId(id));
     }
-    // POST api/organizations/posts?id=5824ebbb17b44627c34fa678
+    // POST api/organizations/posts/5824ebbb17b44627c34fa678
     /// <param name="id">post id</param>
-    [HttpPost("posts")]
+    [HttpPost("posts/{id}")]
     public void UpdatePost([FromBody] Post post) {
       throw new NotImplementedException();
       //Repo.UpatePost(new ObjectId(id));
@@ -148,9 +148,9 @@ namespace skeleton.Controllers {
       throw new NotImplementedException();
       //Repo.CreateNewEvent(new ObjectId(id));
     }
-    // POST api/organizations/events?id=5824eb7817b44627c34fa676
+    // POST api/organizations/events/5824eb7817b44627c34fa676
     /// <param name="id">event id</param>
-    [HttpPost("events")]
+    [HttpPost("events/{id}")]
     public void UpdateEvent(string id) {
       throw new NotImplementedException();
       //Repo.UpateEvent(new ObjectId(id));
