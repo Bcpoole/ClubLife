@@ -29,26 +29,17 @@ namespace skeleton.Controllers {
       return Repo.GetOrganizationById(new ObjectId(id));
     }
 
-    //TODO Not sure how to handle paramters ATM, json in request header? Will check when not tired
-    // PUT api/organizations/newOrganization
-    [HttpPut("newOrganization")]
-    public void CreateNewOrganization() {
-      throw new NotImplementedException();
-      //Repo.CreateNewOrganization();
-    }
-    // PUT api/organizations/newOrganization?org=someJsonObject???
-    [HttpPut("newOrganization")]
-    public void CreateNewOrganization(Organization org) {
-      throw new NotImplementedException();
-      //Repo.CreateNewOrganization();
+    // PUT api/organizations/new
+    [HttpPut("new")]
+    public void CreateNewOrganization([FromBody] Organization org) {
+      Repo.CreateNewOrganizationAsync(org);
     }
     // POST api/organizations/581b77c29534b37d50c51b6c
     /// <param name="id">club id</param>
     [HttpPost("{id}")]
     [Route("{id}")]
-    public void UpdateOrganization(string id) {
-      throw new NotImplementedException();
-      //Repo.UpateOrganization(new ObjectId(id));
+    public void UpdateOrganization([FromBody] Organization org) {
+      Repo.UpdateOrganizationAsync(org);
     }
 
     // GET api/organizations/name?name=japan
@@ -140,7 +131,7 @@ namespace skeleton.Controllers {
     // PUT api/organizations/581b77c29534b37d50c51b6c/events/new
     /// <param name="id">club id</param>
     [HttpPut("{id}/events/new")]
-    public void CreateNewEvent(Event @event) {
+    public void CreateNewEvent([FromBody]Event @event) {
       Repo.CreateNewEventAsync(@event);
     }
 

@@ -53,6 +53,23 @@ namespace skeleton.Data {
     public IEnumerable<Organization> FindOrganizationByTag(string tag) {
       return GetAllOrganizations().Where(x => x.MainSummary.ToLower().Contains(tag.ToLower()));
     }
+
+    public async void UpdateOrganizationAsync(Organization org) {
+      var coll = database.GetCollection<Organization>("organizations");
+
+      throw new NotImplementedException();
+
+      //var filter = Builders<Post>.Filter.Eq(x => x.Id, org.Id);
+      //var update = Builders<Post>.Update
+      //  .Set(x => x.Content, org.Content)
+      //  .Set(x => x.Subject, org.Subject);
+      //await coll.UpdateOneAsync(filter, update);
+    }
+
+    public async void CreateNewOrganizationAsync(Organization org) {
+      org.Id = new ObjectId();
+      await database.GetCollection<Organization>("organizations").InsertOneAsync(org);
+    }
     #endregion
 
     #region Posts
