@@ -62,7 +62,7 @@ namespace skeleton.Data {
 
     public IEnumerable<Post> FindPostsByOrganization(ObjectId id) {
       var postIds = GetOrganizationById(id).Posts;
-      return database.GetCollection<Post>("posts").AsQueryable().Where(x => postIds.Contains(x.Id));
+      return database.GetCollection<Post>("posts").AsQueryable().Where(x => postIds.Contains(x.Id.ToString()));
     }
     #endregion
 
@@ -73,7 +73,7 @@ namespace skeleton.Data {
 
     public IEnumerable<Event> FindEventsByOrganization(ObjectId id) {
       var eventIds = GetOrganizationById(id).Events;
-      return database.GetCollection<Event>("events").AsQueryable().Where(x => eventIds.Contains(x.Id));
+      return database.GetCollection<Event>("events").AsQueryable().Where(x => eventIds.Contains(x.Id.ToString()));
     }
 
     public IEnumerable<Event> FindPublicEvents() {
