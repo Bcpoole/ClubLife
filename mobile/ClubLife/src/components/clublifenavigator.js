@@ -5,8 +5,6 @@ import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback } from 'reac
 import HomePage from '../views/HomePageView';
 import Signup from '../views/signup';
 import Login from '../views/login';
-import TestPage from '../views/testpage';
-import OtherTestPage from '../views/othertestpage';
 import Club from '../views/club';
 import Profile from '../views/profile';
 import FindAClub from '../views/findaclub';
