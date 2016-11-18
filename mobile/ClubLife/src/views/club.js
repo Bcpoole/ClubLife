@@ -12,6 +12,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import LoadingView from '../components/loadingview';
 
 
 //import TabNavigator from 'react-native-tab-navigator';
@@ -24,64 +25,64 @@ class Club extends Component {
         this.state = {
             hasData: false,
             data: [],
-
         };
     }
-    
-    
-    // _resultsView(){
-        
-        
-    // }
-    
-    
-    
+
     render() {
+        if(!this.state.hasData) {
+            return <LoadingView/>;
+        }
+        else {
+            //TODO: make all the stuff underneath do actual things,
+            // here I'm just returning the JSON as a string and making it the view LMAO
+            return <View style={{paddingTop: 40}}><Text>{JSON.stringify(this.state.data)}</Text></View>
+
+        }
         var TouchableElement = TouchableNativeFeedback;
         var officer = true; // figure this out later
         var member = false;
-        
+
         var offOps = <Text></Text>;
         if (officer){
-            offOps = 
+            offOps =
                 <TouchableElement onPress = {this.props.onGoEditClub}>
                     <View><Text style = {styles.button} >Edit Club Info</Text></View>
                 </TouchableElement>;
         }
-        
+
         var memberOps =  <TouchableElement onPress = {() =>Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'This person wants to join club','please let me join, i love club.')}>
                 <View><Text style = {styles.button}>Join Club</Text></View>
             </TouchableElement>;
         if (member){
             memberOps = <Text></Text>;
         }
-        
+
         // Club Variables:
-        
+
         var picURL = 'https://images.collegiatelink.net/clink/images/f5b2dc13-7aab-4a95-ab24-adcfa884d90e57a54f72-e5a6-43f1-aa48-942c176ef3b2.png';
         var name = 'ACM';
         var data = this.state.data;
-        
-        
+
+
         return (
-        
-        
-        
+
+
+
         <ScrollView style={styles.container}>
             <View style={styles.box}>
-                
+
                 <Image source={{uri: picURL}} style={{flex:1, height: 375, width: 375}} />
-                
-                
+
+
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
                     {name}
                     </Text>
- 
+
                 </View>
-                
-                
-                
+
+
+
                 <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
                     <TouchableElement onPress={this.props.onGoClubList}>
                         <View><Text style={styles.button}>Events</Text></View>
@@ -92,11 +93,11 @@ class Club extends Component {
                     {memberOps}
                     {offOps}
                 </View>
-                
-                
+
+
             </View>
-           
-           
+
+
             {data.map(club=> {
                 return (
                     <View><Text>{club.name}</Text></View>
@@ -113,21 +114,15 @@ class Club extends Component {
                 <Image style = {styles.edit} source={require('./pat.jpeg')} />
                 <Text style = {styles.instructions}> Patrick: Vote for me in tomorrow's elections!</Text>
             </View>
-         
-
-
         </ScrollView>
-
-
         );
         }
-        
-        
+
+
         // Jonathan's component code
         componentDidMount() {
-            const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name=machinery";
-            //const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name=UA+Association+for+Computing+Machinery";
-            
+            const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
+                this.props.clubName.replace(" ","+");
             fetch(url)
                 .then(res=>res.json())
                 .then(json => {
@@ -141,14 +136,9 @@ class Club extends Component {
                     //TODO: figure out how to navigate back out if something went wrong
                 })
         }
-
-
-
 }
 
-   module.exports = Club;
-
-
+module.exports = Club;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,30 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, ScrollView, Image, TouchableNativeFeedback } from 'react-native';
 
 export default class FindAClub extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hasData: false, // turns true once we make the actual API call,
-            error: false,
-            data: [],
             sort: 'name',
             filterName: ''
         };
 
-        this._errorView = this._errorView.bind(this);
         this._loadingView = this._loadingView.bind(this);
         this._resultsView = this._resultsView.bind(this);
-    }
-
-    _errorView() {
-        return (
-            <View>
-                <Text>
-                An error occurred.
-                </Text>
-            </View>
-        );
+        this.DEFAULT_IMG = "https://avatars2.githubusercontent.com/u/12243827?v=3&s=40"; //hey it me
+        this._navigateToClub = this._navigateToClub.bind(this);
     }
 
     _loadingView() {
@@ -38,11 +26,7 @@ export default class FindAClub extends Component {
     }
 
     _resultsView() {
-        //failsafe
-        if(this.state.error) {
-            return this._errorView();
-        }
-        var data = this.state.data;
+        var data = this.props.clubList;
         //sort data in-place by name
         if(this.state.sort === 'name'){
             data.sort((a,b) => a.name.localeCompare(b.name));
@@ -51,7 +35,8 @@ export default class FindAClub extends Component {
         if(this.state.filterName) {
             data = data.filter((club) => club.name.startsWith(this.state.filterName));
         }
-        var defaultImg = "https://avatars2.githubusercontent.com/u/12243827?v=3&s=40"
+
+        var TouchableElement = TouchableNativeFeedback;
         var content = (
             <View>
                 <TextInput
@@ -64,10 +49,13 @@ export default class FindAClub extends Component {
                     {data.map(club => {
                         return (
                             <View key={club.name} style={{flex: 1, flexDirection: 'row'}}>
-                                <Image
-                                    source={{uri: club.img || defaultImg}}
-                                    style={{height: 40, width: 40}}
-                                />
+                                <TouchableElement
+                                    onPress={()=>this._navigateToClub(club)}>
+                                    <Image
+                                        source={{uri: club.img || this.DEFAULT_IMG}}
+                                        style={{height: 40, width: 40}}
+                                    />
+                                </TouchableElement>
                                 <Text>
                                     {club.name+" PresidentName: "+club.presidentName}
                                 </Text>
@@ -82,35 +70,14 @@ export default class FindAClub extends Component {
     }
 
     render() {
-        var content = (
-            <View></View>
-        );
-        if(this.state.error) {
-            content = this._errorView();
-        }
-        if(!this.state.hasData) {
-            content = this._loadingView();
-        }
-        else {
-            //TODO: figure out what to render once we fetch data
-            content = this._resultsView();
-        }
-        return content;
+        return this.props.clubList ? this._resultsView() : this._loadingView();
     }
 
-    componentDidMount() {
-        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations";
-        fetch(url)
-            .then(res=>res.json())
-            .then(json => {
-                this.setState({
-                    hasData: true,
-                    data: json
-                })
-            })
-            .catch(e => {
-                console.error(e);
-                //TODO: figure out how to navigate back out if something went wrong
-            })
+    _navigateToClub(club) {
+        this.props.navigator.push({
+            type: "club",
+            index: this.props.route.index+1,
+            clubName: club.name
+        });
     }
 }

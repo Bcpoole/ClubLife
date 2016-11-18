@@ -24,8 +24,28 @@ export default class ClubLifeNavigator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: ""
+            userId: "",
+            clubList: null
         };
+    }
+
+    _fetchClubInfo() {
+        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations";
+        fetch(url)
+            .then(res=>res.json())
+            .then(json => {
+                this.setState({
+                    clubList: json
+                })
+            })
+            .catch(e => {
+                console.error(e);
+                //TODO: figure out how to navigate back out if something went wrong
+            })
+    }
+
+    componentDidMount() {
+        this._fetchClubInfo();
     }
 
     render() {
@@ -128,6 +148,7 @@ export default class ClubLifeNavigator extends Component {
                 case "club":
                     scene = (
                         <Club
+                            clubName={route.clubName}
                             onGoEditClub={()=>{
                                 const leIndex = route.index+1;
                                 navigator.push({
@@ -175,6 +196,7 @@ export default class ClubLifeNavigator extends Component {
                         <FindAClub
                             navigator={navigator}
                             route={route}
+                            clubList={this.state.clubList}
                         />
                     );
                     break;
