@@ -46,19 +46,28 @@ namespace skeleton.Data {
     }
     #endregion
 
-    //POST
-    public async void UpdateUserName(ObjectId id, string name) {
+    public async void UpdateUserAsync(User user) {
+      var coll = database.GetCollection<User>("users");
 
-      var user = GetUserById(id);
-      var col = database.GetCollection<User>("users");
-
-      var filter = Builders<User>.Filter.Eq(x => x.Id, id);
-      var update = Builders<User>.Update.Set(x => x.Name, name);
-      await col.UpdateOneAsync(filter, update);
+      var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
+      var update = Builders<User>.Update
+        .Set(x => x.Username, user.Username)
+        .Set(x => x.Name, user.Name)
+        .Set(x => x.Clubs, user.Clubs);
+      await coll.UpdateOneAsync(filter, update);
     }
 
-    public void UpdateUser(ObjectId id) {
-      throw new NotImplementedException();
+    public async void CreateNewUserAsync(User user) {
+      var coll = database.GetCollection<User>("users");
+
+      user.Id = new ObjectId();
+      await coll.InsertOneAsync(user);
+
+      var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
+      var update = Builders<User>.Update
+        .Set(x => "salt", Guid.NewGuid().ToString())
+        .Set(x => "password", "implment OAuth on Frontend please so I can just store tokens");
+      await coll.UpdateOneAsync(filter, update);
     }
   }
 }
