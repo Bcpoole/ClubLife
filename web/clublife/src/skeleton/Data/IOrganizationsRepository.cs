@@ -19,5 +19,6 @@ namespace skeleton.Data {
     Event GetEvent(ObjectId id);
     IEnumerable<Event> FindPublicEvents();
     void UpdateEventAsync(Event @event);
+    void CreateNewEventAsync(Event @event);
   }
 }

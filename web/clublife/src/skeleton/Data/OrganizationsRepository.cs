@@ -110,6 +110,12 @@ namespace skeleton.Data {
         .Set(x => x.IsPublic, @event.IsPublic);
       await coll.UpdateOneAsync(filter, update);
     }
+
+    public async void CreateNewEventAsync(Event @event) {
+      @event.Id = new ObjectId();
+      @event.Created = DateTime.UtcNow;
+      await database.GetCollection<Event>("events").InsertOneAsync(@event);
+    }
     #endregion
   }
 }

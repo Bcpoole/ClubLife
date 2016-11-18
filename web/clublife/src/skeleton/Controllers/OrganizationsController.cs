@@ -140,9 +140,8 @@ namespace skeleton.Controllers {
     // PUT api/organizations/581b77c29534b37d50c51b6c/events/new
     /// <param name="id">club id</param>
     [HttpPut("{id}/events/new")]
-    public void CreateNewEvent(string id) {
-      throw new NotImplementedException();
-      //Repo.CreateNewEvent(new ObjectId(id));
+    public void CreateNewEvent(Event @event) {
+      Repo.CreateNewEventAsync(@event);
     }
 
     // GET api/organizations/581b77c29534b37d50c51b6c/events
