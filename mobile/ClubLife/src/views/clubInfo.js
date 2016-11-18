@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -26,53 +24,53 @@ class ClubInfo extends Component {
             data: []
 
         };
-        
-    }   
+
+    }
     render() {
         var TouchableElement = TouchableNativeFeedback;
         var officer = true; // figure this out later
         var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','image url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
         var data = this.state.data;
-        
+
         function clubValue(){
-           
+
            var returnValue = [];
-                    
-           
-            
+
+
+
            data.map(club=> {
                var i = 0;
                for (let prop in club){
-                    
+
                     if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
                         continue;
                     }
-                    
+
                     returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
                     i++;
                }
-               
-               
-              
-                
-               
+
+
+
+
+
             })
-      
+
           return returnValue;
-            
+
         }
-        
-        
-        
+
+
+
         return (
         <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
-            
+
             {clubValue()}
-            
+
             <TouchableElement style = {styles.button} onPress = {()=>{alert("yo")}}>
                 <View><Text>Submit</Text></View>
             </TouchableElement>
-            <TouchableElement style = {styles.button} onPress = {this.props.onGoClub}>
+            <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub()}>
                 <View><Text>Back</Text></View>
             </TouchableElement>
 
@@ -81,8 +79,16 @@ class ClubInfo extends Component {
 
         );
         }
-        
-        
+
+        _onGoClub() {
+            this.props.navigator.push({
+                type: "club",
+                index: this.props.route.index+1,
+                user: this.props.route.user
+            });
+        }
+
+
         // Jonathan's component code
         // hard coded to acm
         componentDidMount() {
@@ -105,9 +111,7 @@ class ClubInfo extends Component {
 
 }
 
-   module.exports = ClubInfo;
-
-
+module.exports = ClubInfo;
 
 const styles = StyleSheet.create({
   container: {

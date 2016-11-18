@@ -15,26 +15,34 @@ class ClubPage extends Component {
         super(props);
         this.state = {selectedTab: 'home'};
     }
-    
+
     render (){
-        
+
         var TouchableElement = TouchableNativeFeedback;
         return(
            <View>
-           
+
            <Text>{"\n\n"}Mah CLOOBS: </Text>
-           
-           <TouchableElement style = {styles.button} onPress = {this.props.onGoClub}>
+
+           <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub()}>
               <View><Text>Club 1</Text></View>
            </TouchableElement>
-           
+
            </View>
-            
-            
+
+
         );
-        
+
     }
-    
+
+    _onGoClub() {
+        this.props.navigator.push({
+            type: 'club',
+            index: this.props.route.index+1,
+            clubName: 'acm'
+        });
+    }
+
 }
 
 

@@ -1,18 +1,8 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  Alert,
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableNativeFeedback,
-  Image,
-  TouchableOpacity,
-  TouchableHighlight,
+  AppRegistry, Alert, Button, StyleSheet, Text, View, TextInput,
+  TouchableNativeFeedback, Image, TouchableOpacity, TouchableHighlight,
 } from 'react-native';
-
 
 class EditProfile extends Component {
     constructor(props){
@@ -46,19 +36,19 @@ class EditProfile extends Component {
             <View style = {styles.clubs}>
                 <Text style = {styles.instructions}>Krusty Krab Cooks</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Club?", "Are you sure you want to leave this club?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.png')} />
                 </TouchableHighlight>
             </View>
             <View style = {styles.clubs}>
                 <Text style = {styles.instructions}>Bubble Blowers</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Club?", "Are you sure you want to leave this club?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.png')} />
                 </TouchableHighlight>
             </View>
             <View style = {styles.clubs}>
                 <Text style = {styles.instructions}>Jellyfishing</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Club?", "Are you sure you want to leave this club?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.png')} />
                 </TouchableHighlight>
             </View>
 
@@ -67,24 +57,24 @@ class EditProfile extends Component {
                 <Text style = {styles.instructions}>Jellyfishing Practice</Text>
                 <Text style = {styles.instructions}>[Tues. 6:00 pm]</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Event?", "Are you sure you want to leave this event?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.png')} />
                 </TouchableHighlight>
             </View>
             <View style = {styles.events}>
                 <Text style = {styles.instructions}>Bubble Party</Text>
                 <Text style = {styles.instructions}>[Fri. 8:00 pm]</Text>
                 <TouchableHighlight onPress = {()=>{Alert.alert("Leave Event?", "Are you sure you want to leave this event?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                    <Image style = {styles.deleteButton} source={require('./krab.jpg')} />
+                    <Image style = {styles.deleteButton} source={require('./krab.png')} />
                 </TouchableHighlight>
             </View>
 
             <View style = {styles.finalize}>
-                <TouchableHighlight onPress={this.props.onGoProfile}>
+                <TouchableHighlight onPress={()=>this._onGoProfile()}>
                     <View style = {styles.bottomConfirm}>
                         <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', textAlign: 'center'}}>Confirm</Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={this.props.onGoProfile}>
+                <TouchableHighlight onPress={()=>this._onGoProfile()}>
                     <View style = {styles.bottomCancel}>
                         <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', textAlign: 'center'}}>Cancel</Text>
                     </View>
@@ -95,49 +85,16 @@ class EditProfile extends Component {
         );
         }
 
-
+        _onGoProfile() {
+            if(this.props.route.index > 1) {
+                //assume we came here from the profile, but sanity check
+                this.props.navigator.pop();
+            }
+        }
 
 }
 
-   module.exports = EditProfile;
-
-
-
-
-
-
-
-// module.exports = React.createClass({
-//  render() {
-
-//     var TouchableElement = TouchableNativeFeedback;
-
-
-//     return (
-//       <View style={styles.container}>
-//         <View style={styles.box}>
-//             <Image style = {styles.profilepic} source={require('./sponge.jpeg')} />
-//             <View style={styles.longBox}>
-//                 <Text style={styles.welcome}>
-//                 Spongebob Squarepants
-//                 </Text>
-//                 <Text style = {styles.instructions}>sponge@bob.com</Text>
-
-
-//             </View>
-
-//         </View>
-//          <TouchableElement style = {styles.button} onPress = {()=>{alert("u")}}>
-//                     <View><Image style = {styles.edit} source={require('./edit.png')} /></View>
-//                 </TouchableElement>
-//       </View>
-//     );
-//     }
-//  });
-
-
-
-
+module.exports = EditProfile;
 
 const styles = StyleSheet.create({
   container: {

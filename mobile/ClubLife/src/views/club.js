@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -13,11 +11,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
-
-
 //import TabNavigator from 'react-native-tab-navigator';
 import Communications from 'react-native-communications';
-
 
 class Club extends Component {
     constructor(props){
@@ -45,7 +40,7 @@ class Club extends Component {
         var offOps = <Text></Text>;
         if (officer){
             offOps =
-                <TouchableElement onPress = {this.props.onGoEditClub}>
+                <TouchableElement onPress = {()=>this._onGoEditClub()}>
                     <View><Text style = {styles.button} >Edit Club Info</Text></View>
                 </TouchableElement>;
         }
@@ -84,10 +79,11 @@ class Club extends Component {
 
 
                 <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
-                    <TouchableElement onPress={this.props.onGoClubList}>
+                    <TouchableElement onPress={()=>this._onGoClubInfo()}>
                         <View><Text style={styles.button}>Events</Text></View>
                     </TouchableElement>
-                    <TouchableElement style = {styles.button} onPress = {this.props.onGoClubInfo}>
+                    {/* TODO: fix the callback onpres above */}
+                    <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
                         <View><Text style = {styles.button}>Info</Text></View>
                     </TouchableElement>
                     {memberOps}
@@ -122,7 +118,7 @@ class Club extends Component {
         // Jonathan's component code
         componentDidMount() {
             const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
-                this.props.clubName.replace(" ","+");
+                this.props.route.clubName.replace(" ","+");
             fetch(url)
                 .then(res=>res.json())
                 .then(json => {
@@ -135,6 +131,22 @@ class Club extends Component {
                     console.error(e);
                     //TODO: figure out how to navigate back out if something went wrong
                 })
+        }
+
+        _onGoEditClub() {
+            this.props.navigator.push({
+                type: "EditClub",
+                index: this.props.route.index+1,
+                user: this.props.route.user
+            });
+        }
+
+        _onGoClubInfo() {
+            this.props.navigator.push({
+                type: "clubInfo",
+                index: this.props.route.index+1,
+                user: this.props.route.user
+            });
         }
 }
 
