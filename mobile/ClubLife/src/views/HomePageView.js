@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight } from 'react-native';
 
-
 export default class HomePage extends Component {
+    constructor(props) {
+        super(props);
+    }
   render() {
     return (
       <View>
@@ -27,15 +29,59 @@ export default class HomePage extends Component {
                 <Image style={styles.bottomIcon} source={require('./Profile-Icon.jpeg')} />
             </View>
             <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
-                <TouchableHighlight onPress={this.props.onGoHome}><Text style={styles.BottomBar}>Home</Text></TouchableHighlight>
-                <TouchableHighlight onPress={this.props.onGoClubList}><Text style={styles.BottomBar}>My Clubs</Text></TouchableHighlight>
-                <TouchableHighlight onPress = {this.props.onGoFindAClub}><Text style={styles.BottomBar}>Search</Text></TouchableHighlight>
-                <TouchableHighlight onPress={this.props.onGoEvents}><Text style={styles.BottomBar}>My Events</Text></TouchableHighlight>
-                <TouchableHighlight onPress={this.props.onGoProfile}><Text style={styles.BottomBar}>My Profile</Text></TouchableHighlight>
+                <TouchableHighlight onPress={()=>this._onGoHome()}><Text style={styles.BottomBar}>Home</Text></TouchableHighlight>
+                <TouchableHighlight onPress={()=>this._onGoClubList()}><Text style={styles.BottomBar}>My Clubs</Text></TouchableHighlight>
+                <TouchableHighlight onPress = {()=>this._onGoFindAClub()}><Text style={styles.BottomBar}>Search</Text></TouchableHighlight>
+                <TouchableHighlight onPress={()=>this._onGoEvents()}><Text style={styles.BottomBar}>My Events</Text></TouchableHighlight>
+                <TouchableHighlight onPress={()=>this._onGoProfile()}><Text style={styles.BottomBar}>My Profile</Text></TouchableHighlight>
             </View>
         </View>
       </View>
     );
+  }
+
+  _onGoHome(){
+      this.props.navigator.push({
+          type: "homepage",
+          index: this.props.route.index+1,
+          user: this.props.route.user
+      })
+  }
+
+  _onGoProfile() {
+      this.props.navigator.push({
+          type: "profile",
+          index: this.props.route.index+1,
+          user: this.props.route.user
+      })
+  }
+  _onGoFindAnEvent() {
+      this.props.navigator.push({
+          type: "findanevent",
+          index: this.props.route.index+1,
+          user: this.props.route.user
+      })
+  }
+  _onGoClubList() {
+      this.props.navigator.push({
+          type: "clubPage",
+          index: this.props.route.index+1,
+          user: this.props.route.user
+      })
+  }
+  _onGoFindAClub() {
+      this.props.navigator.push({
+          type: "findaclub",
+          index: this.props.route.index+1,
+          user: this.props.route.user
+      })
+  }
+  _onGoEvents() {
+      this.props.navigator.push({
+          type: "testpage",
+          index: this.props.route.index+1,
+          user: this.props.route.user
+      })
   }
 }
 

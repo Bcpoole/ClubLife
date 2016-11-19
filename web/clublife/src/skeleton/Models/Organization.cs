@@ -1,11 +1,13 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace skeleton.Models {
   [BsonIgnoreExtraElements]
   public class Organization {
+    [JsonConverter(typeof(ObjectIdConverter))]
     public ObjectId Id { get; set; }
     [BsonElement("Secondary Advisor Department")]
     public string SecondaryAdvisorDepartment { get; set; }
@@ -64,10 +66,21 @@ namespace skeleton.Models {
     public string[] Officers { get; set; }
     [BsonElement("members")]
     public string[] Members { get; set; }
+
     [BsonElement("events")]
-    public List<ObjectId> Events { get; set; }
+    private IEnumerable<ObjectId> events { get; set; }
+    public IEnumerable<string> Events {
+      get {
+        return events.Select(x => x.ToString());
+      }
+    }
     [BsonElement("posts")]
-    public List<ObjectId> Posts { get; set; }
+    private IEnumerable<ObjectId> posts { get; set; }
+    public IEnumerable<string> Posts {
+      get {
+        return posts.Select(x => x.ToString());
+      }
+    }
     [BsonElement("pendingRequests")]
     public List<ObjectId> PendingRequests { get; set; }
 

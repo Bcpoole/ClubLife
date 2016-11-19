@@ -1,10 +1,12 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
 namespace skeleton.Models {
   public class Event : IPost {
+    [JsonConverter(typeof(ObjectIdConverter))]
     public ObjectId Id { get; set; }
     [BsonElement("subject")]
     public string Subject { get; set; }
