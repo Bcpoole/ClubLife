@@ -121,12 +121,6 @@ class EditClub extends Component {
         
         
         
-        return (
-        <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
-            
-            {clubValue()}
-            
-            <TouchableElement style = {styles.button} onPress = {()=>{updateDatabase()}}>
 
 
 
@@ -149,32 +143,31 @@ class EditClub extends Component {
 
         );
         }
-
-
-            // Jonathan's component code
-        componentDidMount() {
-            const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name=UA+Association+for+Computing+Machinery";
-            fetch(url)
-                .then(res=>res.json())
-                .then(json => {
-                    this.setState({
-                        hasData: true,
-                        data: json
-                    })
+    }
+        // Jonathan's component code
+    componentDidMount() {
+        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name=UA+Association+for+Computing+Machinery";
+        fetch(url)
+            .then(res=>res.json())
+            .then(json => {
+                this.setState({
+                    hasData: true,
+                    data: json
                 })
-                .catch(e => {
-                    console.error(e);
-                    //TODO: figure out how to navigate back out if something went wrong
-                })
-            }
-
-        _onGoClub() {
-            this.props.navigator.push({
-                type: 'club',
-                index: this.props.route.index+1,
-                user: this.props.route.user
+            })
+            .catch(e => {
+                console.error(e);
+                //TODO: figure out how to navigate back out if something went wrong
             })
         }
+
+    _onGoClub() {
+        this.props.navigator.push({
+            type: 'club',
+            index: this.props.route.index+1,
+            user: this.props.route.user
+        })
+    }
 
 
 }
