@@ -4,6 +4,12 @@ import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight } from '
 export default class HomePage extends Component {
     constructor(props) {
         super(props);
+        /* don't think these are needed, uncomment if needed */
+        this._onGoHome = this._onGoHome.bind(this);
+        this._onGoClubList = this._onGoClubList.bind(this);
+        this._onGoChooseSearch = this._onGoChooseSearch.bind(this);
+        this._onGoEvents = this._onGoEvents.bind(this);
+        this._onGoProfile = this._onGoProfile.bind(this);
     }
   render() {
     return (
@@ -31,7 +37,7 @@ export default class HomePage extends Component {
             <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
                 <TouchableHighlight onPress={()=>this._onGoHome()}><Text style={styles.BottomBar}>Home</Text></TouchableHighlight>
                 <TouchableHighlight onPress={()=>this._onGoClubList()}><Text style={styles.BottomBar}>My Clubs</Text></TouchableHighlight>
-                <TouchableHighlight onPress = {()=>this._onGoFindAClub()}><Text style={styles.BottomBar}>Search</Text></TouchableHighlight>
+                <TouchableHighlight onPress = {()=>this._onGoChooseSearch()}><Text style={styles.BottomBar}>Search</Text></TouchableHighlight>
                 <TouchableHighlight onPress={()=>this._onGoEvents()}><Text style={styles.BottomBar}>My Events</Text></TouchableHighlight>
                 <TouchableHighlight onPress={()=>this._onGoProfile()}><Text style={styles.BottomBar}>My Profile</Text></TouchableHighlight>
             </View>
@@ -55,6 +61,14 @@ export default class HomePage extends Component {
           user: this.props.route.user
       })
   }
+
+  _onGoClubList() {
+      this.props.navigator.push({
+          type: "clubPage",
+          index: this.props.route.index+1,
+          user: this.props.route.user
+      });
+  }
   _onGoFindAnEvent() {
       this.props.navigator.push({
           type: "findanevent",
@@ -62,9 +76,9 @@ export default class HomePage extends Component {
           user: this.props.route.user
       })
   }
-  _onGoClubList() {
+  _onGoChooseSearch() {
       this.props.navigator.push({
-          type: "clubPage",
+          type: "choosesearch",
           index: this.props.route.index+1,
           user: this.props.route.user
       })
