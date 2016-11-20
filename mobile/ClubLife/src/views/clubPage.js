@@ -19,13 +19,14 @@ class ClubPage extends Component {
     render (){
 
         var TouchableElement = TouchableNativeFeedback;
+        var clubName = "UA Association for Computing Machinery";
         return(
            <View>
 
            <Text>{"\n\n"}Mah CLOOBS: </Text>
 
-           <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub()}>
-              <View><Text>Club 1</Text></View>
+           <TouchableElement style = {styles.button} onPress = {()=>this._navigateToClub(clubName)}>
+              <View><Text>{clubName}</Text></View>
            </TouchableElement>
 
            </View>
@@ -35,11 +36,11 @@ class ClubPage extends Component {
 
     }
 
-    _onGoClub() {
+    _navigateToClub(clubName) {
         this.props.navigator.push({
-            type: 'club',
+            type: "club",
             index: this.props.route.index+1,
-            clubName: 'acm'
+            clubName: clubName
         });
     }
 

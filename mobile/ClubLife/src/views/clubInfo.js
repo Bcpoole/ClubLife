@@ -70,7 +70,7 @@ class ClubInfo extends Component {
             <TouchableElement style = {styles.button} onPress = {()=>{alert("yo")}}>
                 <View><Text>Submit</Text></View>
             </TouchableElement>
-            <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub()}>
+            <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub(this.props.route.clubName)}>
                 <View><Text>Back</Text></View>
             </TouchableElement>
 
@@ -80,11 +80,12 @@ class ClubInfo extends Component {
         );
         }
 
-        _onGoClub() {
+        _onGoClub(name) {
             this.props.navigator.push({
                 type: "club",
                 index: this.props.route.index+1,
-                user: this.props.route.user
+                user: this.props.route.user,
+                clubName: name
             });
         }
 
@@ -92,7 +93,8 @@ class ClubInfo extends Component {
         // Jonathan's component code
         // hard coded to acm
         componentDidMount() {
-            const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name=UA+Association+for+Computing+Machinery";
+            const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
+                this.props.route.clubName.replace(" ","+");         
             fetch(url)
                 .then(res=>res.json())
                 .then(json => {
