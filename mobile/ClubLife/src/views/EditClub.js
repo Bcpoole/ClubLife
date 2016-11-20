@@ -23,7 +23,8 @@ class EditClub extends Component {
             hasData: false,
             data: [],
             newVal: '',
-            currentVal:''
+            currentVal:'',
+            newValues : []
             
 
         };
@@ -77,11 +78,15 @@ class EditClub extends Component {
         var clubValue= ()=>{
 
            var returnValue = [];
-
+           this.state.newValues;
+            //onChangeText={(text)=>{this.state.newValues[i]=text}} 
+            //this.state.newValue.push(club[prop]);
            data.map(club=> {
                var i = 0;
+               this.state.newValues;
                for (let prop in club){
-
+                    
+                    this.setState(this.state.newValues;
                     if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
                         continue;
                     }
@@ -94,19 +99,16 @@ class EditClub extends Component {
                             <TextInput 
                                 style = {styles.textEdit} 
                                 value = {club[prop]}>
-                                
+                                     
                                  
                             </TextInput>
                         </View>);
-                    i++;
+                    i++; 
                }
 
 
-
-
-
-            })
-
+            }, this) // end of map
+                       
           return returnValue;
 
         }
@@ -118,7 +120,7 @@ class EditClub extends Component {
 
             {clubValue()}
             <Text>{this.props.route.clubName}</Text> 
-            <TouchableElement style = {styles.button} onPress = {()=>{alert("yo")}}>
+            <TouchableElement style = {styles.button} onPress = {()=>{alert(this.state.newValues[0])}}>
 
                 <View><Text>Submit</Text></View>
             </TouchableElement>
