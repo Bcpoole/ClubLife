@@ -28,11 +28,11 @@ export default class HomePage extends Component {
         </View>
         <View style={{width: 375, height: 65, backgroundColor: 'skyblue'}}>
             <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 5, paddingRight: 15, paddingTop: 3}}>
-                <Image style={styles.bottomIcon} source={require('./Home-Icon.jpg')} />
-                <Image style={styles.bottomIcon} source={require('./Club-Icon.jpeg')} />
-                <Image style={styles.bottomIcon} source={require('./Search-Icon.jpg')} />
-                <Image style={styles.bottomIcon} source={require('./Events-Icon.jpeg')} />
-                <Image style={styles.bottomIcon} source={require('./Profile-Icon.jpeg')} />
+                <Image style={styles.bottomIcon} source={require('./images/Home-Icon.jpg')} />
+                <Image style={styles.bottomIcon} source={require('./images/Club-Icon.jpeg')} />
+                <Image style={styles.bottomIcon} source={require('./images/Search-Icon.jpg')} />
+                <Image style={styles.bottomIcon} source={require('./images/Events-Icon.jpeg')} />
+                <Image style={styles.bottomIcon} source={require('./images/Profile-Icon.jpeg')} />
             </View>
             <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
                 <TouchableHighlight onPress={()=>this._onGoHome()}><Text style={styles.BottomBar}>Home</Text></TouchableHighlight>

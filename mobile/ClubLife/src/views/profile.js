@@ -21,7 +21,7 @@ class Profile extends Component {
         return (
         <View style={styles.container}>
             <View style={styles.box}>
-                <Image style = {styles.profilepic} source={require('./sponge.jpeg')} />
+                <Image style = {styles.profilepic} source={require('./images/sponge.jpeg')} />
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
                     Spongebob Squarepants
@@ -33,7 +33,7 @@ class Profile extends Component {
 
             </View>
             <TouchableHighlight onPress={()=>this._onGoEditProfile()}>
-                <View><Image style = {styles.edit} source={require('./edit.png')} /></View>
+                <View><Image style = {styles.edit} source={require('./images/edit.png')} /></View>
             </TouchableHighlight>
             <Text style = {styles.welcome}>Clubs:</Text>
             <Text style = {styles.instructions}>Krusty Krab Cooks</Text>
@@ -65,7 +65,7 @@ module.exports = Profile;
 //     return (
 //       <View style={styles.container}>
 //         <View style={styles.box}>
-//             <Image style = {styles.profilepic} source={require('./sponge.jpeg')} />
+//             <Image style = {styles.profilepic} source={require('./images/sponge.jpeg')} />
 //             <View style={styles.longBox}>
 //                 <Text style={styles.welcome}>
 //                 Spongebob Squarepants
@@ -77,7 +77,7 @@ module.exports = Profile;
 
 //         </View>
 //          <TouchableElement style = {styles.button} onPress = {()=>{alert("u")}}>
-//                     <View><Image style = {styles.edit} source={require('./edit.png')} /></View>
+//                     <View><Image style = {styles.edit} source={require('./images/edit.png')} /></View>
 //                 </TouchableElement>
 //       </View>
 //     );

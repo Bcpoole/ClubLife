@@ -109,11 +109,11 @@ class Club extends Component {
 
             <Text style = {styles.welcome}>Messages:</Text>
             <View style = {[styles.box,  styles.message]}>
-                <Image style = {styles.edit} source={require('./krab.png')} />
+                <Image style = {styles.edit} source={require('./images/krab.png')} />
                 <Text style = {styles.instructions}> Mr. Krabs: Join us at our frycook olymics next Tues!!</Text>
             </View>
             <View style = {[styles.box, styles.message]}>
-                <Image style = {styles.edit} source={require('./pat.jpeg')} />
+                <Image style = {styles.edit} source={require('./images/pat.jpeg')} />
                 <Text style = {styles.instructions}> Patrick: Vote for me in tomorrow's elections!</Text>
             </View>
         </ScrollView>
