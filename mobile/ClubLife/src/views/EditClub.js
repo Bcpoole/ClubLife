@@ -35,101 +35,89 @@ class EditClub extends Component {
         //image
 
         
-         var data = this.state.data;
+        var data = this.state.data;
         
-        var clubValue = () => {
+        // var clubValue = () => {
            
-           var returnValue = [];
-           //var html = 
-          
-          
-          
-          // something wierd is going on with the text input
-           data.map(club=> {
-               
-               for (let prop in club){
+        //    var returnValue = [];
+     
+        //   // something wierd is going on with the text input
+        //    data.map(club=> {               
+        //        for (let prop in club){                   
+        //             if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
+        //                 continue;
+        //             }
                     
+        //             this.setState({currentVal : club[prop]});
+        //             if (Array.isArray(val)){
+                        
+        //                 // this should be changed? whats in the arrays?
+        //                 this.setState({currentVal:club[prop][0]});
+                        
+        //             }
+                    
+        //             returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text>
+                        
+                        // <TextInput 
+                        //     style = {styles.textEdit} 
+                        //     value = {this.state.curentVal}
+                        //     onChangeText = {(newValue)=>{this.setState({stuff: newValue});}}         
+                            
+                        // ></TextInput>
+                        
+        //                 </View>);
+        //           // club[prop] = this.state.newVal;
+        //        }
+               
+        //     })
+        //     return returnValue;
+                   
+        // }
+        
+        var clubValue= ()=>{
+
+           var returnValue = [];
+
+           data.map(club=> {
+               var i = 0;
+               for (let prop in club){
+
                     if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
                         continue;
                     }
-                    
-                    this.setState({currentState : club[prop]});
-                    if (Array.isArray(val)){
-                        
-                        // this should be changed? whats in the arrays?
-                        this.setState({currentState:club[prop][0]});
-                        
-                    }
-                    
-                    returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text>
-                        
-                        <TextInput 
-                            style = {styles.textEdit} 
-                            value = {this.state.curentState}
-                            onChangeText = {(newValue)=>{this.setState({stuff: newValue});}}
-                            
-                            
-                        ></TextInput>
-                        
+
+                    returnValue.push(
+                        <View>
+                            <Text style={styles.welcome}>
+                                {prop}:
+                            </Text>
+                            <TextInput 
+                                style = {styles.textEdit} 
+                                value = {club[prop]}>
+                                
+                                 
+                            </TextInput>
                         </View>);
-                  // club[prop] = this.state.newVal;
+                    i++;
                }
-               
+
+
+
+
+
             })
-            
-            //   data.map(club=> {
-            //    var i = 0;
-            //    for (let prop in club){
-                    
-            //         if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
-            //             continue;
-            //         }
-                    
-            //         returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text>
-                        
-            //             <Text>{club[prop]}
-            //             </Text>
-                        
-            //             </View>);
-            //         i++;
-            //    }
-            //   })
-      
-          
-
-        function clubValue(){
-
-           var returnValue = [];
-           //var html =
-          for (var i=0;i<vals.length;i++){
-              returnValue.push(<View style = {styles.boxSpace}>
-
-              <Text>{vals[i]}:  </Text>
-              <TextInput
-               style={styles.textEdit}>
-
-               </TextInput>
-               </View>);
-          }
 
           return returnValue;
 
         }
 
         
-        
-        
-        
-        
-
-
-
 
         return (
-        <ScrollView>
+        <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
 
             {clubValue()}
-
+            <Text>{this.props.route.clubName}</Text> 
             <TouchableElement style = {styles.button} onPress = {()=>{alert("yo")}}>
 
                 <View><Text>Submit</Text></View>
@@ -142,11 +130,12 @@ class EditClub extends Component {
 
 
         );
-        }
+        
     }
         // Jonathan's component code
     componentDidMount() {
-        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name=UA+Association+for+Computing+Machinery";
+        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
+                this.props.route.clubName.replace(" ","+");
         fetch(url)
             .then(res=>res.json())
             .then(json => {
@@ -165,7 +154,8 @@ class EditClub extends Component {
         this.props.navigator.push({
             type: 'club',
             index: this.props.route.index+1,
-            user: this.props.route.user
+            user: this.props.route.user,
+            clubName: this.props.route.clubName
         })
     }
 
@@ -189,7 +179,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   instructions: {
-    textAlign: 'center',
+    //textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },

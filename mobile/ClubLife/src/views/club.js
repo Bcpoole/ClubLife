@@ -35,7 +35,7 @@ class Club extends Component {
         else {
             //TODO: make all the stuff underneath do actual things,
             // here I'm just returning the JSON as a string and making it the view LMAO
-            return <View style={{paddingTop: 40}}><Text>{JSON.stringify(this.state.data)}</Text></View>
+            //return <View style={{paddingTop: 40}}><Text>{JSON.stringify(this.state.data)}</Text></View>
         }
 
         var TouchableElement = TouchableNativeFeedback;
@@ -62,13 +62,19 @@ class Club extends Component {
 
 
 
-        var picURL = 'https://images.collegiatelink.net/clink/images/f5b2dc13-7aab-4a95-ab24-adcfa884d90e57a54f72-e5a6-43f1-aa48-942c176ef3b2.png';
-        var name = 'ACM';
+        var picURL;
+        
         var data = this.state.data;
+        var name;
 
 
-
-
+        {data.map(club=> {
+                name = club.name;
+                picURL = club.img;
+                // return (
+                //     <View><Text>{club.name}</Text></View>
+                // );
+            })}
 
         return (
 
@@ -86,7 +92,7 @@ class Club extends Component {
 
 
                 <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
-                    <TouchableElement onPress={()=>this._onGoClubInfo()}>
+                    <TouchableElement onPress={()=>this._onGoEditClub()}>
                         <View><Text style={styles.button}>Events</Text></View>
                     </TouchableElement>
                     {/* TODO: fix the callback onpres above */}
@@ -99,12 +105,7 @@ class Club extends Component {
                 </View>
             </View>
 
-            {data.map(club=> {
-                return (
-                    <View><Text>{club.name}</Text></View>
-                );
-            })}
-            <Text>{data.name}</Text>
+            
 
             <Text style = {styles.welcome}>Messages:</Text>
             <View style = {[styles.box,  styles.message]}>
@@ -143,7 +144,8 @@ class Club extends Component {
             this.props.navigator.push({
                 type: "EditClub",
                 index: this.props.route.index+1,
-                user: this.props.route.user
+                user: this.props.route.user,
+                clubName: this.props.route.clubName
             });
         }
 
@@ -151,7 +153,8 @@ class Club extends Component {
             this.props.navigator.push({
                 type: "clubInfo",
                 index: this.props.route.index+1,
-                user: this.props.route.user
+                user: this.props.route.user,
+                clubName: this.props.route.clubName
             });
         }
 }
