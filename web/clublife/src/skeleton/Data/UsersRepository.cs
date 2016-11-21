@@ -33,8 +33,8 @@ namespace skeleton.Data {
       return GetAllUsers().Where(x => x.Id == id).FirstOrDefault();
     }
 
-    public IEnumerable<User> FindUserByUsername(string username) {
-      return GetAllUsers().Where(x => x.Username.ToLower().Contains(username.ToLower()));
+    public User FindUserByUsername(string username) {
+      return GetAllUsers().Where(x => x.Username.ToLower() == username.ToLower()).FirstOrDefault();
     }
 
     public IEnumerable<User> FindUserByName(string name) {
@@ -47,7 +47,13 @@ namespace skeleton.Data {
     #endregion
 
     public async void UpdateUserAsync(User user) {
-      var coll = database.GetCollection<User>("users");
+      var dbUser = GetUserById(user.Id);
+      if (dbUser.Username != user.Username) {
+        //check if already exists
+        //do stuff
+      }
+
+        var coll = database.GetCollection<User>("users");
 
       var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
       var update = Builders<User>.Update
