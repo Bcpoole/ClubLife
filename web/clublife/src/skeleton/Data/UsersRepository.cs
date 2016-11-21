@@ -34,7 +34,7 @@ namespace skeleton.Data {
     }
 
     public User FindUserByUsername(string username) {
-      return GetAllUsers().Where(x => x.Username.ToLower() == username.ToLower()).FirstOrDefault();
+      return GetAllUsers().Where(x => x.Username.ToLower() == username.ToLower()).SingleOrDefault();
     }
 
     public IEnumerable<User> FindUserByName(string name) {
