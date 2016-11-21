@@ -67,5 +67,11 @@ namespace skeleton.Controllers {
       }
       return Ok(events);
     }
+
+    // POST api/users/5824e62917b44627c34fa66e/leave/581b77c29534b37d50c51b6c
+    [HttpPost("{userId}/leave/{clubId}")]
+    public void LeaveClub(string userId, string clubId) {
+      Repo.LeaveClub(new ObjectId(userId), new ObjectId(clubId));
+    }
   }
 }

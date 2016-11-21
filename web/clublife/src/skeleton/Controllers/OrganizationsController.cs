@@ -154,5 +154,13 @@ namespace skeleton.Controllers {
       return Ok(events);
     }
     #endregion
+
+    #region Members
+    // POST api/organizations/581b77c29534b37d50c51b6c/approve/5824e62917b44627c34fa66e?approved=true
+    [HttpPost("{clubId}/approve/{userId}")]
+    public void ApprovePendingUser(string userId, string clubId, bool approved) {
+      Repo.ApproveMember(new ObjectId(userId), new ObjectId(clubId), approved);
+    }
+    #endregion
   }
 }
