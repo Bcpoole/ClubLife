@@ -57,7 +57,6 @@ namespace skeleton.Data {
 
       var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
       var update = Builders<User>.Update
-        .Set(x => x.Username, user.Username)
         .Set(x => x.Name, user.Name)
         .Set(x => x.Clubs, user.Clubs);
       await coll.UpdateOneAsync(filter, update);
