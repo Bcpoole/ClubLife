@@ -25,7 +25,7 @@ class EditClub extends Component {
             newVal: '',
             currentVal:'',
             newValues : []
-            
+
 
         };
     }
@@ -35,57 +35,57 @@ class EditClub extends Component {
         //var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
         //image
 
-        
+
         var data = this.state.data;
-        
+
         // var clubValue = () => {
-           
+
         //    var returnValue = [];
-     
+
         //   // something wierd is going on with the text input
-        //    data.map(club=> {               
-        //        for (let prop in club){                   
+        //    data.map(club=> {
+        //        for (let prop in club){
         //             if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
         //                 continue;
         //             }
-                    
+
         //             this.setState({currentVal : club[prop]});
         //             if (Array.isArray(val)){
-                        
+
         //                 // this should be changed? whats in the arrays?
         //                 this.setState({currentVal:club[prop][0]});
-                        
+
         //             }
-                    
+
         //             returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text>
-                        
-                        // <TextInput 
-                        //     style = {styles.textEdit} 
+
+                        // <TextInput
+                        //     style = {styles.textEdit}
                         //     value = {this.state.curentVal}
-                        //     onChangeText = {(newValue)=>{this.setState({stuff: newValue});}}         
-                            
+                        //     onChangeText = {(newValue)=>{this.setState({stuff: newValue});}}
+
                         // ></TextInput>
-                        
+
         //                 </View>);
         //           // club[prop] = this.state.newVal;
         //        }
-               
+
         //     })
         //     return returnValue;
-                   
+
         // }
-        
+
         var clubValue= ()=>{
 
            var returnValue = [];
            this.state.newValues;
-            //onChangeText={(text)=>{this.state.newValues[i]=text}} 
+            //onChangeText={(text)=>{this.state.newValues[i]=text}}
             //this.state.newValue.push(club[prop]);
            data.map(club=> {
                var i = 0;
                this.state.newValues;
                for (let prop in club){
-                    
+
                     this.setState(this.state.newValues;
                     if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
                         continue;
@@ -96,30 +96,30 @@ class EditClub extends Component {
                             <Text style={styles.welcome}>
                                 {prop}:
                             </Text>
-                            <TextInput 
-                                style = {styles.textEdit} 
+                            <TextInput
+                                style = {styles.textEdit}
                                 value = {club[prop]}>
-                                     
-                                 
+
+
                             </TextInput>
                         </View>);
-                    i++; 
+                    i++;
                }
 
 
             }, this) // end of map
-                       
+
           return returnValue;
 
         }
 
-        
+
 
         return (
         <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
 
             {clubValue()}
-            <Text>{this.props.route.clubName}</Text> 
+            <Text>{this.props.route.clubName}</Text>
             <TouchableElement style = {styles.button} onPress = {()=>{alert(this.state.newValues[0])}}>
 
                 <View><Text>Submit</Text></View>
@@ -132,7 +132,7 @@ class EditClub extends Component {
 
 
         );
-        
+
     }
         // Jonathan's component code
     componentDidMount() {
@@ -156,8 +156,7 @@ class EditClub extends Component {
         this.props.navigator.push({
             type: 'club',
             index: this.props.route.index+1,
-            user: this.props.route.user,
-            clubName: this.props.route.clubName
+            state: this.props.route.state,
         })
     }
 

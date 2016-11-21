@@ -52,8 +52,9 @@ export default class ClubLifeNavigator extends Component {
         //initial route for navigation
         var initialRoute = this.props.initialRoute || {
             type: 'login',
-            index: 0
-        }
+            index: 0,
+            state: {}
+        };
 
         //determine which scene to render based on route information.
         var renderScene = (route, navigator) => {
@@ -91,23 +92,8 @@ export default class ClubLifeNavigator extends Component {
                     break;
                 case "choosesearch":
                     scene = (
-                        <ChooseSearch
-                            onGoFindAClub={()=>{
-                                const leIndex = route.index + 1;
-                                navigator.push({
-                                     "type": "findaclub",
-                                     index: leIndex
-                                });
-                            }}
-                            onGoFindAnEvent={()=>{
-                                const leIndex = route.index + 1;
-                                navigator.push({
-                                    "type": "findanevent",
-                                    index: leIndex
-                                });
-                            }}
-                        />
-                        );
+                        <ChooseSearch navigator={navigator} route={route} />
+                    );
                     break;
                 case "findaclub":
                     scene = (
@@ -162,7 +148,12 @@ export default class ClubLifeNavigator extends Component {
                 default:
                     //oh shi-
                     scene = (
-                        <View><Text>Something went horribly wrong with routing.</Text></View>
+                        <View><Text>
+                            {`Something went horribly wrong with routing.
+                            Maybe you made the route type wrong.
+                            Maybe you forgot a break statement.
+                            Maybe it's something else.`}
+                        </Text></View>
                     );
             }
             return scene;
