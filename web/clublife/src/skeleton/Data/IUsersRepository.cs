@@ -11,7 +11,7 @@ namespace skeleton.Data {
     IEnumerable<User> GetAllUsers();
     User GetUserById(ObjectId id);
     IEnumerable<User> FindUserByName(string name);
-    IEnumerable<User> FindUserByUsername(string username);
+    User FindUserByUsername(string username);
     IEnumerable<User> FindUsersInClubById(ObjectId id);
 
     void UpdateUserAsync(User user);
