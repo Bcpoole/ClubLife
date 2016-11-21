@@ -47,13 +47,7 @@ namespace skeleton.Data {
     #endregion
 
     public async void UpdateUserAsync(User user) {
-      var dbUser = GetUserById(user.Id);
-      if (dbUser.Username != user.Username) {
-        //check if already exists
-        //do stuff
-      }
-
-        var coll = database.GetCollection<User>("users");
+      var coll = database.GetCollection<User>("users");
 
       var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
       var update = Builders<User>.Update
