@@ -154,5 +154,17 @@ namespace skeleton.Controllers {
       return Ok(events);
     }
     #endregion
+
+    #region Members
+    [HttpPost("{clubId}/approve")]
+    public void ApprovePendingUser(string userId, string clubId, bool approved) {
+      Repo.ApproveMember(new ObjectId(userId), new ObjectId(clubId), approved);
+    }
+
+    [HttpPost("{userId}/leave/{clubId}")]
+    public void LeaveClub(string userId, string clubId) {
+      Repo.LeaveClub(new ObjectId(userId), new ObjectId(clubId));
+    }
+    #endregion
   }
 }
