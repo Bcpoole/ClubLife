@@ -68,5 +68,17 @@ namespace skeleton.Data {
         .Set(x => "password", "implment OAuth on Frontend please so I can just store tokens");
       await coll.UpdateOneAsync(filter, update);
     }
+
+    public void LeaveClub(ObjectId userId, ObjectId clubId) {
+      var user = GetUserById(userId);
+      user.Clubs.Remove(clubId.ToString());
+
+      var orgRepo = new OrganizationsRepository();
+      var org = orgRepo.GetOrganizationById(clubId);
+      org.Members.Remove(org.Members.Where(x => x == userId.ToString()).Single());
+
+      orgRepo.UpdateOrganizationAsync(org);
+      UpdateUserAsync(user);
+    }
   }
 }

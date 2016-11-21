@@ -25,6 +25,5 @@ namespace skeleton.Data {
     void CreateNewEventAsync(Event @event);
 
     void ApproveMember(ObjectId userId, ObjectId clubId, bool approved);
-    void LeaveClub(ObjectId userId, ObjectId clubId);
   }
 }

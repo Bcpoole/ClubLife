@@ -185,18 +185,6 @@ namespace skeleton.Data {
 
       UpdateOrganizationAsync(org);
     }
-
-    public void LeaveClub(ObjectId userId, ObjectId clubId) {
-      var org = GetOrganizationById(clubId);
-      org.Members.Remove(org.Members.Where(x => x == userId.ToString()).Single());
-
-      var userRepo = new UsersRepository();
-      var user = userRepo.GetUserById(userId);
-      user.Clubs.Append(clubId.ToString());
-
-      UpdateOrganizationAsync(org);
-      userRepo.UpdateUserAsync(user);
-    }
     #endregion
   }
 }
