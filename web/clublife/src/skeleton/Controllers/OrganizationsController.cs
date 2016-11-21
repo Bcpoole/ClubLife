@@ -134,6 +134,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/organizations/581b77c29534b37d50c51b6c/events
+    /// <param name="id">club id</param>
     [HttpGet("{id}/events")]
     public IActionResult GetEventsByOrganization(string id) {
       var events = Repo.FindEventsByOrganization(new ObjectId(id));
