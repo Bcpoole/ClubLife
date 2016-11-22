@@ -89,11 +89,6 @@ export default class Login extends Component {
     render() {
         var TouchableElement = TouchableNativeFeedback;
 
-        var authenticationStatus = '';
-        if(this.state.authenticated) {
-            authenticationStatus = (<Text>{`You are authenticated with TODO`}</Text>);
-        }
-
         return (
             <View style={styles.container}>
                 <Text style={styles.welcome}>
