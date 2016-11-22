@@ -36,8 +36,9 @@ class Signup extends Component {
 
     _navigateSignup() {
         this.props.navigator.push({
-            "type": "login",
-            index: this.props.route.index+1
+            type: "login",
+            index: this.props.route.index+1,
+            state: this.props.route.state
         });
     }
 
@@ -89,8 +90,7 @@ class Signup extends Component {
 
 
         );
-        }
-
+    }
 }
 
 module.exports = Signup;

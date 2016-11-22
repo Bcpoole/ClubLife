@@ -40,7 +40,7 @@ class ClubPage extends Component {
         this.props.navigator.push({
             type: "club",
             index: this.props.route.index+1,
-            clubName: clubName
+            state: Object.assign({}, this.props.route.state, {clubName: clubName})
         });
     }
 

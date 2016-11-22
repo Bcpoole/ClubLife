@@ -122,15 +122,16 @@ export default class Login extends Component {
     _onSuccessfulLogin(user) {
         this.props.navigator.push({
             type: "homepage",
-            user: user,
-            index: this.props.route.index+1
+            index: this.props.route.index+1,
+            state: Object.assign({}, this.props.route.state, {user: user})
         });
     }
 
     _onGoSignup() {
         this.props.navigator.push({
             type: "signup",
-            index: this.props.route.index+1
+            index: this.props.route.index+1,
+            state: this.props.route.state
         });
     }
 }

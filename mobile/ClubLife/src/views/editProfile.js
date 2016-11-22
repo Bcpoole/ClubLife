@@ -90,7 +90,7 @@ class EditProfile extends Component {
 
         _onGoProfile() {
             if(this.props.route.index > 1) {
-                //assume we came here from the profile, but sanity check
+                //assume we came here from the profile
                 this.props.navigator.pop();
             }
         }

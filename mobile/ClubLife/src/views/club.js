@@ -11,11 +11,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
-
-
-
-
-
 //import TabNavigator from 'react-native-tab-navigator';
 import Communications from 'react-native-communications';
 
@@ -63,7 +58,7 @@ class Club extends Component {
 
 
         var picURL;
-        
+
         var data = this.state.data;
         var name;
 
@@ -105,7 +100,7 @@ class Club extends Component {
                 </View>
             </View>
 
-            
+
 
             <Text style = {styles.welcome}>Messages:</Text>
             <View style = {[styles.box,  styles.message]}>
@@ -144,8 +139,7 @@ class Club extends Component {
             this.props.navigator.push({
                 type: "EditClub",
                 index: this.props.route.index+1,
-                user: this.props.route.user,
-                clubName: this.props.route.clubName
+                state: this.props.route.state
             });
         }
 
@@ -153,8 +147,7 @@ class Club extends Component {
             this.props.navigator.push({
                 type: "clubInfo",
                 index: this.props.route.index+1,
-                user: this.props.route.user,
-                clubName: this.props.route.clubName
+                state: this.props.route.state
             });
         }
 }
