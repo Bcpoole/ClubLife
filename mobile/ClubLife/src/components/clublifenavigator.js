@@ -24,8 +24,8 @@ export default class ClubLifeNavigator extends Component {
         super(props);
         this.state = {
             userId: "",
-            clubList: null,
-            eventList: null
+            clubList: [],
+            eventList: []
         };
     }
 
@@ -82,12 +82,14 @@ export default class ClubLifeNavigator extends Component {
                     break;
                 case "profile":
                     scene = (
-                        <Profile navigator={navigator} route={route} />
+                        <Profile navigator={navigator} route={route}
+                            clubList = {this.state.clubList}/>
                     );
                     break;
                 case "editProfile":
                     scene = (
-                        <EditProfile navigator={navigator} route={route} />
+                        <EditProfile navigator={navigator} route={route}
+                            clubList = {this.state.clubList}/>
                     );
                     break;
                 case "choosesearch":
