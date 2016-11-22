@@ -86,7 +86,7 @@ class EditClub extends Component {
                this.state.newValues;
                for (let prop in club){
 
-                    this.setState(this.state.newValues;
+                    this.setState(this.state.newValues);
                     if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
                         continue;
                     }
