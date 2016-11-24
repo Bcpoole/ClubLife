@@ -24,44 +24,42 @@ class EditClub extends Component {
             data: [],
             newVal: '',
             currentVal:'',
-            newValues : '',
-            //newValues : {hi:0},
+
+            //newValues : '',
+            newValues : {}
             //hasValues:false            
+
+            
+
+
 
         };
         //this.setState({hasValues:false});
     }
-    render() {
+    
+    
+    
+    _resultsView(){
         var TouchableElement = TouchableNativeFeedback;
         var officer = true; // figure this out later
         //var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
         //image
 
-        
+
         var data = this.state.data;
-        var ho = this.state.hasData;
-        //this.setState({hasData:false});
-        
         var yo = this;
         
-        if (this.state.hasData){
-            this.setState({hasData:false});
-            this.setState({newValues:{}});
-        }
+      
         
         
-        
-        function hey(boo){
-            if (boo in this.state.newValues){
-            //if (ho){
-                //yo.setState({hasData: false});
-                // this.setState(newValues: 'hey');
-                //this.state.newValues;
-                //return this.state.newValues[club[prop]];
-                return "blah2";    
+        function hey(changedVal,originalVal){
+            //if (boo in this.state.newValues){
+            if (changedVal in yo.state.newValues){
+                return "RAWWWR";
+                //return yo.state.newValues[changedVal];    
             }
             else{
-                return "blah";
+                return originalVal;
             }
          }
         
@@ -91,11 +89,13 @@ class EditClub extends Component {
                                 <TextInput 
                                     style = {styles.textEdit} 
                                     onChangeText={(newText)=>{
+                                        
+                                        var obj = Object.assign(this.state.newValues,{prop:newText});
                                         //this.state.newValues[club[prop]] = newText;
-                                        this.setState({newValues[club[prop]]:this.state.newValues});
+                                        this.setState({newValues:obj});
                                         }
                                     }
-                                    value = {hey(club[prop])}
+                                    value = {hey(prop,club[prop])}
                                      > 
                                     
                                 </TextInput>
@@ -107,17 +107,12 @@ class EditClub extends Component {
             
         }
         
-       
-
-
-        
-
-        return (
-        <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
+        var content = (<ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
 
             {clubValue()}
             <Text>{this.state.newValues[0]}</Text>
             <TouchableElement style = {styles.button} onPress = {()=>{alert(blah[1])}}>
+
 
                 <View><Text>Submit</Text></View>
             </TouchableElement>
@@ -125,16 +120,61 @@ class EditClub extends Component {
                 <View><Text>Back</Text></View>
             </TouchableElement>
 
-        </ScrollView>
-
-
-        );
+        </ScrollView>);
         
+       return content;
+
+        
+    }
+    
+    
+    _processSubmit(){
+        var jsonString = '{';
+        var id;
+        data.map(club=>{
+            id = club.id;
+            for(let prop in club){
+                if (prop in this.state.newValues){
+                    jsonString+="\"" + prop + "\":" + this.state.newValues[prop] + ",";
+                }
+                else{
+                    jsonString+="\"" + prop + "\":" + club[prop] + ",";
+                }
+                
+            }
+        })
+        jsonString+='}';
+        
+        var updatedData = JSON.parse(jsonString);
+        
+        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
+                this.props.route.state.clubName.replace(" ","+");
+        fetch(url,
+            {
+                method: "POST",
+                body: updatedData
+            })
+            .then(function(res){ return res.json(); })
+            .then(function(data){ alert( JSON.stringify( data ) ) })
+            
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    render() {
+        
+        return this._resultsView();
+
     }
         // Jonathan's component code
     componentDidMount() {
         const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
-                this.props.route.clubName.replace(" ","+");
+                this.props.route.state.clubName.replace(" ","+");
         fetch(url)
             .then(res=>res.json())
             .then(json => {
@@ -153,8 +193,7 @@ class EditClub extends Component {
         this.props.navigator.push({
             type: 'club',
             index: this.props.route.index+1,
-            user: this.props.route.user,
-            clubName: this.props.route.clubName
+            state: this.props.route.state,
         })
     }
 

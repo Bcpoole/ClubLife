@@ -84,8 +84,7 @@ class ClubInfo extends Component {
             this.props.navigator.push({
                 type: "club",
                 index: this.props.route.index+1,
-                user: this.props.route.user,
-                clubName: name
+                state: Object.assign({}, this.props.route.state, {clubName: name})
             });
         }
 
@@ -94,7 +93,7 @@ class ClubInfo extends Component {
         // hard coded to acm
         componentDidMount() {
             const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
-                this.props.route.clubName.replace(" ","+");         
+                this.props.route.clubName.replace(" ","+");
             fetch(url)
                 .then(res=>res.json())
                 .then(json => {
