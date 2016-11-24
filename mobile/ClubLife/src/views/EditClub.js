@@ -24,10 +24,12 @@ class EditClub extends Component {
             data: [],
             newVal: '',
             currentVal:'',
-            newValues : []
-            
+            newValues : '',
+            //newValues : {hi:0},
+            //hasValues:false            
 
         };
+        //this.setState({hasValues:false});
     }
     render() {
         var TouchableElement = TouchableNativeFeedback;
@@ -37,81 +39,76 @@ class EditClub extends Component {
 
         
         var data = this.state.data;
+        var ho = this.state.hasData;
+        //this.setState({hasData:false});
         
-        // var clubValue = () => {
-           
-        //    var returnValue = [];
-     
-        //   // something wierd is going on with the text input
-        //    data.map(club=> {               
-        //        for (let prop in club){                   
-        //             if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
-        //                 continue;
-        //             }
-                    
-        //             this.setState({currentVal : club[prop]});
-        //             if (Array.isArray(val)){
-                        
-        //                 // this should be changed? whats in the arrays?
-        //                 this.setState({currentVal:club[prop][0]});
-                        
-        //             }
-                    
-        //             returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text>
-                        
-                        // <TextInput 
-                        //     style = {styles.textEdit} 
-                        //     value = {this.state.curentVal}
-                        //     onChangeText = {(newValue)=>{this.setState({stuff: newValue});}}         
-                            
-                        // ></TextInput>
-                        
-        //                 </View>);
-        //           // club[prop] = this.state.newVal;
-        //        }
-               
-        //     })
-        //     return returnValue;
-                   
-        // }
+        var yo = this;
         
+        if (this.state.hasData){
+            this.setState({hasData:false});
+            this.setState({newValues:{}});
+        }
+        
+        
+        
+        function hey(boo){
+            if (boo in this.state.newValues){
+            //if (ho){
+                //yo.setState({hasData: false});
+                // this.setState(newValues: 'hey');
+                //this.state.newValues;
+                //return this.state.newValues[club[prop]];
+                return "blah2";    
+            }
+            else{
+                return "blah";
+            }
+         }
+        
+    
         var clubValue= ()=>{
 
-           var returnValue = [];
-           this.state.newValues;
-            //onChangeText={(text)=>{this.state.newValues[i]=text}} 
-            //this.state.newValue.push(club[prop]);
-           data.map(club=> {
-               var i = 0;
-               this.state.newValues;
-               for (let prop in club){
-                    
-                    this.setState(this.state.newValues;
-                    if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
-                        continue;
-                    }
+            var returnValue = [];
+            //this.state.newValues;
+                //onChangeText={(text)=>{this.state.newValues[i]=text}} 
+                //this.state.newValue.push(club[prop]);
+            data.map(club=> {
+                var i = 0;
+                
+                for (let prop in club){
+                        //this.state.newValues;
+                        
+                        if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
+                            continue;
+                        }
+                        
+                        
+                        returnValue.push(
+                            <View>
+                                <Text style={styles.welcome}>
+                                    {prop}:
+                                </Text>
+                                <TextInput 
+                                    style = {styles.textEdit} 
+                                    onChangeText={(newText)=>{
+                                        //this.state.newValues[club[prop]] = newText;
+                                        this.setState({newValues[club[prop]]:this.state.newValues});
+                                        }
+                                    }
+                                    value = {hey(club[prop])}
+                                     > 
+                                    
+                                </TextInput>
+                            </View>);
+                        i++;                }
 
-                    returnValue.push(
-                        <View>
-                            <Text style={styles.welcome}>
-                                {prop}:
-                            </Text>
-                            <TextInput 
-                                style = {styles.textEdit} 
-                                value = {club[prop]}>
-                                     
-                                 
-                            </TextInput>
-                        </View>);
-                    i++; 
-               }
-
-
-            }, this) // end of map
-                       
-          return returnValue;
-
+                }, this) // end of map                       
+            return returnValue;
+            
         }
+        
+       
+
 
         
 
@@ -119,8 +116,8 @@ class EditClub extends Component {
         <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
 
             {clubValue()}
-            <Text>{this.props.route.clubName}</Text> 
-            <TouchableElement style = {styles.button} onPress = {()=>{alert(this.state.newValues[0])}}>
+            <Text>{this.state.newValues[0]}</Text>
+            <TouchableElement style = {styles.button} onPress = {()=>{alert(blah[1])}}>
 
                 <View><Text>Submit</Text></View>
             </TouchableElement>
