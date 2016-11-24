@@ -11,7 +11,7 @@ export default class FindAClub extends Component {
 
         this._loadingView = this._loadingView.bind(this);
         this._resultsView = this._resultsView.bind(this);
-        this.DEFAULT_IMG_URL = "https://avatars2.githubusercontent.com/u/12243827?v=3&s=40"; //hey it me
+        this.DEFAULT_IMG = "https://avatars2.githubusercontent.com/u/12243827?v=3&s=40"; //hey it me
         this._navigateToClub = this._navigateToClub.bind(this);
     }
 
@@ -52,7 +52,7 @@ export default class FindAClub extends Component {
                                 <TouchableElement
                                     onPress={()=>this._navigateToClub(club)}>
                                     <Image
-                                        source={{uri: club.img || this.DEFAULT_IMG_URL}}
+                                        source={{uri: club.img || this.DEFAULT_IMG}}
                                         style={{height: 40, width: 40}}
                                     />
                                 </TouchableElement>
@@ -77,7 +77,7 @@ export default class FindAClub extends Component {
         this.props.navigator.push({
             type: "club",
             index: this.props.route.index+1,
-            state: Object.assign({}, this.props.route.state, {clubName: club.name})
+            clubName: club.name
         });
     }
 }

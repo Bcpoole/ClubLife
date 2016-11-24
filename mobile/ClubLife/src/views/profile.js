@@ -49,7 +49,7 @@ class Profile extends Component {
         this.props.navigator.push({
             type: "editProfile",
             index: this.props.route.index+1,
-            state: this.props.route.state
+            user: this.props.route.user
         })
     }
 }

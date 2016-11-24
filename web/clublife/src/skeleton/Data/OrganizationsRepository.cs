@@ -4,7 +4,6 @@ using System.Linq;
 using skeleton.Models;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using Microsoft.AspNetCore.Mvc;
 
 namespace skeleton.Data {
   public class OrganizationsRepository : IOrganizationsRepository {
@@ -166,24 +165,6 @@ namespace skeleton.Data {
       @event.Id = new ObjectId();
       @event.Created = DateTime.UtcNow;
       await database.GetCollection<Event>("events").InsertOneAsync(@event);
-    }
-    #endregion
-
-    #region Members
-    public void ApproveMember(ObjectId userId, ObjectId clubId, bool approved) {
-      var org = GetOrganizationById(clubId);
-      org.PendingRequests.Remove(userId);
-
-      if (approved) {
-        var userRepo = new UsersRepository();
-        var user = userRepo.GetUserById(userId);
-        user.Clubs.Append(clubId.ToString());
-        userRepo.UpdateUserAsync(user);
-
-        org.Members.Append(userId.ToString());
-      }
-
-      UpdateOrganizationAsync(org);
     }
     #endregion
   }

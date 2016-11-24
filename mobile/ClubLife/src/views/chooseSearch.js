@@ -9,49 +9,38 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+
+
+//import TabNavigator from 'react-native-tab-navigator';
 import Communications from 'react-native-communications';
 
 export default class ChooseSearch extends Component {
     constructor(props) {
         super(props);
-        this._onGoFindAClub = this._onGoFindAClub.bind(this);
-        this._onGoFindAnEvent = this._onGoFindAnEvent.bind(this);
-    }
+        }
 
-    render() {
-        return (
-            <View style={{backgroundColor: '#F5FCFF'}}>
-                <Text style={styles.title}>Which would you like to search?</Text>
+        render() {
 
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10}}>
-                    <Image style={styles.pictures} source={require('./images/Club-Icon.jpeg')} />
-                    <Image style={styles.pictures} source={require('./images/Events-Icon.jpeg')} />
-                </View>
+        return(
+        <View style={{backgroundColor: '#F5FCFF'}}>
+            <Text style={styles.title}>Which would you like to search?</Text>
 
-                <View style={{width: 365, height: 100, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 13, paddingTop: 75}}>
-                    <TouchableHighlight onPress={()=>this._onGoFindAClub()}><Text style={styles.subtitles}>Search Clubs</Text></TouchableHighlight>
-                    <TouchableHighlight onPress={()=>this._onGoFindAnEvent()}><Text style={styles.subtitles}>Search Events</Text></TouchableHighlight>
-                </View>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10}}>
+                <Image style={styles.pictures} source={require('./images/Club-Icon.jpeg')} />
+                <Image style={styles.pictures} source={require('./images/Events-Icon.jpeg')} />
             </View>
+
+            <View style={{width: 365, height: 100, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 13, paddingTop: 75}}>
+                <TouchableHighlight onPress={this.props.onGoFindAClub}><Text style={styles.subtitles}>Search Clubs</Text></TouchableHighlight>
+                <TouchableHighlight onPress={this.props.onGoFindAnEvent}><Text style={styles.subtitles}>Search Events</Text></TouchableHighlight>
+            </View>
+        </View>
         );
     }
-
-    _onGoFindAClub() {
-        this.props.navigator.push({
-            type: "findaclub",
-            index: this.props.route.index+1,
-            state: this.props.route.state
-        });
-    }
-
-    _onGoFindAnEvent() {
-        this.props.navigator.push({
-            type: "findanevent",
-            index: this.props.route.index+1,
-            state: this.props.route.state
-        });
-    }
 }
+
+    module.exports = ChooseSearch;
+
 
 const styles = StyleSheet.create({
     container: {

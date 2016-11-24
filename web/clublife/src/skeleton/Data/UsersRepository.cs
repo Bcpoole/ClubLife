@@ -34,7 +34,7 @@ namespace skeleton.Data {
     }
 
     public User FindUserByUsername(string username) {
-      return GetAllUsers().Where(x => x.Username.ToLower() == username.ToLower()).SingleOrDefault();
+      return GetAllUsers().Where(x => x.Username.ToLower() == username.ToLower()).FirstOrDefault();
     }
 
     public IEnumerable<User> FindUserByName(string name) {
@@ -67,18 +67,6 @@ namespace skeleton.Data {
         .Set(x => "salt", Guid.NewGuid().ToString())
         .Set(x => "password", "implment OAuth on Frontend please so I can just store tokens");
       await coll.UpdateOneAsync(filter, update);
-    }
-
-    public void LeaveClub(ObjectId userId, ObjectId clubId) {
-      var user = GetUserById(userId);
-      user.Clubs.Remove(clubId.ToString());
-
-      var orgRepo = new OrganizationsRepository();
-      var org = orgRepo.GetOrganizationById(clubId);
-      org.Members.Remove(org.Members.Where(x => x == userId.ToString()).Single());
-
-      orgRepo.UpdateOrganizationAsync(org);
-      UpdateUserAsync(user);
     }
   }
 }

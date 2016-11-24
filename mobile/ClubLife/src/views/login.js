@@ -42,52 +42,54 @@ export default class Login extends Component {
     }
 
     _authenticate() {
-        /*
-            Forgive me, Father, for I have sinned.
-            In an effort to graduate on time, we have decided to delay our final spirit bomb for user authentication implementation for right before the demo, and
-                in the interest of having something work for the demo in case our spirit bomb falls short, we are going to spoof user authentication.
-            May this application never be published anywhere, and let's make user auth the very first thing we get working (correctly)
-                on any future personal projects.
-
-            So, the basic idea is that the password field doesn't do anything useful, but if the user email exists for some user in the DB, go ahead and exist as that user.
-            TODO: NEVER this in our careers
-        */
+        //TODO: remove the snippet below and have real authentication
         this.setState({
-            authenticated: false,
+            authenticated: true,
+            isAuthenticating: false,
+            user: 'bcpoole@crimson.ua.edu'
+        }, () => {this._onSuccessfulLogin(this.state.user)});
+        return;
+
+
+        //TODO: make a GET request on an authentication api endpoint with the user's email and hash of the password
+        this.setState({
             isAuthenticating: true,
-            hasMadeAuthenticatonAttempt: true,
-            user: null
-        }, ()=> {
-            var email = this.state.emailPlainText;
-            var pass = this._hashString(this.state.passwordPlainText); // :(
-            var endpoint = "http://skeleton20161103012840.azurewebsites.net/api/Users/username?username="+email;
-            fetch(endpoint)
-                .then(res=> {
-                    if(res.status !== 200) {
-                        this.setState({
-                            isAuthenticating: false
-                        });
-                        return Promise.reject(new Error(res.statusText));
-                    }
-                    else {
-                        return res.json();
-                    }
-                })
-                .then(json=> {
+            authenticated: false
+        });
+        var email = this.state.emailPlainText;
+        var pass = this._hashString(this.state.passwordPlainText);
+        fetch("")
+            .then(res => res.json())
+            .then(json => {
+                var authenticated = /* some function of the json */ true; //TODO: do not auto-authenticate lmao
+                if(authenticated) {
                     this.setState({
                         isAuthenticating: false,
+                        hasMadeAuthenticatonAttempt: true,
                         authenticated: true,
-                        user: json
-                    }, ()=>this._onSuccessfulLogin(this.state.user));
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-        });
+                        user: json //TODO: what user are we? how do we get that info? need endpoint
+                    }, () => {this._onSuccessfulLogin(this.state.user);});
+                }
+                else {
+                    this.setState({
+                        isAuthenticating: false,
+                        hasMadeAuthenticatonAttempt: true,
+                        authenticated: false
+                    });
+                }
+            })
+            .catch(e => {
+                //TODO: handle authentication error properly
+            })
     }
 
     render() {
         var TouchableElement = TouchableNativeFeedback;
+
+        var authenticationStatus = '';
+        if(this.state.authenticated) {
+            authenticationStatus = (<Text>{`You are authenticated with TODO`}</Text>);
+        }
 
         return (
             <View style={styles.container}>
@@ -112,8 +114,7 @@ export default class Login extends Component {
                 <TouchableElement style = {styles.button} onPress = {()=>this._onGoSignup()}>
                     <View><Text>Not currently registered? Sign up!</Text></View>
                 </TouchableElement>
-                {(this.state.hasMadeAuthenticatonAttempt && !this.state.isAuthenticating && !this.state.authenticated) ?
-                    <View><Text>authentication attempt failed</Text></View> : <Text></Text>}
+                {/*authenticationStatus*/}
             </View>
         );
     }
@@ -121,16 +122,15 @@ export default class Login extends Component {
     _onSuccessfulLogin(user) {
         this.props.navigator.push({
             type: "homepage",
-            index: this.props.route.index+1,
-            state: Object.assign({}, this.props.route.state, {user: user})
+            user: user,
+            index: this.props.route.index+1
         });
     }
 
     _onGoSignup() {
         this.props.navigator.push({
             type: "signup",
-            index: this.props.route.index+1,
-            state: this.props.route.state
+            index: this.props.route.index+1
         });
     }
 }

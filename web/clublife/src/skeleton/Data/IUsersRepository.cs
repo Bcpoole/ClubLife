@@ -16,7 +16,5 @@ namespace skeleton.Data {
 
     void UpdateUserAsync(User user);
     void CreateNewUserAsync(User user);
-
-    void LeaveClub(ObjectId userId, ObjectId clubId);
   }
 }

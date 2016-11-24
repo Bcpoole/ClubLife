@@ -50,7 +50,7 @@ export default class HomePage extends Component {
       this.props.navigator.push({
           type: "homepage",
           index: this.props.route.index+1,
-          state: this.props.route.state
+          user: this.props.route.user
       })
   }
 
@@ -58,7 +58,7 @@ export default class HomePage extends Component {
       this.props.navigator.push({
           type: "profile",
           index: this.props.route.index+1,
-          state: this.props.route.state
+          user: this.props.route.user
       })
   }
 
@@ -66,35 +66,35 @@ export default class HomePage extends Component {
       this.props.navigator.push({
           type: "clubPage",
           index: this.props.route.index+1,
-          state: this.props.route.state
+          user: this.props.route.user
       });
   }
   _onGoFindAnEvent() {
       this.props.navigator.push({
           type: "findanevent",
           index: this.props.route.index+1,
-          state: this.props.route.state
+          user: this.props.route.user
       })
   }
   _onGoChooseSearch() {
       this.props.navigator.push({
           type: "choosesearch",
           index: this.props.route.index+1,
-          state: this.props.route.state
+          user: this.props.route.user
       })
   }
   _onGoFindAClub() {
       this.props.navigator.push({
           type: "findaclub",
           index: this.props.route.index+1,
-          state: this.props.route.state
+          user: this.props.route.user
       })
   }
   _onGoEvents() {
       this.props.navigator.push({
           type: "testpage",
           index: this.props.route.index+1,
-          state: this.props.route.state
+          user: this.props.route.user
       })
   }
 }

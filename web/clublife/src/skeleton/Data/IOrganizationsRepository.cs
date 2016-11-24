@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using skeleton.Models;
 using MongoDB.Bson;
-using Microsoft.AspNetCore.Mvc;
 
 namespace skeleton.Data {
   public interface IOrganizationsRepository {
@@ -23,7 +22,5 @@ namespace skeleton.Data {
     IEnumerable<Event> FindPublicEvents();
     void UpdateEventAsync(Event @event);
     void CreateNewEventAsync(Event @event);
-
-    void ApproveMember(ObjectId userId, ObjectId clubId, bool approved);
   }
 }

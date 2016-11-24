@@ -14,10 +14,10 @@ namespace skeleton.Models {
     [BsonElement("name")]
     public string Name { get; set; }
     [BsonElement("clubs")]
-    private IList<ObjectId> clubs { get; set; }
-    public IList<string> Clubs {
+    private IEnumerable<ObjectId> clubs { get; set; }
+    public IEnumerable<string> Clubs {
       get {
-        return clubs.Select(x => x.ToString()).ToList();
+        return clubs.Select(x => x.ToString());
       }
     }
   }

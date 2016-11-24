@@ -61,28 +61,28 @@ namespace skeleton.Models {
     public string PresidentName { get; set; }
 
     [BsonElement("leaders")]
-    public IList<string> Leaders { get; set; }
+    public string[] Leaders { get; set; }
     [BsonElement("officers")]
-    public IList<string> Officers { get; set; }
+    public string[] Officers { get; set; }
     [BsonElement("members")]
-    public IList<string> Members { get; set; }
+    public string[] Members { get; set; }
 
     [BsonElement("events")]
-    private IList<ObjectId> events { get; set; }
-    public IList<string> Events {
+    private IEnumerable<ObjectId> events { get; set; }
+    public IEnumerable<string> Events {
       get {
-        return events.Select(x => x.ToString()).ToList();
+        return events.Select(x => x.ToString());
       }
     }
     [BsonElement("posts")]
-    private IList<ObjectId> posts { get; set; }
-    public IList<string> Posts {
+    private IEnumerable<ObjectId> posts { get; set; }
+    public IEnumerable<string> Posts {
       get {
-        return posts.Select(x => x.ToString()).ToList();
+        return posts.Select(x => x.ToString());
       }
     }
     [BsonElement("pendingRequests")]
-    public IList<ObjectId> PendingRequests { get; set; }
+    public List<ObjectId> PendingRequests { get; set; }
 
     //private dynamic meetingDay;
     //[BsonElement("CleanDayResults")]
