@@ -15,6 +15,7 @@ import ClubPage from '../views/clubPage';
 import ClubInfo from '../views/clubInfo';
 import EditProfile from '../views/editProfile';
 import ChooseSearch from '../views/chooseSearch';
+import PendingMembers from '../views/pendingMembers';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -52,8 +53,9 @@ export default class ClubLifeNavigator extends Component {
         //initial route for navigation
         var initialRoute = this.props.initialRoute || {
             type: 'login',
-            index: 0
-        }
+            index: 0,
+            state: {}
+        };
 
         //determine which scene to render based on route information.
         var renderScene = (route, navigator) => {
@@ -91,23 +93,8 @@ export default class ClubLifeNavigator extends Component {
                     break;
                 case "choosesearch":
                     scene = (
-                        <ChooseSearch
-                            onGoFindAClub={()=>{
-                                const leIndex = route.index + 1;
-                                navigator.push({
-                                     "type": "findaclub",
-                                     index: leIndex
-                                });
-                            }}
-                            onGoFindAnEvent={()=>{
-                                const leIndex = route.index + 1;
-                                navigator.push({
-                                    "type": "findanevent",
-                                    index: leIndex
-                                });
-                            }}
-                        />
-                        );
+                        <ChooseSearch navigator={navigator} route={route} />
+                    );
                     break;
                 case "findaclub":
                     scene = (
@@ -144,7 +131,7 @@ export default class ClubLifeNavigator extends Component {
                     break;
                 case "clubPage":
                     scene = (
-                        <ClubPage navigator={navigator} route={route} />
+                        <ClubPage navigator={navigator} route={route} clubList={this.state.clubList} />
                     );
                     break;
                 case "EditClub":
@@ -158,11 +145,22 @@ export default class ClubLifeNavigator extends Component {
                         <ClubInfo navigator = {navigator} route={route} />
                     );
                     break;
+                
+                case "pendingMembers":
+                    scene = (
+                        <PendingMembers navigator = {navigator} route={route} />
+                    );
+                    break;
 
                 default:
                     //oh shi-
                     scene = (
-                        <View><Text>Something went horribly wrong with routing.</Text></View>
+                        <View><Text>
+                            {`Something went horribly wrong with routing.
+                            Maybe you made the route type wrong.
+                            Maybe you forgot a break statement.
+                            Maybe it's something else.`}
+                        </Text></View>
                     );
             }
             return scene;
