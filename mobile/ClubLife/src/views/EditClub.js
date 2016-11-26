@@ -24,12 +24,16 @@ class EditClub extends Component {
             data: [],
             newVal: '',
             currentVal:'',
-            newValues : []
-
-
+            //newValues : '',
+            newValues : {}
+            //hasValues:false
         };
+        //this.setState({hasValues:false});
     }
-    render() {
+
+
+
+    _resultsView(){
         var TouchableElement = TouchableNativeFeedback;
         var officer = true; // figure this out later
         //var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
@@ -37,107 +41,133 @@ class EditClub extends Component {
 
 
         var data = this.state.data;
+        var yo = this;
 
-        // var clubValue = () => {
 
-        //    var returnValue = [];
 
-        //   // something wierd is going on with the text input
-        //    data.map(club=> {
-        //        for (let prop in club){
-        //             if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
-        //                 continue;
-        //             }
 
-        //             this.setState({currentVal : club[prop]});
-        //             if (Array.isArray(val)){
+        function hey(changedVal,originalVal){
+            //if (boo in this.state.newValues){
+            if (changedVal in yo.state.newValues){
+                return "RAWWWR";
+                //return yo.state.newValues[changedVal];
+            }
+            else{
+                return originalVal;
+            }
+         }
 
-        //                 // this should be changed? whats in the arrays?
-        //                 this.setState({currentVal:club[prop][0]});
-
-        //             }
-
-        //             returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text>
-
-                        // <TextInput
-                        //     style = {styles.textEdit}
-                        //     value = {this.state.curentVal}
-                        //     onChangeText = {(newValue)=>{this.setState({stuff: newValue});}}
-
-                        // ></TextInput>
-
-        //                 </View>);
-        //           // club[prop] = this.state.newVal;
-        //        }
-
-        //     })
-        //     return returnValue;
-
-        // }
 
         var clubValue= ()=>{
 
-           var returnValue = [];
-           this.state.newValues;
-            //onChangeText={(text)=>{this.state.newValues[i]=text}}
-            //this.state.newValue.push(club[prop]);
-           data.map(club=> {
-               var i = 0;
-               this.state.newValues;
-               for (let prop in club){
+            var returnValue = [];
+            //this.state.newValues;
+                //onChangeText={(text)=>{this.state.newValues[i]=text}}
+                //this.state.newValue.push(club[prop]);
+            data.map(club=> {
+                var i = 0;
 
-                    this.setState(this.state.newValues);
-                    if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
-                        continue;
-                    }
+                for (let prop in club){
+                        //this.state.newValues;
 
-                    returnValue.push(
-                        <View>
-                            <Text style={styles.welcome}>
-                                {prop}:
-                            </Text>
-                            <TextInput
-                                style = {styles.textEdit}
-                                value = {club[prop]}>
+                        if (prop==="id" || prop === "events" || prop==="posts" || prop==="img"){
+                            continue;
+                        }
 
 
-                            </TextInput>
-                        </View>);
-                    i++;
-               }
+                        returnValue.push(
+                            <View>
+                                <Text style={styles.welcome}>
+                                    {prop}:
+                                </Text>
+                                <TextInput
+                                    style = {styles.textEdit}
+                                    onChangeText={(newText)=>{
 
+                                        var obj = Object.assign(this.state.newValues,{prop:newText});
+                                        //this.state.newValues[club[prop]] = newText;
+                                        this.setState({newValues:obj});
+                                        }
+                                    }
 
-            }, this) // end of map
+                                    value = {hey(prop,club[prop])}
+                                     >
 
-          return returnValue;
+                                </TextInput>
+                            </View>);
+                        i++;                }
+
+                }, this) // end of map
+            return returnValue;
 
         }
 
-
-
-        return (
-        <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
+        var content = (<ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
 
             {clubValue()}
-            <Text>{this.props.route.clubName}</Text>
-            <TouchableElement style = {styles.button} onPress = {()=>{alert(this.state.newValues[0])}}>
-
+            <Text>{this.state.newValues[0]}</Text>
+            <TouchableElement style = {styles.button} onPress = {()=>{alert(blah[1])}}>
                 <View><Text>Submit</Text></View>
             </TouchableElement>
             <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub()}>
                 <View><Text>Back</Text></View>
             </TouchableElement>
 
-        </ScrollView>
+        </ScrollView>);
+
+       return content;
 
 
-        );
+    }
+
+
+    _processSubmit(){
+        var jsonString = '{';
+        var id;
+        data.map(club=>{
+            id = club.id;
+            for(let prop in club){
+                if (prop in this.state.newValues){
+                    jsonString+="\"" + prop + "\":" + this.state.newValues[prop] + ",";
+                }
+                else{
+                    jsonString+="\"" + prop + "\":" + club[prop] + ",";
+                }
+
+            }
+        })
+        jsonString+='}';
+
+        var updatedData = JSON.parse(jsonString);
+
+        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
+                this.props.route.state.clubName.replace(" ","+");
+        fetch(url,
+            {
+                method: "POST",
+                body: updatedData
+            })
+            .then(function(res){ return res.json(); })
+            .then(function(data){ alert( JSON.stringify( data ) ) })
+
+
+
+
+
+    }
+
+
+
+
+    render() {
+
+        return this._resultsView();
 
     }
         // Jonathan's component code
     componentDidMount() {
         const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
-                this.props.route.clubName.replace(" ","+");
+                this.props.route.state.clubName.replace(" ","+");
         fetch(url)
             .then(res=>res.json())
             .then(json => {

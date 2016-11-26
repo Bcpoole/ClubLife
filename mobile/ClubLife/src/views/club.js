@@ -23,53 +23,90 @@ class Club extends Component {
             data: [],
         };
     }
+    
+    _addToPending(userID){
+        
+        
+    }
+    
+    
     render() {
         if(!this.state.hasData) {
             return <LoadingView/>;
         }
-        else {
-            //TODO: make all the stuff underneath do actual things,
-            // here I'm just returning the JSON as a string and making it the view LMAO
-            //return <View style={{paddingTop: 40}}><Text>{JSON.stringify(this.state.data)}</Text></View>
-        }
 
         var TouchableElement = TouchableNativeFeedback;
+        
+         // Club Variables:
+        var picURL;
+        var data = this.state.data;
+        var name;
+        var officers;
+        var members;
+        var leaders;
+        var email;
 
-        var officer = true; // figure this out later
-
+        {data.map(club=> {
+            name = club.name;
+            picURL = club.img;
+            officers= club.officers;
+            members = club.members;
+            leaders = club.leaders;
+            email = club.email;
+    
+        })}
+        
+        var user = this.props.route.state.user;
+        
+        function isInArray(array){    
+            for (var j = 0; j<array.length;i++){
+                if (array[i]===user.id){
+                    return true;
+                }
+                
+            }
+            return false;
+        }
+        
+        //var officer = isOfficer(officers);
+        //var member = isOfficer(members);
+        //var leader = isOfficer(leaders); 
+        
+        // while there is nothing in the arrays
+        var officer = true; 
         var member = false;
+        var leader = true;
 
+        
+        // officer options: post to club, approve members
         var offOps = <Text></Text>;
         if (officer){
             offOps =
-                <TouchableElement onPress = {()=>this._onGoEditClub()}>
-                    <View><Text style = {styles.button} >Edit Club Info</Text></View>
+                <TouchableElement onPress = {()=>this._onGoPendingMembers()}>
+                    <View><Text style = {styles.button} >Pending Members</Text></View>
                 </TouchableElement>;
         }
-        var memberOps =  <TouchableElement onPress = {() =>Communications.email(['avhedges@crimson.ua.edu', 'avhedges@crimson.ua.edu'],null,null,'This person wants to join club','please let me join, i love club.')}>
+        
+        // member options: {if !member allow to join club}
+        var memberOps =  <TouchableElement onPress = {()=>alert("HEYO!!!")}>
                 <View><Text style = {styles.button}>Join Club</Text></View>
             </TouchableElement>;
         if (member){
             memberOps = <Text></Text>;
         }
 
-        // Club Variables:
+        // leader options: edit club info, post to club, approve members
+        var leaderOps = <Text></Text>;
+        if (leader){
+            leaderOps =
+                <TouchableElement onPress = {()=>this._onGoEditClub()}>
+                    <View><Text style = {styles.button} >Edit Club Info</Text></View>
+                </TouchableElement>;
+        }
+       
 
 
 
-        var picURL;
-
-        var data = this.state.data;
-        var name;
-
-
-        {data.map(club=> {
-                name = club.name;
-                picURL = club.img;
-                // return (
-                //     <View><Text>{club.name}</Text></View>
-                // );
-            })}
 
         return (
 
@@ -86,16 +123,20 @@ class Club extends Component {
                 </View>
 
 
-                <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
+                <View style={{width: 365, height: 30, flexDirection: 'row', 
+                    justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>
                     <TouchableElement onPress={()=>this._onGoEditClub()}>
                         <View><Text style={styles.button}>Events</Text></View>
                     </TouchableElement>
-                    {/* TODO: fix the callback onpres above */}
                     <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
                         <View><Text style = {styles.button}>Info</Text></View>
                     </TouchableElement>
+                    <TouchableElement onPress = {() =>Communications.email([email,user.username],null,null,'This person wants to join club','please let me join, i love club.')}>
+                        <View><Text style = {styles.button}>Contact an Officer</Text></View>
+                    </TouchableElement>
                    {memberOps}
-                    {offOps}
+                   {leaderOps}
+                   {offOps}
 
                 </View>
             </View>
@@ -120,7 +161,7 @@ class Club extends Component {
 
         componentDidMount() {
             const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
-                this.props.route.clubName.replace(" ","+");
+                this.props.route.state.clubName.replace(" ","+");
             fetch(url)
                 .then(res=>res.json())
                 .then(json => {
@@ -146,6 +187,14 @@ class Club extends Component {
         _onGoClubInfo() {
             this.props.navigator.push({
                 type: "clubInfo",
+                index: this.props.route.index+1,
+                state: this.props.route.state
+            });
+        }
+        
+        _onGoPendingMembers() {
+            this.props.navigator.push({
+                type: "pendingMembers",
                 index: this.props.route.index+1,
                 state: this.props.route.state
             });
