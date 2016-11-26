@@ -11,12 +11,32 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-class Profile extends Component {
+export default class Profile extends Component {
     constructor(props){
         super(props);
-        this.state = {textOp: 1, boxOp: 0};
+        this.state = {
+            textOp: 1,
+            boxOp: 0
+        };
+        this._onGoEditProfile = this._onGoEditProfile.bind(this);
+        this._onGoFindAClub = this._onGoFindAClub.bind(this);
+        this._onGoClub = this._onGoClub.bind(this);
     }
     render() {
+        var user = this.props.route.state.user;
+        var clubList = this.props.clubList;
+        var userClubIds = user.clubs;
+        var userClubs = [];
+        for(let userClubId in userClubIds) {
+            //in the interest of saving coding time, this code is obviously slow...TODO: optimize later? (e.g. presort clubs by id and binary search?)
+            for(let club in clubList) {
+                if(club.id === userClubId) {
+                    userClubs.push(club);
+                    break;
+                }
+            }
+        }
+
         var TouchableElement = TouchableNativeFeedback;
         return (
         <View style={styles.container}>
@@ -24,11 +44,9 @@ class Profile extends Component {
                 <Image style = {styles.profilepic} source={require('./images/sponge.jpeg')} />
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
-                    Spongebob Squarepants
+                        {user.name}
                     </Text>
-                    <Text style = {styles.instructions}>sponge@bob.com</Text>
-
-
+                    <Text style = {styles.instructions}>{user.username}</Text>
                 </View>
 
             </View>
@@ -36,53 +54,50 @@ class Profile extends Component {
                 <View><Image style = {styles.edit} source={require('./images/edit.png')} /></View>
             </TouchableHighlight>
             <Text style = {styles.welcome}>Clubs:</Text>
-            <Text style = {styles.instructions}>Krusty Krab Cooks</Text>
-            <Text style = {styles.instructions}>Bubble Blowers</Text>
-            <Text style = {styles.instructions}>Jellyfishing Club</Text>
-            <Text style = {styles.welcome}>Events:</Text>
-            <Text style = {styles.instructions}>Jellyfishing practice [Tues. 6:00 pm]</Text>
-            <Text style = {styles.instructions}>Bubble Party           [Fri. 8:00 pm] </Text>
+            {
+                userClubs.length ? (
+                    userClubs.map(club => {
+                        return (
+                            <TouchableElement onPress={()=>this._onGoClub(club)}>
+                                <Text style={styles.instructions}>
+                                    {club.name}
+                                </Text>
+                            </TouchableElement>
+                        );
+                    })
+                ) :
+                <TouchableElement onPress={()=>this._onGoFindAClub()}>
+                    <View><Text style={styles.instructions}>You aren't in any clubs! How about finding a club?</Text></View>
+                </TouchableElement>
+            }
         </View>
         );
-        }
+    }
+
     _onGoEditProfile() {
         this.props.navigator.push({
             type: "editProfile",
             index: this.props.route.index+1,
             state: this.props.route.state
-        })
+        });
+    }
+
+    _onGoFindAClub() {
+        this.props.navigator.push({
+            type: "findaclub",
+            index: this.props.route.index+1,
+            state: this.props.route.state
+        });
+    }
+
+    _onGoClub(club) {
+        this.props.navigator.push({
+            type: "club",
+            index: this.props.route.index+1,
+            state: Object.assign({}, this.props.route.state, {club: club})
+        });
     }
 }
-
-module.exports = Profile;
-
-// module.exports = React.createClass({
-//  render() {
-
-//     var TouchableElement = TouchableNativeFeedback;
-
-
-//     return (
-//       <View style={styles.container}>
-//         <View style={styles.box}>
-//             <Image style = {styles.profilepic} source={require('./images/sponge.jpeg')} />
-//             <View style={styles.longBox}>
-//                 <Text style={styles.welcome}>
-//                 Spongebob Squarepants
-//                 </Text>
-//                 <Text style = {styles.instructions}>sponge@bob.com</Text>
-
-
-//             </View>
-
-//         </View>
-//          <TouchableElement style = {styles.button} onPress = {()=>{alert("u")}}>
-//                     <View><Image style = {styles.edit} source={require('./images/edit.png')} /></View>
-//                 </TouchableElement>
-//       </View>
-//     );
-//     }
-//  });
 
 const styles = StyleSheet.create({
   container: {
