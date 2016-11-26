@@ -120,7 +120,7 @@ class Club extends Component {
 
         componentDidMount() {
             const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
-                this.props.route.clubName.replace(" ","+");
+                this.props.route.state.clubName.replace(" ","+");
             fetch(url)
                 .then(res=>res.json())
                 .then(json => {
