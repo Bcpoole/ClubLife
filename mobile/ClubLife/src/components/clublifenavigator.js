@@ -15,6 +15,7 @@ import ClubPage from '../views/clubPage';
 import ClubInfo from '../views/clubInfo';
 import EditProfile from '../views/editProfile';
 import ChooseSearch from '../views/chooseSearch';
+import PendingMembers from '../views/pendingMembers';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -132,7 +133,7 @@ export default class ClubLifeNavigator extends Component {
                     break;
                 case "clubPage":
                     scene = (
-                        <ClubPage navigator={navigator} route={route} />
+                        <ClubPage navigator={navigator} route={route} clubList={this.state.clubList} />
                     );
                     break;
                 case "EditClub":
@@ -144,6 +145,12 @@ export default class ClubLifeNavigator extends Component {
                 case "clubInfo":
                     scene = (
                         <ClubInfo navigator = {navigator} route={route} />
+                    );
+                    break;
+                
+                case "pendingMembers":
+                    scene = (
+                        <PendingMembers navigator = {navigator} route={route} />
                     );
                     break;
 
