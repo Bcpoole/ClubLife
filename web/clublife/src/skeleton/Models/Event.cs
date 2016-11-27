@@ -22,5 +22,19 @@ namespace skeleton.Models {
     public IEnumerable<ObjectId> RSVP { get; set; }
     [BsonElement("isPublic")]
     public bool IsPublic { get; set; }
+    [BsonElement("author")]
+    private ObjectId author;
+    public string Author {
+      get {
+        return author.ToString();
+      }
+    }
+    [BsonElement("club")]
+    private ObjectId club;
+    public string Club {
+      get {
+        return club.ToString();
+      }
+    }
   }
 }

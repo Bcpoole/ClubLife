@@ -130,7 +130,12 @@ namespace skeleton.Data {
     public async void CreateNewPostAsync(Post post) {
       post.Id = new ObjectId();
       post.Created = DateTime.UtcNow;
+
+      var org = GetOrganizationById(new ObjectId(post.Club));
+      org.Posts.Add(post.Id.ToString());
+
       await database.GetCollection<Post>("posts").InsertOneAsync(post);
+      UpdateOrganizationAsync(org);
     }
     #endregion
 
@@ -166,6 +171,12 @@ namespace skeleton.Data {
       @event.Id = new ObjectId();
       @event.Created = DateTime.UtcNow;
       await database.GetCollection<Event>("events").InsertOneAsync(@event);
+
+      var org = GetOrganizationById(new ObjectId(@event.Club));
+      org.Posts.Add(@event.Id.ToString());
+
+      await database.GetCollection<Event>("events").InsertOneAsync(@event);
+      UpdateOrganizationAsync(org);
     }
     #endregion
 
