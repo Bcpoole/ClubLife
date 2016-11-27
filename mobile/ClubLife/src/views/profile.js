@@ -10,31 +10,47 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
+import LoadingView from '../components/loadingview';
 
 export default class Profile extends Component {
     constructor(props){
         super(props);
         this.state = {
             textOp: 1,
-            boxOp: 0
+            boxOp: 0,
+            hasMemberData: false, //when we use Profile as arbitrary Member page, need to load data asynchronous
+            memberData: {}
         };
+        this.type = this.props.type || ""; //expecting "profile" or "memberPage"
         this._onGoEditProfile = this._onGoEditProfile.bind(this);
         this._onGoFindAClub = this._onGoFindAClub.bind(this);
         this._onGoClub = this._onGoClub.bind(this);
     }
+
     render() {
         var user = this.props.route.state.user;
         var clubList = this.props.clubList;
         var userClubIds = user.clubs;
         var userClubs = [];
-        for(let userClubId in userClubIds) {
+        for(let userClubId of userClubIds) {
             //in the interest of saving coding time, this code is obviously slow...TODO: optimize later? (e.g. presort clubs by id and binary search?)
-            for(let club in clubList) {
+            for(let club of clubList) {
                 if(club.id === userClubId) {
                     userClubs.push(club);
                     break;
                 }
             }
+        }
+        var memberId = this.props.route.state.memberId || "";
+        //default to "profile" settings, but override if we're a member page
+        var name = user.name;
+        var username = user.username;
+        if(this.type === "memberPage") {
+            if(!this.state.hasMemberData) {
+                return <LoadingView/>;
+            }
+            name = this.state.memberData.name;
+            username = this.state.memberData.username;
         }
 
         var TouchableElement = TouchableNativeFeedback;
@@ -44,30 +60,44 @@ export default class Profile extends Component {
                 <Image style = {styles.profilepic} source={require('./images/sponge.jpeg')} />
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
-                        {user.name}
+                        {name}
                     </Text>
-                    <Text style = {styles.instructions}>{user.username}</Text>
+                    <Text style = {styles.instructions}>{username}</Text>
                 </View>
 
             </View>
-            <TouchableHighlight onPress={()=>this._onGoEditProfile()}>
-                <View><Image style = {styles.edit} source={require('./images/edit.png')} /></View>
-            </TouchableHighlight>
+            {
+            this.type === "profile" ?
+                <TouchableHighlight onPress={()=>this._onGoEditProfile()}>
+                    <View><Image style = {styles.edit} source={require('./images/edit.png')} /></View>
+                </TouchableHighlight>
+                : <View/>
+            }
             <Text style = {styles.welcome}>Clubs:</Text>
             {
                 userClubs.length ? (
-                    userClubs.map(club => {
+                    userClubs.map((club) => {
                         return (
-                            <TouchableElement onPress={()=>this._onGoClub(club)}>
-                                <Text style={styles.instructions}>
-                                    {club.name}
-                                </Text>
+                            <TouchableElement onPress={()=>this._onGoClub(club)} key={"club-"+club.id}>
+                                <View>
+                                    <Text style={styles.instructions}>
+                                        {club.name}
+                                    </Text>
+                                </View>
                             </TouchableElement>
                         );
                     })
                 ) :
-                <TouchableElement onPress={()=>this._onGoFindAClub()}>
-                    <View><Text style={styles.instructions}>You aren't in any clubs! How about finding a club?</Text></View>
+                <TouchableElement onPress={()=>{
+                    if(this.type==="profile") {
+                        this._onGoFindAClub()
+                    }
+                }}>
+                    <View><Text style={styles.instructions}>{
+                        this.type === "profile" ?
+                            "You aren't in any clubs! How about finding a club?"
+                            : "Not in any clubs."
+                    }</Text></View>
                 </TouchableElement>
             }
         </View>

@@ -19,7 +19,6 @@ export default class EditProfile extends Component {
         this._onCancelChanges = this._onCancelChanges.bind(this);
         this._performChanges = this._performChanges.bind(this);
         this._removeSelfFromClub = this._removeSelfFromClub.bind(this);
-        this._removeSelfFromEvent = this._removeSelfFromEvent.bind(this);
         this._postNewUserInfo = this._postNewUserInfo.bind(this);
         this._confirmClubAlert = this._confirmClubAlert.bind(this);
         this._onGoProfileWithChanges = this._onGoProfileWithChanges.bind(this);
@@ -187,10 +186,6 @@ export default class EditProfile extends Component {
                 .then(res => res.json())
                 .then(json => console.log("removed self from club, res json " +JSON.stringify(json)))
                 .catch(e => console.error(e));
-        }
-
-        _removeSelfFromEvent(event) {
-            return; //TODO: RSVP feature
         }
 }
 

@@ -33,7 +33,7 @@ export default class FindAClub extends Component {
         }
         //TODO: add more filters
         if(this.state.filterName) {
-            data = data.filter((club) => club.name.startsWith(this.state.filterName));
+            data = data.filter((club) => club.name.toLowerCase().indexOf(this.state.filterName.toLowerCase()) > -1);
         }
 
         var TouchableElement = TouchableNativeFeedback;
@@ -77,7 +77,7 @@ export default class FindAClub extends Component {
         this.props.navigator.push({
             type: "club",
             index: this.props.route.index+1,
-            state: Object.assign({}, this.props.route.state, {clubName: club.name})
+            state: Object.assign({}, this.props.route.state, {club: club})
         });
     }
 }

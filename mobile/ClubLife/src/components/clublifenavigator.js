@@ -9,13 +9,17 @@ import Club from '../views/club';
 import Profile from '../views/profile';
 import FindAClub from '../views/findaclub';
 import FindAnEvent from '../views/findAnEvent';
-import AllViews from '../views/allviews.js';
-import EditClub from '../views/EditClub';
+import AllViews from '../views/allviews';
+import EditClub from '../views/editClub';
 import ClubPage from '../views/clubPage';
 import ClubInfo from '../views/clubInfo';
 import EditProfile from '../views/editProfile';
 import ChooseSearch from '../views/chooseSearch';
 import PendingMembers from '../views/pendingMembers';
+import PostToClubOptions from '../views/postToClubOptions';
+import EditEvent from '../views/editEvent';
+import EditPost from '../views/editPost';
+import ClubEvents from '../views/clubEvents';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -94,7 +98,8 @@ export default class ClubLifeNavigator extends Component {
                 case "profile":
                     scene = (
                         <Profile navigator={navigator} route={route}
-                            clubList = {this.state.clubList}/>
+                            clubList = {this.state.clubList}
+                            type={"profile"}/>
                     );
                     break;
                 case "editProfile":
@@ -157,10 +162,58 @@ export default class ClubLifeNavigator extends Component {
                         <ClubInfo navigator = {navigator} route={route} />
                     );
                     break;
-                
+
                 case "pendingMembers":
                     scene = (
                         <PendingMembers navigator = {navigator} route={route} />
+                    );
+                    break;
+
+                case "postToClubOptions":
+                    scene = (
+                        <PostToClubOptions navigator={navigator} route={route} />
+                    );
+                    break;
+
+                case "editEvent":
+                    scene = (
+                        <EditEvent navigator={navigator} route={route}
+                            type = {"edit"} />
+                    );
+                    break;
+
+                case "createEvent":
+                    scene = (
+                        <EditEvent navigator={navigator} route={route}
+                            type = {"create"}/>
+                    );
+                    break;
+
+                case "editPost":
+                    scene = (
+                        <EditPost navigator={navigator} route={route}
+                            type = {"edit"} />
+                    );
+                    break;
+
+                case "createPost":
+                    scene = (
+                        <EditPost navigator={navigator} route={route}
+                            type={"create"} />
+                    );
+                    break;
+
+                case "memberPage":
+                    scene = (
+                        <Profile navigator={navigator} route={route}
+                            clubList = {this.state.clubList}
+                            type={"memberPage"} />
+                    );
+                    break;
+
+                case "clubEvents":
+                    scene = (
+                        <ClubEvents navigator={navigator} route={route} />
                     );
                     break;
 
