@@ -14,7 +14,7 @@ namespace skeleton.Models {
     [BsonElement("name")]
     public string Name { get; set; }
     [BsonElement("clubs")]
-    private IList<ObjectId> clubs { get; set; }
+    private IList<ObjectId> clubs;
     public IList<string> Clubs {
       get {
         return clubs.Select(x => x.ToString()).ToList();

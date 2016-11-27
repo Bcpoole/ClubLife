@@ -68,14 +68,14 @@ namespace skeleton.Models {
     public IList<string> Members { get; set; }
 
     [BsonElement("events")]
-    private IList<ObjectId> events { get; set; }
+    private IList<ObjectId> events;
     public IList<string> Events {
       get {
         return events.Select(x => x.ToString()).ToList();
       }
     }
     [BsonElement("posts")]
-    private IList<ObjectId> posts { get; set; }
+    private IList<ObjectId> posts;
     public IList<string> Posts {
       get {
         return posts.Select(x => x.ToString()).ToList();
