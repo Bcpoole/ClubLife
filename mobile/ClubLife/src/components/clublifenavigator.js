@@ -81,6 +81,16 @@ export default class ClubLifeNavigator extends Component {
                         <Club navigator={navigator} route={route} />
                     );
                     break;
+                case "event":
+                    scene = (
+                        <Event navigator={navigator} route={route} />
+                    );
+                    break;
+                case "makeEvent":
+                    scene = (
+                        <makeEvent navigator={navigator} route={route} />
+                    );
+                    break;
                 case "profile":
                     scene = (
                         <Profile navigator={navigator} route={route}
