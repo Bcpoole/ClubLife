@@ -16,46 +16,46 @@ class ClubPage extends Component {
         this.state = {selectedTab: 'home'};
     }
 
-    
+
     _resultsView(){
-        
-        
+
+
         var TouchableElement = TouchableNativeFeedback;
         var userClubs = this.props.route.state.user.clubs;
         var returnVal = [];
         var data = this.props.clubList;
-        
+
         //console.log(data);
-        console.log(data.filter((club)=>club.id===userClubs[0]));
-        
+        //console.log(data.filter((club)=>club.id===userClubs[0]));
+
         returnVal.push(<Text style = {styles.welcome}>My Clubs</Text>);
-        
+
         for (var i =0;i<userClubs.length;i++){
-           
-           
+
+
             var clubObj =data.filter((club)=>club.id===userClubs[i]);
-            
-            
+
+
             returnVal.push(
-                
+
                 clubObj.map(club=>{
                     var content = (
-                        <TouchableElement style = {styles.button} onPress = {()=>this._navigateToClub(club.name)}>
+                        <TouchableElement style = {styles.button} onPress = {()=>this._navigateToClub(club)}>
                             <View><Text style = {styles.instructions}>{club.name}</Text></View>
                         </TouchableElement>);
                     return content;
-                }) 
+                })
             );
-   
+
         }
         //returnVal.push(</View>);
         return returnVal;
-        
-        
+
+
     }
-    
+
     render (){
-        
+
         return (
             <View  style = {{marginTop: 30, paddingBottom: 30}}>
                 {this._resultsView()}
@@ -63,11 +63,11 @@ class ClubPage extends Component {
         );
     }
 
-    _navigateToClub(clubName) {
+    _navigateToClub(club) {
         this.props.navigator.push({
             type: "club",
             index: this.props.route.index+1,
-            state: Object.assign({}, this.props.route.state, {clubName: clubName})
+            state: Object.assign({}, this.props.route.state, {club: club})
         });
     }
 
