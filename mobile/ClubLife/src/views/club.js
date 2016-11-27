@@ -77,9 +77,9 @@ class Club extends Component {
             return false;
         }
 
-        var isMember = isInArray(members);
-        var isOfficer = isInArray(officers);
-        var isLeader = isInArray(leaders);
+        var isMember = isInArray(members); //members.includes(user.id)
+        var isOfficer = isInArray(officers); //officers.includes(user.id)
+        var isLeader = isInArray(leaders); //leaders.includes(user.id)
 
 
         // officer (and by extension, leader) options: post to club, approve members
@@ -124,7 +124,7 @@ class Club extends Component {
 
         <ScrollView style={styles.container}>
             <View style={styles.box}>
-                <Image source={{uri: picURL}} style={{flex:1, height: 375, width: 375}} />
+                <Image source={{uri: picURL}} style={{flex:1, height: 200, width: 200}} />
 
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
@@ -135,7 +135,7 @@ class Club extends Component {
 
                 <View style={{width: 365, height: 30, flexDirection: 'row',
                     justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>
-                    <TouchableElement onPress={()=>this._onGoEditClub()}>
+                    <TouchableElement onPress={()=>this._onGoEvent()}>
                         <View><Text style={styles.button}>Events</Text></View>
                     </TouchableElement>
                     <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
@@ -218,6 +218,14 @@ class Club extends Component {
         _onPostToClub() {
             this.props.navigator.push({
                 type: "postToClubOptions",
+                index: this.props.route.index+1,
+                state: this.props.route.state
+            });
+        }
+
+        _onGoEvent() {
+            this.props.navigator.push({
+                type: "event",
                 index: this.props.route.index+1,
                 state: this.props.route.state
             });
