@@ -92,7 +92,7 @@ export default class HomePage extends Component {
   }
   _onGoEvents() {
       this.props.navigator.push({
-          type: "testpage",
+          type: "myEvents",
           index: this.props.route.index+1,
           state: this.props.route.state
       })
