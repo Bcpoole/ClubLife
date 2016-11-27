@@ -20,6 +20,7 @@ import PostToClubOptions from '../views/postToClubOptions';
 import EditEvent from '../views/editEvent';
 import EditPost from '../views/editPost';
 import ClubEvents from '../views/clubEvents';
+import MyEvents from '../views/myEvents';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -214,6 +215,12 @@ export default class ClubLifeNavigator extends Component {
                 case "clubEvents":
                     scene = (
                         <ClubEvents navigator={navigator} route={route} />
+                    );
+                    break;
+
+                case "myEvents":
+                    scene = (
+                        <MyEvents navigator={navigator} route={route} />
                     );
                     break;
 
