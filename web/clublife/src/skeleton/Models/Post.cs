@@ -13,5 +13,19 @@ namespace skeleton.Models {
     public string Content { get; set; }
     [BsonElement("created")]
     public DateTime Created { get; set; }
+    [BsonElement("author")]
+    private ObjectId author;
+    public string Author {
+      get {
+        return author.ToString();
+      }
+    }
+    [BsonElement("club")]
+    private ObjectId club;
+    public string Club {
+      get {
+        return club.ToString();
+      }
+    }
   }
 }
