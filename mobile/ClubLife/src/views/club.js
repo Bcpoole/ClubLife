@@ -114,7 +114,7 @@ class Club extends Component {
 
         <ScrollView style={styles.container}>
             <View style={styles.box}>
-                <Image source={{uri: picURL}} style={{flex:1, height: 375, width: 375}} />
+                <Image source={{uri: picURL}} style={{flex:1, height: 200, width: 200}} />
 
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
@@ -125,7 +125,7 @@ class Club extends Component {
 
                 <View style={{width: 365, height: 30, flexDirection: 'row', 
                     justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>
-                    <TouchableElement onPress={()=>this._onGoEditClub()}>
+                    <TouchableElement onPress={()=>this._onGoEvent()}>
                         <View><Text style={styles.button}>Events</Text></View>
                     </TouchableElement>
                     <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
@@ -195,6 +195,14 @@ class Club extends Component {
         _onGoPendingMembers() {
             this.props.navigator.push({
                 type: "pendingMembers",
+                index: this.props.route.index+1,
+                state: this.props.route.state
+            });
+        }
+
+        _onGoEvent() {
+            this.props.navigator.push({
+                type: "event",
                 index: this.props.route.index+1,
                 state: this.props.route.state
             });
