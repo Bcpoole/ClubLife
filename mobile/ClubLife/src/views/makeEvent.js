@@ -33,6 +33,7 @@ export default class Profile extends Component {
                 onChangeText={(text) => this.setState({nextUserState: Object.assign(this.state.nextUserState, {name: text})})}
                 placeholder={Please enter event location}/>
 
+                //Time/Date for makeEvent will be a series of picker boxes in a row? [Day] [Time] [AM/PM]
                 <Picker
                     style={styles.picker}
                     selectedValue={this.state.selected1}
