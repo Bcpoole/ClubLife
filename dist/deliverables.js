@@ -25,7 +25,11 @@ System.register([], function (_export, _context) {
         }
 
         Team.prototype.generateFileList = function generateFileList() {
-          this.files = ['P1SoftwareRequirementsDocumentSRD.docx', 'CS495ClassDiagramFinal.png', 'UseCaseDiagrams.zip', 'ActivityDiagrams.zip', 'Sales Pitch.pptx', 'PRS-1 Requirements Slides.pptx'];
+          this.documentFiles = ['P1SoftwareRequirementsDocumentSRD.docx'];
+
+          this.diagramFiles = ['CS495ClassDiagramFinal.png', 'Use Case Diagrams.zip', 'Activity Diagrams.zip', 'Class Diagrams.zip', 'Sequence Diagrams.zip'];
+
+          this.pptxFiles = ['Sales Pitch.pptx', 'PRS-1 Requirements Slides.pptx', 'PRS-2 Design Slides.pptx', 'Final Presentation.pptx'];
         };
 
         return Team;

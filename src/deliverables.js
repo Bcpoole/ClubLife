@@ -7,13 +7,23 @@ export class Team {
   }
 
   generateFileList() {
-    this.files = [
-      'P1SoftwareRequirementsDocumentSRD.docx',
+    this.documentFiles = [
+      'P1SoftwareRequirementsDocumentSRD.docx'
+    ];
+
+    this.diagramFiles = [
       'CS495ClassDiagramFinal.png',
-      'UseCaseDiagrams.zip',
-      'ActivityDiagrams.zip',
+      'Use Case Diagrams.zip',
+      'Activity Diagrams.zip',
+      'Class Diagrams.zip',
+      'Sequence Diagrams.zip'
+    ];
+
+    this.pptxFiles = [
       'Sales Pitch.pptx',
-      'PRS-1 Requirements Slides.pptx'
-    ]
+      'PRS-1 Requirements Slides.pptx',
+      'PRS-2 Design Slides.pptx',
+      'Final Presentation.pptx'
+    ];
   }
 }
