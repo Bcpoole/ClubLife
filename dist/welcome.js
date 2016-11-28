@@ -28,13 +28,7 @@ System.register([], function (_export, _context) {
           } else {
             this.logo = prodVersion;
           }
-
-          this.setGoals();
         }
-
-        Welcome.prototype.setGoals = function setGoals() {
-          this.goals = ['Cross-platform through the use of Xamarin', 'User-centered functionality that make it actually worth using', 'Easy-to-adopt setup for clubs'];
-        };
 
         Welcome.prototype.UrlExists = function UrlExists(url) {
           var httpChecker = new XMLHttpRequest();

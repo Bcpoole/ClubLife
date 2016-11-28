@@ -10,16 +10,6 @@ export class Welcome {
     } else {
       this.logo = prodVersion;
     }
-
-    this.setGoals();
-  }
-
-  setGoals() {
-    this.goals = [
-      'Cross-platform through the use of Xamarin',
-      'User-centered functionality that make it actually worth using',
-      'Easy-to-adopt setup for clubs'
-    ];
   }
 
   UrlExists(url) {

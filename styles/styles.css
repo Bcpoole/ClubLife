@@ -203,3 +203,7 @@ h2 img.logo {
     opacity: 1;
   }
 }
+
+ul.open-circle {
+    list-style-type: circle;
+}
