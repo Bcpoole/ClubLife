@@ -22,6 +22,8 @@ class Club extends Component {
             hasData: false,
             data: [],
             post: [],
+            event: [],
+            postsEvents: []
             
         };
         this.DEFAULT_IMG_URL = "";
@@ -56,16 +58,53 @@ class Club extends Component {
 
     _addMessages(){
         var posts = this.state.data[0].posts;
+        var events = this.state.data[0].events;
         var returnValue = [];
+        // actual post objects 
+        var postArray = [];
+       
+        
         for (var i =0;i<posts.length;i++) {
-            _getPost(posts[i].id);
+            this._getPost(posts[i]);
             var post = this.state.post[0];
-            returnValue.push( 
-                <View style = {[styles.box,  styles.message]}>
-                    <Text style = {styles.instructions}> {post.author}: {post.content}</Text>
-                </View>
-            );
+            postArray.push(post);
+      
         }
+        for (var j =0;j<events.length;j++) {
+            this._getEvent(events[j]);
+            var event = this.state.event[0];
+            postArray.push(event);
+        }
+        
+        var sortedPostArray = postArray.sort((a,b)=>{a.created.localCompare(b.created)});
+        
+        for (var k = 0;k<sortedPostArray.length;k++){
+            var val = sortedPostArray[k];
+            
+            // if event:
+            // if(val.hasOwnProperty('isPublic')){
+            //     returnValue.push(
+            //         <View style = {[styles.box,  styles.message]}>
+            //             <Text>EVENT: {val.subject}</Text>
+                    
+            //         </View>
+            //     );
+            
+            // }
+            // else{
+            //     // if post:
+            //     returnValue.push( 
+            //         <View style = {[styles.box,  styles.message]}>
+            //             <Text style = {styles.instructions}>POST:  {val.author}: {val.content}</Text>
+            //         </View>
+            //     ); 
+            // }
+            
+            
+            
+            
+        }
+        
         return returnValue;
          
     }
@@ -87,9 +126,30 @@ class Club extends Component {
                         index: 0,
                         state: {}
                     });
-                })            
-        
+                })                    
     }
+    
+     _getEvent(eventId){
+          const url = 'http://skeleton20161103012840.azurewebsites.net/api/Organizations/events/'+eventId;
+            fetch(url)
+                .then(res=>res.json())
+                .then(json => {
+                    this.setState({
+                        post: [json]
+                    })
+                })
+                .catch(e => {
+                    console.error(e);
+                    //reset to login if this call screws up, I guess
+                    this.props.navigator.resetTo({
+                        type: "login",
+                        index: 0,
+                        state: {}
+                    });
+                })                    
+    }
+    
+    
 
 
     render() {
