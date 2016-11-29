@@ -10,7 +10,7 @@ import Profile from '../views/profile';
 import FindAClub from '../views/findaclub';
 import FindAnEvent from '../views/findAnEvent';
 import AllViews from '../views/allviews';
-import EditClub from '../views/editClub';
+import EditClub from '../views/EditClub';
 import ClubPage from '../views/clubPage';
 import ClubInfo from '../views/clubInfo';
 import EditProfile from '../views/editProfile';
@@ -21,6 +21,7 @@ import EditEvent from '../views/editEvent';
 import EditPost from '../views/editPost';
 import ClubEvents from '../views/clubEvents';
 import MyEvents from '../views/myEvents';
+import Event from '../views/event';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 

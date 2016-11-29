@@ -21,15 +21,16 @@ class ClubPage extends Component {
 
 
         var TouchableElement = TouchableNativeFeedback;
-        var userClubs = this.props.route.state.user.clubs;
+        //var userClubs = this.props.route.state.user.clubs;
+        var user = this.props.route.state.user;
+        var userClubs = user.clubs;
         var returnVal = [];
         var data = this.props.clubList;
 
         //console.log(data);
         //console.log(data.filter((club)=>club.id===userClubs[0]));
-
         returnVal.push(<Text key={"title-key"} style = {styles.welcome}>My Clubs</Text>);
-
+        
         for (var i =0;i<userClubs.length;i++){
 
 
@@ -63,11 +64,11 @@ class ClubPage extends Component {
         );
     }
 
-    _navigateToClub(club) {
+    _navigateToClub(clubName) {
         this.props.navigator.push({
             type: "club",
             index: this.props.route.index+1,
-            state: Object.assign({}, this.props.route.state, {club: club})
+            state: Object.assign({}, this.props.route.state, {club: clubName})
         });
     }
 
