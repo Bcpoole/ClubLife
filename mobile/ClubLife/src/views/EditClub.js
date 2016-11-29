@@ -48,7 +48,18 @@ class EditClub extends Component {
 
         var data = this.state.data;
         var yo = this;
-        
+
+        var variableNames = ({'secondaryAdvisorDepartment':'Secondary Advisor Department','organizationMeetingLocation':'Meeting Location',
+        'vicePresidentEmail':'Vice-President Email','presidentEmail':'President Email','parentOrganization':'Parent Organization',
+        'organizationMeetingTime':'Meeting Time','advisorEmail':'Advisor Email','vicePresidentName':'Vice-President',
+        'advisorPhone':'Advisor Phone','organizationEmail':'Organization Email','secretaryName':'Secretary',
+        'advisorDepartment':'Advisor Department','secretaryEmail':'Secretary Email','primarycontact':'Primary Contact',
+        'organizationMeetingDay':'Meeting Day','secondaryAdvisorNameAndTitle':'Secondary Advisor','url':'Website','advisorNameAndTitle':'Advisor',
+        'secondaryAdvisorPhone':'Secondary Advisor Phone','summary':'Summary','treasurerEmail':'Treasurer Email',
+        'secondaryAdvisorEmail':'Secondary Advisor Email','mainSummary':'Main Summary','aboutSummary':'About Summary',
+        'name':'Club Name','presidentName':'President'});
+
+
         function hey(changedVal,originalVal){
             //if (boo in this.state.newValues){
             if (changedVal in yo.state.newValues){
@@ -81,7 +92,7 @@ class EditClub extends Component {
                         returnValue.push(
                             <View>
                                 <Text style={styles.welcome}>
-                                    {prop}:
+                                    {variableNames[prop]}:
                                 </Text>
                                 <TextInput
                                     style = {styles.textEdit}
@@ -164,7 +175,7 @@ class EditClub extends Component {
         
     }
     
-    
+
     _processSubmit(){
         var jsonString = '{';
         var id;
@@ -193,14 +204,10 @@ class EditClub extends Component {
             })
             .then(function(res){ return res.json(); })
             .then(function(data){ alert( JSON.stringify( data ) ) })
-            
-        
-        
-        
         
     }
     
-    
+
     
 
 

@@ -38,6 +38,15 @@ class ClubInfo extends Component {
 
         var leaderOps = <Text></Text>;
 
+        var variableNames = ({'secondaryAdvisorDepartment':'Secondary Advisor Department','organizationMeetingLocation':'Meeting Location',
+        'vicePresidentEmail':'Vice-President Email','presidentEmail':'President Email','parentOrganization':'Parent Organization',
+        'organizationMeetingTime':'Meeting Time','advisorEmail':'Advisor Email','vicePresidentName':'Vice-President',
+        'advisorPhone':'Advisor Phone','organizationEmail':'Organization Email','secretaryName':'Secretary',
+        'advisorDepartment':'Advisor Department','secretaryEmail':'Secretary Email','primarycontact':'Primary Contact',
+        'organizationMeetingDay':'Meeting Day','secondaryAdvisorNameAndTitle':'Secondary Advisor','url':'Website','advisorNameAndTitle':'Advisor',
+        'secondaryAdvisorPhone':'Secondary Advisor Phone','summary':'Summary','treasurerEmail':'Treasurer Email',
+        'secondaryAdvisorEmail':'Secondary Advisor Email','mainSummary':'Main Summary','aboutSummary':'About Summary',
+        'name':'Club Name','presidentName':'President'});
 
         if(club.leaders.indexOf(user.id) > -1) {
             leaderOps =
@@ -61,7 +70,7 @@ class ClubInfo extends Component {
                     if (prop==="id" || prop === "events" || prop==="posts" || prop==="img" || prop ==="leaders" || prop ==="officers" || prop==="members"||prop==="pendingRequests"){
                         continue;
                     }
-                    returnValue.push(<View key={"clubInfo-"+i}><Text style={styles.welcome}>{prop}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
+                    returnValue.push(<View key={"clubInfo-"+i}><Text style={styles.welcome}>{variableNames[prop]}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
                     i++;
                }
            });
@@ -69,7 +78,6 @@ class ClubInfo extends Component {
           return returnValue;
 
         }
-
 
 
         return (
