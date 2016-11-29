@@ -25,5 +25,7 @@ export class Team {
       'PRS-2 Design Slides.pptx',
       'Final Presentation.pptx'
     ];
+
+    this.appFile = 'TO-DO';
   }
 }

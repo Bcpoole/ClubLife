@@ -30,6 +30,8 @@ System.register([], function (_export, _context) {
           this.diagramFiles = ['CS495ClassDiagramFinal.png', 'Use Case Diagrams.zip', 'Activity Diagrams.zip', 'Class Diagrams.zip', 'Sequence Diagrams.zip'];
 
           this.pptxFiles = ['Sales Pitch.pptx', 'PRS-1 Requirements Slides.pptx', 'PRS-2 Design Slides.pptx', 'Final Presentation.pptx'];
+
+          this.appFile = 'TO-DO';
         };
 
         return Team;
