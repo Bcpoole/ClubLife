@@ -130,7 +130,6 @@ namespace skeleton.Data {
     }
 
     public async void CreateNewPostAsync(Post post) {
-      post.Id = new ObjectId();
       post.Created = DateTime.UtcNow;
 
       await database.GetCollection<Post>("posts").InsertOneAsync(post);
@@ -173,7 +172,6 @@ namespace skeleton.Data {
     }
 
     public async void CreateNewEventAsync(Event @event) {
-      @event.Id = new ObjectId();
       @event.Created = DateTime.UtcNow;
       await database.GetCollection<Event>("events").InsertOneAsync(@event);
 
