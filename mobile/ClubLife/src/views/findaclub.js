@@ -38,9 +38,9 @@ export default class FindAClub extends Component {
 
         var TouchableElement = TouchableNativeFeedback;
         var content = (
-            <View>
+            <View style={{backgroundColor: '#F5FCFF'}}>
                 <TextInput
-                    style={{paddingTop: 20}}
+                    style={{paddingTop: 20, backgroundColor: 'white'}}
                     placeholder={"filter clubs by name"}
                     onChangeText={(filterName)=>{this.setState({filterName: filterName});}}
                     >
@@ -49,16 +49,16 @@ export default class FindAClub extends Component {
                     {data.map(club => {
                         return (
                             <View key={club.name} style={{flex: 1, flexDirection: 'row'}}>
+
                                 <TouchableElement
                                     onPress={()=>this._navigateToClub(club)}>
-                                    <Image
-                                        source={{uri: club.img || this.DEFAULT_IMG_URL}}
-                                        style={{height: 40, width: 40}}
-                                    />
+                                    <View>
+                                        <Text style={{fontSize: 17, margin: 2}}>
+                                            {club.name}
+                                        </Text>
+                                    </View>
                                 </TouchableElement>
-                                <Text>
-                                    {club.name+" PresidentName: "+club.presidentName}
-                                </Text>
+
                             </View>
                         );
                     })}

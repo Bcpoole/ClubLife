@@ -176,7 +176,7 @@ class Club extends Component {
 
         <ScrollView style={styles.container}>
             <View style={styles.box}>
-                <Image source={{uri: picURL}} style={{flex:1, height: 200, width: 200}} />
+                <Image source={{uri: picURL}} style={{height: 200, width: 200, resizeMode: 'contain'}} />
 
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
@@ -192,7 +192,7 @@ class Club extends Component {
                     <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
                         <View><Text style = {styles.button}>Info</Text></View>
                     </TouchableElement>
-                 
+
                    {memberOps}
                    {leaderOps}
                    {offOps}
@@ -306,6 +306,10 @@ const styles = StyleSheet.create({
       width: 100
   },
 
+  padding: {
+      paddingBottom: 10,
+  },
+
     BottomBar: {
 
       fontSize: 12,
@@ -368,9 +372,9 @@ const styles = StyleSheet.create({
 
   box: {
 
+      alignItems: 'center',
 
-
-      flexDirection: 'row',
+      flexDirection: 'column',
 
       flexWrap: 'wrap'
 

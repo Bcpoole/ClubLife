@@ -100,18 +100,30 @@ export default class Login extends Component {
                     keyboardType="email-address"
                     placeholder="email"
                 />
+
+                <Text style={{paddingTop: 3}}></Text>
+
                 <TextInput
                     style={styles.textEdit}
                     onChangeText={(moreText) => this.setState({passwordPlainText: moreText})}
                     placeholder="password"
                     secureTextEntry={true}
                 />
+
+                <Text style={{paddingTop: 3}}></Text>
+
                 <TouchableElement style = {styles.button} onPress = {() => {this._authenticate()}}>
                     <View><Text>Submit</Text></View>
                 </TouchableElement>
+
+                <Text style={{paddingTop: 3}}></Text>
+
                 <TouchableElement style = {styles.button} onPress = {()=>this._onGoSignup()}>
                     <View><Text>Not currently registered? Sign up!</Text></View>
                 </TouchableElement>
+
+                <Text style={{paddingTop: 3}}></Text>
+
                 {(this.state.hasMadeAuthenticatonAttempt && !this.state.isAuthenticating && !this.state.authenticated) ?
                     <View><Text>authentication attempt failed</Text></View> : <Text></Text>}
             </View>
