@@ -74,6 +74,7 @@ export default class ClubLifeNavigator extends Component {
                     );
                     break;
                 case "login":
+                    this._fetchClubInfo();
                     scene = (
                         <Login navigator={navigator} route={route} />
                     );
