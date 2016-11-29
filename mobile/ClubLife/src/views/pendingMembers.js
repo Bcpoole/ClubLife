@@ -14,10 +14,9 @@ class PendingMembers extends Component {
     constructor(props){
         super(props);
         this.state = {
-            selectedTab: 'home',
-            clubData: Object.assign({},this.props.route.state.club),
-            loadedMembers: {}
+            clubData: JSON.parse(JSON.stringify(this.props.route.state.club)) //deep copy
         };
+        this.userList = this.props.route.state.userList;
     }
 
     render (){
@@ -42,20 +41,12 @@ class PendingMembers extends Component {
                 </View>
             );
         }
-        else if(pendingRequests.length !== Object.keys(this.state.loadedMembers).length) {
-            //if we haven't loaded all the members yet...
-            pmView = (
-                <View>
-                    <Text>Loading pending membership requests...</Text>
-                </View>
-            );
-        }
         else {
             pmView = (
                 <View>
-                    {pendingRequests.map(id => {
+                    {pendingRequests.map((id,i) => {
                         var approveButton = canApprove ? (
-                            <TouchableElement>
+                            <TouchableElement onPress={()=>this._approveRequest(id)}>
                                 <View>
                                     <Text>Approve</Text>
                                 </View>
@@ -69,10 +60,10 @@ class PendingMembers extends Component {
                             </TouchableElement>
                         ): <View></View>;
                         return (
-                            <View>
+                            <View key={"fofofo"+i}>
                                 <TouchableElement onPress={()=>this._onGoMemberById(id)}>
                                     <View>
-                                        <Text>{this.state.loadedMembers[id].name}</Text>
+                                        <Text>{this._getMemberById(id).name}</Text>
                                     </View>
                                 </TouchableElement>
                                 {approveButton}
@@ -90,24 +81,6 @@ class PendingMembers extends Component {
                 {goBack}
             </View>
         );
-    }
-
-    componentDidMount() {
-        //load each member in the membership request
-        let getMemberRequest = (userId) => {
-            let url = "http://skeleton20161103012840.azurewebsites.net/api/Users/"+userId;
-            fetch(url)
-                .then(res => res.json())
-                .then(json => {
-                    this.setState({
-                        loadedMembers: Object.assign(this.state.loadedMembers, {userId: json})
-                    });
-                })
-                .catch(e => console.error(e));
-        };
-        for(let memberId of this.props.route.state.club.pendingRequests) {
-            getMemberRequest(memberId);
-        }
     }
 
     _onGoMemberById(memberId) {
@@ -129,21 +102,41 @@ class PendingMembers extends Component {
 
     _denyRequest(memberId) {
         var clubId = this.state.clubData.id;
-        var url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/" + clubId + "/approve/" + memberId;
-        fetch(url, {method: "POST", body: JSON.stringify({approved: false})})
-            .then(res => res.json())
-            .then(json => {})
+        var url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/" + clubId + "/approve/" + memberId + "?approved=false";
+        let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+        let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+        fetch(url, {method: "POST"})
+            .then(parseResponse)
+            .then(json => {
+                this._onHandled(memberId);
+            })
             .catch(e => console.error(e));
 
     }
 
     _approveRequest(memberId) {
         var clubId = this.state.clubData.id;
-        var url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/" + clubId + "/approve/" + memberId;
-        fetch(url, {method: "POST", body: JSON.stringify({approved: true})})
-            .then(res => res.json())
-            .then(json => {})
+        var url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/" + clubId + "/approve/" + memberId + "?approved=true";
+        let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+        let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+        fetch(url, {method: "POST"})
+            .then(parseResponse)
+            .then(json => {
+                this._onHandled(memberId);
+            })
             .catch(e => console.error(e));
+    }
+
+    _onHandled(id) {
+        let pendingRequests = [...this.state.clubData.pendingRequests];
+        var remIndex = pendingRequests.indexOf(id);
+        if(remIndex > -1) {
+            pendingRequests.splice(remIndex,1);
+        }
+        var nextState = Object.assign({},this.state.clubData, {pendingRequests: pendingRequests});
+        this.setState({
+            clubData: nextState
+        });
     }
 
     _onGoBack() {
@@ -154,6 +147,17 @@ class PendingMembers extends Component {
             index: this.props.route.index-1,
             state: Object.assign({}, this.props.route.state, {club: this.state.clubData})
         });
+    }
+
+    _getMemberById(id) {
+        for(let member of this.userList) {
+            if(member.id === id) {
+                return member;
+            }
+        }
+        return {
+            name: "Unknown User"
+        }; //handle deleted users...I guess?
     }
 }
 

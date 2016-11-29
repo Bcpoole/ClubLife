@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Alert,
   AppRegistry,
   StyleSheet,
   Text,
@@ -30,10 +31,12 @@ class Club extends Component {
     }
 
     _addToPending(userId){
-        var club = this.state.data[0];
+        var club = this.state.data;
         //if we're already in the pending members, no op and alert the user
         if(club.pendingRequests.indexOf(userId) > -1) {
-            alert("You have already requested to join the club. Be patient!");
+            Alert.alert("Hey now","You have already requested to join the club. Be patient!", [
+                {"text": "Sorry!", onPress: () => {}}
+            ]);
             //alert(this.state.data[0].pendingRequests);
             return;
         }
@@ -41,10 +44,12 @@ class Club extends Component {
         pending.push(userId);
         var newClub = Object.assign({}, club, {pendingRequests: pending});
         var url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/"+club.id;
-        fetch(url, {method: "POST", body: JSON.stringify(newClub)})
-            .then(()=>{
+        let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+        let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+        fetch(url, {method: "POST", headers: headers, body: JSON.stringify(newClub)})
+            .then(parseResponse)
+            .then(json=>{
                 alert("You have requested to join "+club.name);
-
                 // set our state to be the new club as well
                 this.setState({
                     data: newClub
@@ -289,7 +294,7 @@ class Club extends Component {
             this.props.navigator.push({
                 type: "pendingMembers",
                 index: this.props.route.index+1,
-                state: this.props.route.state
+                state: Object.assign({}, this.props.route.state, {userList: this.state.users})
             });
         }
 
