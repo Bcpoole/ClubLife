@@ -63,19 +63,26 @@ class Club extends Component {
         // actual post objects 
         var postArray = [];
        
+        var hey = this.state.post[0];
+        console.log(this.state.post);
+        //returnValue.push(<Text>{hey.subject}</Text>);
         
-        for (var i =0;i<posts.length;i++) {
-            this._getPost(posts[i]);
-            var post = this.state.post[0];
-            returnValue.push(<Text>{post.subject}</Text>);
-            postArray.push(post);
-      
-        }
-        for (var j =0;j<events.length;j++) {
-            this._getEvent(events[j]);
-            var event = this.state.event[0];
-            postArray.push(event);
-        }
+        // for (var i =0;i<posts.length;i++) {
+        //     this._getPost(posts[i]);          
+        //     var post = this.state.post[0];
+
+        //     returnValue.push(<Text key={"posts"+i}>{post.subject}</Text>);
+        //     postArray.push(post);
+
+
+        // }
+        // for (var j =0;j<events.length;j++) {
+        //     this._getEvent(events[j]);
+            
+        //     var event = this.state.event[0];
+        //     returnValue.push(<Text key={"e"+j}>{post.subject}</Text>);
+        //     postArray.push(event);
+        // }
         
         // var sortedPostArray = postArray.sort((a,b)=>{a.created.localCompare(b.created)});
         
@@ -110,46 +117,7 @@ class Club extends Component {
          
     }
     
-    _getPost(postId){
-          const url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/posts/"+postId;
-            fetch(url)
-                .then(res=>res.json())
-                .then(json => {
-                    this.setState({
-                        post: [json]
-                    })
-                })
-                .catch(e => {
-                    console.error(e);
-                    //reset to login if this call screws up, I guess
-                    this.props.navigator.resetTo({
-                        type: "login",
-                        index: 0,
-                        state: {}
-                    });
-                })                    
-    }
-    
-     _getEvent(eventId){
-          const url = 'http://skeleton20161103012840.azurewebsites.net/api/Organizations/events/'+eventId;
-            fetch(url)
-                .then(res=>res.json())
-                .then(json => {
-                    this.setState({
-                        post: [json]
-                    })
-                })
-                .catch(e => {
-                    console.error(e);
-                    //reset to login if this call screws up, I guess
-                    this.props.navigator.resetTo({
-                        type: "login",
-                        index: 0,
-                        state: {}
-                    });
-                })                    
-    }
-    
+
     
 
 
@@ -273,7 +241,27 @@ class Club extends Component {
                     this.setState({
                         hasData: true,
                         data: json
-                    })
+                    });
+                    //var posts = [];
+                    //for (var i =0;i<json.posts;i++){
+                        //const url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/posts/"+json.posts[i];
+                        //const url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/posts/"+"5824ebc517b44627c34fa679";
+                         //const url = 'http://skeleton20161103012840.azurewebsites.net/api/Organizations/events/'+"5824eba317b44627c34fa677";
+                    const url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/events/5824eba317b44627c34fa677";
+                    fetch(url)
+                        .then(res=>res.json())
+                        .then(json => {
+                        //    posts.push(json);
+                            this.setState({post: [json]});
+                        })
+                        .catch(e => {
+                            console.error(e);
+                        
+                        });        
+                    //}
+                    // this.setState({post: posts});
+                    
+                    
                 })
                 .catch(e => {
                     console.error(e);
@@ -284,8 +272,22 @@ class Club extends Component {
                         state: {}
                     });
                 })
-        }
+            }
 
+        
+        // -----------------------------------------
+        
+          
+        
+       
+        
+        
+        
+        
+
+        
+        
+        
         _onGoEditClub() {
             this.props.navigator.push({
                 type: "EditClub",

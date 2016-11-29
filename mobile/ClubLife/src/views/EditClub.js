@@ -24,14 +24,7 @@ class EditClub extends Component {
             data: [],
             newVal: '',
             currentVal:'',
-
-            //newValues : '',
             newValues : {}
-            //hasValues:false            
-
-            
-
-
 
         };
         //this.setState({hasValues:false});
@@ -42,9 +35,6 @@ class EditClub extends Component {
     _resultsView(){
         var TouchableElement = TouchableNativeFeedback;
         var officer = true; // figure this out later
-        //var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
-        //image
-
 
         var data = this.state.data;
         var yo = this;
