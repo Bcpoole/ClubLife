@@ -32,28 +32,28 @@ class ClubInfo extends Component {
         //var vals = ['Secondary Advisor Department','Meeting Location','Vice President Email','President Email','Parent Organization','Meeting Times','Advisor Email','Vice President Name','Advisor Phone','Organization Email','Secretary Name','Advisor Department','Seceretary Email','Primary Contact','Meeting Day','Secondary Advisor Name and Title','url','image url','Advisor Name and Title','Secondary Advisor Phone','Summary','Treasurer Email','Secondary Advisor Email','Main Summary','About Summary','Name', 'President Name'];
         var data = this.state.data;
 
-        
+
         var user = this.props.route.state.user;
         var club = this.props.route.state.club;
-     
+
         var leaderOps = <Text></Text>;
-        
-        
-        if(club.leaders.indexOf(user.id) > -1) { 
+
+
+        if(club.leaders.indexOf(user.id) > -1) {
             leaderOps =
                 <TouchableElement onPress = {()=>this._onGoEditClub()}>
                     <View><Text style = {styles.button} >Edit Club Info</Text></View>
-                </TouchableElement>;            
+                </TouchableElement>;
         }
-        
-        
+
+
         function clubValue(){
 
            var returnValue = [];
 
-          
-           
-           
+
+
+
            data.map(club=> {
                var i = 0;
                for (let prop in club){
@@ -61,21 +61,16 @@ class ClubInfo extends Component {
                     if (prop==="id" || prop === "events" || prop==="posts" || prop==="img" || prop ==="leaders" || prop ==="officers" || prop==="members"||prop==="pendingRequests"){
                         continue;
                     }
-                    returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
+                    returnValue.push(<View key={"clubInfo-"+i}><Text style={styles.welcome}>{prop}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
                     i++;
                }
-
-
-
-
-
-            })
+           });
 
           return returnValue;
 
         }
 
-        
+
 
         return (
         <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
@@ -101,7 +96,7 @@ class ClubInfo extends Component {
                 state: Object.assign({}, this.props.route.state, {clubName: name})
             });
         }
-        
+
         _onGoEditClub() {
             this.props.navigator.push({
                 type: "EditClub",
