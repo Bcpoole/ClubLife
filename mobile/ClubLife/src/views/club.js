@@ -20,17 +20,14 @@ class Club extends Component {
         super(props);
         this.state = {
             hasData: false,
-            data: [],
-            post: [],
-            event: [],
-            postsEvents: []
-            
+            data: {},
+            posts: [],
+            events: [],
+            postsEvents: [],
+            users: []
         };
         this.DEFAULT_IMG_URL = "";
     }
-
-    
-
 
     _addToPending(userId){
         var club = this.state.data[0];
@@ -46,80 +43,15 @@ class Club extends Component {
         var url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/"+club.id;
         fetch(url, {method: "POST", body: JSON.stringify(newClub)})
             .then(()=>{
-                alert("You have requested to join "+club.name);
-                
+                 alert("You have requested to join "+club.name);
+
                 // set our state to be the new club as well
                 this.setState({
-                    data: [newClub]
+                    data: newClub
                 });
             })
             .catch(e => console.error(e));
     }
-
-    _addMessages(){
-        var posts = this.state.data[0].posts;
-        var events = this.state.data[0].events;
-        var returnValue = [];
-        // actual post objects 
-        var postArray = [];
-       
-        var hey = this.state.post[0];
-        console.log(this.state.post);
-        //returnValue.push(<Text>{hey.subject}</Text>);
-        
-        // for (var i =0;i<posts.length;i++) {
-        //     this._getPost(posts[i]);          
-        //     var post = this.state.post[0];
-
-        //     returnValue.push(<Text key={"posts"+i}>{post.subject}</Text>);
-        //     postArray.push(post);
-
-
-        // }
-        // for (var j =0;j<events.length;j++) {
-        //     this._getEvent(events[j]);
-            
-        //     var event = this.state.event[0];
-        //     returnValue.push(<Text key={"e"+j}>{post.subject}</Text>);
-        //     postArray.push(event);
-        // }
-        
-        // var sortedPostArray = postArray.sort((a,b)=>{a.created.localCompare(b.created)});
-        
-        // for (var k = 0;k<sortedPostArray.length;k++){
-        //     var val = sortedPostArray[k];
-            
-        //     // if event:
-        //     // if(val.hasOwnProperty('isPublic')){
-        //     //     returnValue.push(
-        //     //         <View style = {[styles.box,  styles.message]}>
-        //     //             <Text>EVENT: {val.subject}</Text>
-                    
-        //     //         </View>
-        //     //     );
-            
-        //     // }
-        //     // else{
-        //     //     // if post:
-        //     //     returnValue.push( 
-        //     //         <View style = {[styles.box,  styles.message]}>
-        //     //             <Text style = {styles.instructions}>POST:  {val.author}: {val.content}</Text>
-        //     //         </View>
-        //     //     ); 
-        //     // }
-            
-            
-            
-            
-        // }
-        
-        return returnValue;
-         
-    }
-    
-
-    
-
 
     render() {
         if(!this.state.hasData) {
@@ -127,18 +59,17 @@ class Club extends Component {
         }
 
         var TouchableElement = TouchableNativeFeedback;
-        
+
 
          // Club Variables:
         var data = this.state.data;
-        var club = data[0];
+        var club = data;
         var picURL = club.img || this.DEFAULT_IMG_URL;
         var name = club.name;
         var officers = club.officers;
         var members = club.members;
         var leaders = club.leaders;
         var email = club.email;
-        
 
         var user = this.props.route.state.user;
 
@@ -202,10 +133,10 @@ class Club extends Component {
                     {name}
                     </Text>
                 </View>
-                  
+
                 <View style={{width: 365, height: 30, flexDirection: 'row',
                     justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>
-                    <TouchableElement onPress={()=>this._onGoEvent()}>
+                    <TouchableElement onPress={()=>this._onGoEvents()}>
                         <View><Text style={styles.button}>Events</Text></View>
                     </TouchableElement>
                     <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
@@ -217,19 +148,68 @@ class Club extends Component {
 
                 </View>
             </View>
-
-
-
             <Text style = {styles.welcome}>Club Posts:</Text>
-            
-            {this._addMessages()}
-           
+            {this._messages()}
         </ScrollView>
         );
         }
 
-        
-        
+        _messages() {
+            if(!this.state.users.length) {
+                //we can't map the user IDs to users so no-op
+                return [];
+            }
+            //concat clubs and events into one array
+            var posts = this.state.posts;
+            var events = this.state.events;
+            var user = this.props.route.state.user;
+            if(!(this.state.data.members.includes(user.id) || this.state.data.officers.includes(user.id) || this.state.data.leaders.includes(user.id))) {
+                //if we aren't in the club, don't show private events
+
+                //normally we wouldn't filter clientside and this is horrible but we KNOW this endpoint works, but not /api/.../public so let's minimize work
+                events = events.filter(e => e.isPublic);
+            }
+            var returnValue = [];
+            // actual post objects
+            var postArray = [].concat(posts, events);
+            postArray.sort((a,b)=>{a.created.localeCompare(b.created)});
+            var TouchableElement = TouchableNativeFeedback;
+            let authorName = id => {
+                for(let user of this.state.users) {
+                    if(user.id === id) {
+
+                       return user.name;
+                    }
+                }
+                return "Unknown author";
+            };
+            returnValue = postArray.map((post,i) => {
+                if(post.hasOwnProperty("isPublic")) {
+                    //the post is an event
+                    return (
+                        <TouchableElement key={"p"+i} onPress={() => this._onGoEvent(post)}>
+                            <View style = {[styles.box,  styles.message]}>
+                                <Text>{"EVENT: "+post.subject}</Text>
+                            </View>
+                        </TouchableElement>
+                    );
+                }
+                else {
+                    //the post is a post
+                    return (
+                        <TouchableElement key={"p"+i} onPress = {() => this._onGoPost(post)}>
+                            <View style = {[styles.box,  styles.message]}>
+                                <Text>{"POST by "+authorName(post.author)+": "+post.subject}</Text>
+                            </View>
+                        </TouchableElement>
+                    )
+                }
+            });
+            return returnValue;
+        }
+
+
+
         // Jonathan's component code
 
         componentDidMount() {
@@ -240,28 +220,11 @@ class Club extends Component {
                 .then(json => {
                     this.setState({
                         hasData: true,
-                        data: json
+                        data: json[0] //no idea why this is returning an array now
+                    }, () => {
+                        this._fetchClubPosts();
+                        this._fetchClubEvents();
                     });
-                    //var posts = [];
-                    //for (var i =0;i<json.posts;i++){
-                        //const url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/posts/"+json.posts[i];
-                        //const url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/posts/"+"5824ebc517b44627c34fa679";
-                         //const url = 'http://skeleton20161103012840.azurewebsites.net/api/Organizations/events/'+"5824eba317b44627c34fa677";
-                    const url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/events/5824eba317b44627c34fa677";
-                    fetch(url)
-                        .then(res=>res.json())
-                        .then(json => {
-                        //    posts.push(json);
-                            this.setState({post: [json]});
-                        })
-                        .catch(e => {
-                            console.error(e);
-                        
-                        });        
-                    //}
-                    // this.setState({post: posts});
-                    
-                    
                 })
                 .catch(e => {
                     console.error(e);
@@ -272,29 +235,52 @@ class Club extends Component {
                         state: {}
                     });
                 })
-            }
+            const userUrl = "http://skeleton20161103012840.azurewebsites.net/api/users";
+            fetch(userUrl).then(res=>res.json()).then(json => this.setState({users: json}))
+            .catch(e => {
+                console.error(e);
+            });
+        }
 
-        
-        // -----------------------------------------
-        
-          
-        
-       
-        
-        
-        
-        
+        _fetchClubPosts() {
+            let club = this.state.data;
+            let url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+club.id+"/posts";
+            fetch(url)
+                .then(res => res.json())
+                .then(json => {
+                    this.setState({
+                        posts: json
+                    })
+                })
+                .catch(e => console.error(e));
+        }
 
-        
-        
-        
+        _fetchClubEvents() {
+            let club = this.state.data;
+           let url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+club.id+"/events";
+            fetch(url)
+
+               .then(res => res.json())
+                .then(json => {
+                   this.setState({
+                        events: json
+
+                  });
+
+               })
+                .catch(e => console.error(e));
+
+        }
+
+
         _onGoEditClub() {
             this.props.navigator.push({
                 type: "EditClub",
                 index: this.props.route.index+1,
                 state: this.props.route.state
             });
-        }
+
+       }
 
         _onGoClubInfo() {
             this.props.navigator.push({
@@ -313,18 +299,39 @@ class Club extends Component {
         }
 
         _onPostToClub() {
-            this.props.navigator.push({
+
+           this.props.navigator.push({
                 type: "postToClubOptions",
+                index: this.props.route.index+1,
+                state: this.props.route.state
+
+           });
+        }
+
+        _onGoEvents() {
+            this.props.navigator.push({
+                type: "clubEvents",
                 index: this.props.route.index+1,
                 state: this.props.route.state
             });
         }
 
-        _onGoEvent() {
-            this.props.navigator.push({
-                type: "clubEvents",
+
+       _onGoPost(post) {
+           this.props.navigator.push({
+
+               type: "post",
                 index: this.props.route.index+1,
-                state: this.props.route.state
+                state: Object.assign({}, this.props.route.state, {post: post})
+            });
+        }
+
+        _onGoEvent(event) {
+            this.props.navigator.push({
+                type: "event",
+                index: this.props.route.index+1,
+
+               state: Object.assign({}, this.props.route.state, {event: event})
             });
         }
 }
@@ -335,21 +342,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     //justifyContent: 'center',
-    //alignItems: 'center',
+
+   //alignItems: 'center',
     backgroundColor: '#F5FCFF',
  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+
+   margin: 10,
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
-  },
+
+ },
   button: {
-   textAlign: 'center',
+
+  textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
@@ -386,7 +397,7 @@ const styles = StyleSheet.create({
 
       justifyContent: 'center',
 
-      alignItems: 'center',
+     alignItems: 'center',
 
 
 
@@ -418,7 +429,8 @@ const styles = StyleSheet.create({
 
     backgroundColor: 'white',
 
-    borderWidth: 1
+
+   borderWidth: 1
 
   },
 
@@ -427,6 +439,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
 
       flexDirection: 'column',
+
 
       flexWrap: 'wrap'
 
@@ -440,6 +453,7 @@ const styles = StyleSheet.create({
 
 
 
-  }
+
+ }
 
 });
