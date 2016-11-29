@@ -183,7 +183,7 @@ namespace skeleton.Data {
     #region Members
     public void ApproveMember(ObjectId userId, ObjectId clubId, bool approved) {
       var org = GetOrganizationById(clubId);
-      org.PendingRequests.Remove(userId);
+      org.PendingRequests.Remove(userId.ToString());
 
       if (approved) {
         var userRepo = new UsersRepository();
