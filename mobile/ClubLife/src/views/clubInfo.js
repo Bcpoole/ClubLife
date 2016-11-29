@@ -46,15 +46,10 @@ class ClubInfo extends Component {
                         continue;
                     }
 
-                    returnValue.push(<View><Text style={styles.welcome}>{prop}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
+                    returnValue.push(<View key={"clubInfo-"+i}><Text style={styles.welcome}>{prop}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
                     i++;
                }
-
-
-
-
-
-            })
+           });
 
           return returnValue;
 
