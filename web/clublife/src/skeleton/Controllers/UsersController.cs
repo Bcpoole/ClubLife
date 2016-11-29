@@ -27,7 +27,7 @@ namespace skeleton.Controllers {
       return Repo.GetUserById(new ObjectId(id));
     }
     // PUT api/users/new
-    [HttpPost("new")]
+    [HttpPut("new")]
     public void CreateNewUser([FromBody] User user) {
       Repo.CreateNewUserAsync(user);
     }
