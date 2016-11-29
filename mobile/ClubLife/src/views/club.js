@@ -21,15 +21,21 @@ class Club extends Component {
         this.state = {
             hasData: false,
             data: [],
+            post: [],
+            
         };
         this.DEFAULT_IMG_URL = "";
     }
+
+    
+
 
     _addToPending(userId){
         var club = this.state.data[0];
         //if we're already in the pending members, no op and alert the user
         if(club.pendingRequests.indexOf(userId) > -1) {
             alert("You have already requested to join the club. Be patient!");
+            //alert(this.state.data[0].pendingRequests);
             return;
         }
         var pending = [...club.pendingRequests];
@@ -39,12 +45,50 @@ class Club extends Component {
         fetch(url, {method: "POST", body: JSON.stringify(newClub)})
             .then(()=>{
                 alert("You have requested to join "+club.name);
+                
                 // set our state to be the new club as well
                 this.setState({
                     data: [newClub]
                 });
             })
             .catch(e => console.error(e));
+    }
+
+    _addMessages(){
+        var posts = this.state.data[0].posts;
+        var returnValue = [];
+        for (var i =0;i<posts.length;i++) {
+            _getPost(posts[i].id);
+            var post = this.state.post[0];
+            returnValue.push( 
+                <View style = {[styles.box,  styles.message]}>
+                    <Text style = {styles.instructions}> {post.author}: {post.content}</Text>
+                </View>
+            );
+        }
+        return returnValue;
+         
+    }
+    
+    _getPost(postId){
+          const url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/posts/"+postId;
+            fetch(url)
+                .then(res=>res.json())
+                .then(json => {
+                    this.setState({
+                        post: [json]
+                    })
+                })
+                .catch(e => {
+                    console.error(e);
+                    //reset to login if this call screws up, I guess
+                    this.props.navigator.resetTo({
+                        type: "login",
+                        index: 0,
+                        state: {}
+                    });
+                })            
+        
     }
 
 
@@ -54,6 +98,7 @@ class Club extends Component {
         }
 
         var TouchableElement = TouchableNativeFeedback;
+        
 
          // Club Variables:
         var data = this.state.data;
@@ -64,6 +109,7 @@ class Club extends Component {
         var members = club.members;
         var leaders = club.leaders;
         var email = club.email;
+        
 
         var user = this.props.route.state.user;
 
@@ -86,7 +132,8 @@ class Club extends Component {
         var offOps = <Text></Text>;
         if (isOfficer || isLeader){
             offOps = (
-                <View>
+                <View style = {{width: 215, height: 30, flexDirection: 'row',
+                    justifyContent: 'space-around', flexWrap: 'wrap'}}>
                     <TouchableElement onPress={()=>this._onPostToClub()}>
                         <View><Text style = {styles.button}>Post to Club</Text></View>
                     </TouchableElement>
@@ -101,22 +148,27 @@ class Club extends Component {
         var memberOps =  <TouchableElement onPress = {()=>this._addToPending(user.id)}>
                 <View><Text style = {styles.button}>Join Club</Text></View>
             </TouchableElement>;
-        if (isMember){
+        if (isLeader || isOfficer){
             memberOps = <Text></Text>;
+        }
+        else if (isMember){
+            memberOps =<TouchableElement onPress = {() =>Communications.email([email,user.username],null,null,'This person wants to join club','please let me join, i love club.')}>
+                        <View><Text style = {styles.button}>Contact an Officer</Text></View>
+                    </TouchableElement>;
         }
 
         // leader options: edit club info, post to club, approve members
         var leaderOps = <Text></Text>;
-        if (isLeader){
-            leaderOps =
-                <TouchableElement onPress = {()=>this._onGoEditClub()}>
-                    <View><Text style = {styles.button} >Edit Club Info</Text></View>
-                </TouchableElement>;
-        }
 
+        // if (isLeader){
+        //     leaderOps =
+        //         <TouchableElement onPress = {()=>this._onGoEditClub()}>
+        //             <View><Text style = {styles.button} >Edit Club Info</Text></View>
+        //         </TouchableElement>;
+        // }
+       
 
-
-
+        
 
         return (
 
@@ -131,8 +183,7 @@ class Club extends Component {
                     {name}
                     </Text>
                 </View>
-
-
+                  
                 <View style={{width: 365, height: 30, flexDirection: 'row',
                     justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>
                     <TouchableElement onPress={()=>this._onGoEvent()}>
@@ -141,9 +192,7 @@ class Club extends Component {
                     <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
                         <View><Text style = {styles.button}>Info</Text></View>
                     </TouchableElement>
-                    <TouchableElement onPress = {() =>Communications.email([email,user.username],null,null,'This person wants to join club','please let me join, i love club.')}>
-                        <View><Text style = {styles.button}>Contact an Officer</Text></View>
-                    </TouchableElement>
+                 
                    {memberOps}
                    {leaderOps}
                    {offOps}
@@ -153,20 +202,16 @@ class Club extends Component {
 
 
 
-            <Text style = {styles.welcome}>Messages:</Text>
-            <View style = {[styles.box,  styles.message]}>
-                <Image style = {styles.edit} source={require('./images/krab.png')} />
-                <Text style = {styles.instructions}> Mr. Krabs: Join us at our frycook olymics next Tues!!</Text>
-            </View>
-            <View style = {[styles.box, styles.message]}>
-                <Image style = {styles.edit} source={require('./images/pat.jpeg')} />
-                <Text style = {styles.instructions}> Patrick: Vote for me in tomorrow's elections!</Text>
-            </View>
+            <Text style = {styles.welcome}>Club Posts:</Text>
+            
+            {this._addMessages()}
+           
         </ScrollView>
         );
         }
 
-
+        
+        
         // Jonathan's component code
 
         componentDidMount() {
@@ -225,7 +270,7 @@ class Club extends Component {
 
         _onGoEvent() {
             this.props.navigator.push({
-                type: "event",
+                type: "clubEvents",
                 index: this.props.route.index+1,
                 state: this.props.route.state
             });
