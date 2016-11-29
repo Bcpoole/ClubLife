@@ -28,7 +28,16 @@ export default class ClubEvents extends Component {
 
 
         var TouchableElement = TouchableNativeFeedback;
-        return <View><Text>TODO: club event page</Text></View>;
+        return (
+            
+            <View>
+            
+            <Text>TODO: club event page</Text>
+      
+            
+            </View>
+            
+        );
     }
 
     componentDidMount() {

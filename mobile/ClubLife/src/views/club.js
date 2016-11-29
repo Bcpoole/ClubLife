@@ -158,17 +158,7 @@ class Club extends Component {
         }
 
         // leader options: edit club info, post to club, approve members
-        var leaderOps = <Text></Text>;
 
-        // if (isLeader){
-        //     leaderOps =
-        //         <TouchableElement onPress = {()=>this._onGoEditClub()}>
-        //             <View><Text style = {styles.button} >Edit Club Info</Text></View>
-        //         </TouchableElement>;
-        // }
-       
-
-        
 
         return (
 
@@ -194,7 +184,6 @@ class Club extends Component {
                     </TouchableElement>
                  
                    {memberOps}
-                   {leaderOps}
                    {offOps}
 
                 </View>
