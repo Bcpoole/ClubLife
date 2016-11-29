@@ -204,7 +204,10 @@ class Club extends Component {
                 </View>
                   
                 <View style={{width: 365, height: 30, flexDirection: 'row',
-                    justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>                 
+                    justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>
+                    <TouchableElement onPress={()=>this._onGoEvent()}>
+                        <View><Text style={styles.button}>Events</Text></View>
+                    </TouchableElement>
                     <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
                         <View><Text style = {styles.button}>Info</Text></View>
                     </TouchableElement>
