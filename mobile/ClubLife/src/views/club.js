@@ -196,7 +196,7 @@ class Club extends Component {
                 else {
                     //the post is a post
                     return (
-                        <TouchableElement key={"p"+i} onPress = {() => this._onGoPost(post)}>
+                        <TouchableElement key={"p"+i} onPress = {() => this._onGoPost(post, authorName(post.author))}>
                             <View style = {[styles.box,  styles.message]}>
                                 <Text>{"POST by "+authorName(post.author)+": "+post.subject}</Text>
                             </View>
@@ -309,11 +309,11 @@ class Club extends Component {
             });
         }
 
-        _onGoPost(post) {
+        _onGoPost(post, authorName) {
             this.props.navigator.push({
                 type: "post",
                 index: this.props.route.index+1,
-                state: Object.assign({}, this.props.route.state, {post: post})
+                state: Object.assign({}, this.props.route.state, {post: post}, {authorName: authorName})
             });
         }
 
