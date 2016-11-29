@@ -24,13 +24,19 @@ class EditClub extends Component {
             data: [],
             newVal: '',
             currentVal:'',
+
             //newValues : '',
             newValues : {}
-            //hasValues:false
+            //hasValues:false            
+
+            
+
+
+
         };
         //this.setState({hasValues:false});
     }
-
+    
 
 
     _resultsView(){
@@ -42,10 +48,7 @@ class EditClub extends Component {
 
         var data = this.state.data;
         var yo = this;
-
-
-
-
+        
         function hey(changedVal,originalVal){
             //if (boo in this.state.newValues){
             if (changedVal in yo.state.newValues){
@@ -91,16 +94,23 @@ class EditClub extends Component {
                                     }
 
                                     value = {hey(prop,club[prop])}
-                                     >
-
+                                     > 
                                 </TextInput>
                             </View>);
                         i++;                }
 
                 }, this) // end of map
             return returnValue;
-
+            
         }
+        
+        // var content = (<ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
+
+        //     {clubValue()}
+        //     <Text>{this.state.newValues[0]}</Text>
+        //     <TouchableElement style = {styles.button} onPress = {()=>{alert(blah[1])}}>
+
+        // }
 
         var content = (<ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
 
@@ -141,7 +151,7 @@ class EditClub extends Component {
         var updatedData = JSON.parse(jsonString);
 
         const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
-                this.props.route.state.clubName.replace(" ","+");
+                this.props.route.state.club.name.replace(" ","+");
         fetch(url,
             {
                 method: "POST",
@@ -151,23 +161,57 @@ class EditClub extends Component {
             .then(function(data){ alert( JSON.stringify( data ) ) })
 
 
-
-
-
+        
     }
-
-
+    
+    
+    _processSubmit(){
+        var jsonString = '{';
+        var id;
+        data.map(club=>{
+            id = club.id;
+            for(let prop in club){
+                if (prop in this.state.newValues){
+                    jsonString+="\"" + prop + "\":" + this.state.newValues[prop] + ",";
+                }
+                else{
+                    jsonString+="\"" + prop + "\":" + club[prop] + ",";
+                }
+                
+            }
+        })
+        jsonString+='}';
+        
+        var updatedData = JSON.parse(jsonString);
+        
+        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
+                this.props.route.state.club.name.replace(" ","+");
+        fetch(url,
+            {
+                method: "POST",
+                body: updatedData
+            })
+            .then(function(res){ return res.json(); })
+            .then(function(data){ alert( JSON.stringify( data ) ) })
+            
+        
+        
+        
+        
+    }
+    
+    
+    
 
 
     render() {
-
         return this._resultsView();
 
     }
         // Jonathan's component code
     componentDidMount() {
         const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
-                this.props.route.state.clubName.replace(" ","+");
+                this.props.route.state.club.name.replace(" ","+");
         fetch(url)
             .then(res=>res.json())
             .then(json => {
