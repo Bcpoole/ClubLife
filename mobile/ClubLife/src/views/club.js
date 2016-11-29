@@ -67,6 +67,7 @@ class Club extends Component {
         for (var i =0;i<posts.length;i++) {
             this._getPost(posts[i]);
             var post = this.state.post[0];
+            returnValue.push(<Text>{post.subject}</Text>);
             postArray.push(post);
       
         }
@@ -76,34 +77,34 @@ class Club extends Component {
             postArray.push(event);
         }
         
-        var sortedPostArray = postArray.sort((a,b)=>{a.created.localCompare(b.created)});
+        // var sortedPostArray = postArray.sort((a,b)=>{a.created.localCompare(b.created)});
         
-        for (var k = 0;k<sortedPostArray.length;k++){
-            var val = sortedPostArray[k];
+        // for (var k = 0;k<sortedPostArray.length;k++){
+        //     var val = sortedPostArray[k];
             
-            // if event:
-            // if(val.hasOwnProperty('isPublic')){
-            //     returnValue.push(
-            //         <View style = {[styles.box,  styles.message]}>
-            //             <Text>EVENT: {val.subject}</Text>
+        //     // if event:
+        //     // if(val.hasOwnProperty('isPublic')){
+        //     //     returnValue.push(
+        //     //         <View style = {[styles.box,  styles.message]}>
+        //     //             <Text>EVENT: {val.subject}</Text>
                     
-            //         </View>
-            //     );
+        //     //         </View>
+        //     //     );
             
-            // }
-            // else{
-            //     // if post:
-            //     returnValue.push( 
-            //         <View style = {[styles.box,  styles.message]}>
-            //             <Text style = {styles.instructions}>POST:  {val.author}: {val.content}</Text>
-            //         </View>
-            //     ); 
-            // }
-            
-            
+        //     // }
+        //     // else{
+        //     //     // if post:
+        //     //     returnValue.push( 
+        //     //         <View style = {[styles.box,  styles.message]}>
+        //     //             <Text style = {styles.instructions}>POST:  {val.author}: {val.content}</Text>
+        //     //         </View>
+        //     //     ); 
+        //     // }
             
             
-        }
+            
+            
+        // }
         
         return returnValue;
          
