@@ -136,7 +136,7 @@ class Club extends Component {
 
                 <View style={{width: 365, height: 30, flexDirection: 'row',
                     justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>
-                    <TouchableElement onPress={()=>this._onGoEvents()}>
+                    <TouchableElement onPress={()=>this._onGoEvents(this.state.events)}>
                         <View><Text style={styles.button}>Events</Text></View>
                     </TouchableElement>
                     <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
@@ -308,11 +308,11 @@ class Club extends Component {
            });
         }
 
-        _onGoEvents() {
+        _onGoEvents(events) {
             this.props.navigator.push({
                 type: "clubEvents",
                 index: this.props.route.index+1,
-                state: this.props.route.state
+                state: Object.assign({},this.props.route.state,{events:events})
             });
         }
 

@@ -28,14 +28,27 @@ export default class ClubEvents extends Component {
 
 
         var TouchableElement = TouchableNativeFeedback;
+        
+        var eventsList = []; 
+        var events = this.props.route.state.events;
+        for (let event of events){
+            eventsList.push(
+                <View>
+                <Text>{event.subject}</Text>
+                <Text>{event.content}</Text>
+                </View>
+            );
+            
+        }
+       
+       
         return (
             
-            <View>
-            
-            <Text>TODO: club event page</Text>
-      
-            
-            </View>
+            <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
+                {eventsList}
+                
+                                  
+            </ScrollView>
             
         );
     }
