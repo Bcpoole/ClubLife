@@ -23,18 +23,8 @@ namespace skeleton.Models {
     [BsonElement("isPublic")]
     public bool IsPublic { get; set; }
     [BsonElement("author")]
-    private ObjectId author;
-    public string Author {
-      get {
-        return author.ToString();
-      }
-    }
+    public string Author { get; set; }
     [BsonElement("club")]
-    private ObjectId club;
-    public string Club {
-      get {
-        return club.ToString();
-      }
-    }
+    public string Club { get; set; }
   }
 }

@@ -14,11 +14,6 @@ namespace skeleton.Models {
     [BsonElement("name")]
     public string Name { get; set; }
     [BsonElement("clubs")]
-    private IList<ObjectId> clubs = new List<ObjectId>();
-    public IList<string> Clubs {
-      get {
-        return clubs.Select(x => x.ToString()).ToList();
-      }
-    }
+    public IList<string> Clubs { get; set; }
   }
 }

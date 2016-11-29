@@ -123,18 +123,20 @@ namespace skeleton.Data {
       var filter = Builders<Post>.Filter.Eq(x => x.Id, post.Id);
       var update = Builders<Post>.Update
         .Set(x => x.Content, post.Content)
-        .Set(x => x.Subject, post.Subject);
+        .Set(x => x.Subject, post.Subject)
+        .Set(x => x.Club, post.Club)
+        .Set(x => x.Author, post.Author);
       await coll.UpdateOneAsync(filter, update);
     }
 
     public async void CreateNewPostAsync(Post post) {
-      post.Id = new ObjectId();
       post.Created = DateTime.UtcNow;
+
+      await database.GetCollection<Post>("posts").InsertOneAsync(post);
 
       var org = GetOrganizationById(new ObjectId(post.Club));
       org.Posts.Add(post.Id.ToString());
 
-      await database.GetCollection<Post>("posts").InsertOneAsync(post);
       UpdateOrganizationAsync(org);
     }
     #endregion
@@ -163,19 +165,19 @@ namespace skeleton.Data {
         .Set(x => x.StartTime, @event.StartTime)
         .Set(x => x.EndTime, @event.EndTime)
         .Set(x => x.RSVP, @event.RSVP)
-        .Set(x => x.IsPublic, @event.IsPublic);
+        .Set(x => x.IsPublic, @event.IsPublic)
+        .Set(x => x.Club, @event.Club)
+        .Set(x => x.Author, @event.Author);
       await coll.UpdateOneAsync(filter, update);
     }
 
     public async void CreateNewEventAsync(Event @event) {
-      @event.Id = new ObjectId();
       @event.Created = DateTime.UtcNow;
       await database.GetCollection<Event>("events").InsertOneAsync(@event);
 
       var org = GetOrganizationById(new ObjectId(@event.Club));
       org.Posts.Add(@event.Id.ToString());
 
-      await database.GetCollection<Event>("events").InsertOneAsync(@event);
       UpdateOrganizationAsync(org);
     }
     #endregion

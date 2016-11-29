@@ -59,7 +59,6 @@ namespace skeleton.Data {
     public async void CreateNewUserAsync(User user) {
       var coll = database.GetCollection<User>("users");
 
-      user.Id = new ObjectId();
       await coll.InsertOneAsync(user);
 
       var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);

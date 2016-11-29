@@ -17,23 +17,24 @@ export default class PostToClubOptions extends Component {
     }
 
     render() {
-        var TouchableElement = TouchableNativeFeedback;
-        var clubData = this.props.route.state.clubData;
+        var TouchableElement = TouchableOpacity;
+        var clubData = this.props.route.state.club;
         var user = this.props.route.state.user;
 
         var info = "User\n"+JSON.stringify(user)+"\nClubData\n"+JSON.stringify(clubData);
 
         var content = (
             <View>
-                <View>
+                <View style={{height: 40}}>
                     <Text>Choose an action:</Text>
                 </View>
-                <TouchableElement onPress={()=>this._onGoMakePost()}>
+                <TouchableElement style={{height: 40}} onPress={()=>this._onGoMakePost()}>
                     <View>
                         <Text>Make a post!</Text>
                     </View>
                 </TouchableElement>
-                <TouchableElement onPress={()=>this._onGoMakeEvent()}>
+                <View/>
+                <TouchableElement style={{height: 40}} onPress={()=>this._onGoMakeEvent()}>
                     <View>
                         <Text>Make an event!</Text>
                     </View>

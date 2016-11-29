@@ -68,26 +68,12 @@ namespace skeleton.Models {
     public IList<string> Members { get; set; }
 
     [BsonElement("events")]
-    private IList<ObjectId> events = new List<ObjectId>();
-    public IList<string> Events {
-      get {
-        return events.Select(x => x.ToString()).ToList();
-      }
-    }
+    public IList<string> Events { get; set; }
     [BsonElement("posts")]
-    private IList<ObjectId> posts = new List<ObjectId>();
-    public IList<string> Posts {
-      get {
-        return posts.Select(x => x.ToString()).ToList();
-      }
-    }
+    public IList<string> Posts { get; set; }
+
     [BsonElement("pendingRequests")]
-    private IList<ObjectId> pendingRequests = new List<ObjectId>();
-    public IList<string> PendingRequests {
-      get {
-        return pendingRequests.Select(x => x.ToString()).ToList();
-      }
-    }
+    public IList<string> PendingRequests { get; set; }
 
     //private dynamic meetingDay;
     //[BsonElement("CleanDayResults")]
