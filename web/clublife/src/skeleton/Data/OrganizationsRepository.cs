@@ -123,7 +123,9 @@ namespace skeleton.Data {
       var filter = Builders<Post>.Filter.Eq(x => x.Id, post.Id);
       var update = Builders<Post>.Update
         .Set(x => x.Content, post.Content)
-        .Set(x => x.Subject, post.Subject);
+        .Set(x => x.Subject, post.Subject)
+        .Set(x => x.Club, post.Club)
+        .Set(x => x.Author, post.Author);
       await coll.UpdateOneAsync(filter, update);
     }
 
@@ -163,7 +165,9 @@ namespace skeleton.Data {
         .Set(x => x.StartTime, @event.StartTime)
         .Set(x => x.EndTime, @event.EndTime)
         .Set(x => x.RSVP, @event.RSVP)
-        .Set(x => x.IsPublic, @event.IsPublic);
+        .Set(x => x.IsPublic, @event.IsPublic)
+        .Set(x => x.Club, @event.Club)
+        .Set(x => x.Author, @event.Author);
       await coll.UpdateOneAsync(filter, update);
     }
 
