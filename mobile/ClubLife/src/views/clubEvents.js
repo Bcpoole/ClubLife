@@ -12,6 +12,7 @@ import {
 import LoadingView from '../components/loadingview';
 //import TabNavigator from 'react-native-tab-navigator';
 import Communications from 'react-native-communications';
+import Button from 'react-native-button';
 
 export default class ClubEvents extends Component {
     constructor(props) {
@@ -33,10 +34,18 @@ export default class ClubEvents extends Component {
         var events = this.props.route.state.events;
         for (let event of events){
             eventsList.push(
-                <View>
-                <Text>{event.subject}</Text>
-                <Text>{event.content}</Text>
-                </View>
+                //  <TouchableElement onPress={() => this._onGoEvent(event)}>
+                 <View>
+                 
+                 <Button onPress={()=>this._onGoEvent(event)} style={{fontSize: 20, color:'gray', textAlign: 'left', marginLeft: 20}}>
+                     {event.subject+"\n\n"} 
+                 </Button>
+                 
+                 </View>
+                
+               
+                
+                
             );
             
         }
@@ -44,11 +53,15 @@ export default class ClubEvents extends Component {
        
         return (
             
-            <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
-                {eventsList}
-                
+            <ScrollView style = {{marginTop: 40, paddingBottom: 30}}>
+                <View>
+                    <Text  style={{fontSize: 25, color:'#800000', textAlign: 'center', marginLeft: 10}}>{this.props.route.state.club.name} Events: {"\n\n"}</Text>
+                    {eventsList}
+                </View>
                                   
             </ScrollView>
+            
+            
             
         );
     }
@@ -86,3 +99,56 @@ export default class ClubEvents extends Component {
         });
     }
 }
+
+ const styles = StyleSheet.create({
+      container: {
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#F5FCFF',
+      },
+      ClubLife: {
+          fontSize: 50,
+          textAlign: 'center',
+          color: 'white',
+          backgroundColor: 'black',
+          fontWeight: 'bold',
+      },
+      announcements: {
+          fontSize: 30,
+          textAlign: 'center',
+          color: 'black',
+          backgroundColor: 'powderblue',
+          paddingTop: 10,
+          paddingBottom: 30,
+          fontWeight: 'bold',
+      },
+      BottomBar: {
+          fontSize: 12,
+          color: 'black',
+          backgroundColor: 'skyblue',
+      },
+      bottomIcon: {
+          width: 25,
+          height: 25,
+          backgroundColor: 'skyblue',
+      },
+
+      description: {
+          fontSize: 10,
+          textAlign: 'center',
+          color: '#FFFFFF'
+      },
+      newsFeed: {
+          fontSize: 25,
+          textAlign: 'center',
+          justifyContent: 'center',
+          color: 'black',
+          backgroundColor: 'powderblue',
+      },
+      bold: {
+          fontWeight: 'bold',
+      },
+      newsFeedPadding: {
+          paddingBottom: 20,
+      },
+    });

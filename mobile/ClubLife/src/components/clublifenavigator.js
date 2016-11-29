@@ -22,6 +22,7 @@ import EditPost from '../views/editPost';
 import ClubEvents from '../views/clubEvents';
 import MyEvents from '../views/myEvents';
 import Event from '../views/event';
+import Post from '../views/post';
 
 var TouchableElement = TouchableNativeFeedback; //TODO: not this
 
@@ -225,6 +226,12 @@ export default class ClubLifeNavigator extends Component {
                     );
                     break;
 
+                case "post":
+                    scene = (
+                        <Post navigator={navigator} route={route} />
+                    );
+                    break;
+
                 default:
                     //oh shi-
                     scene = (
@@ -254,10 +261,6 @@ export default class ClubLifeNavigator extends Component {
         );
     }
 }
-
-/*
-    Styles
-*/
 
 const styles = StyleSheet.create({
     navbar: {
