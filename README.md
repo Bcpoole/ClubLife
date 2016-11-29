@@ -9,9 +9,9 @@ This is an ASP.NET Core web project pre-configured for building a .NET Core back
 ### API
 Refer to the Swagger JSON and UI endpoints:
 
-***\<your-root-url\>/api-docs/v1/swagger.json***
+***\<your-root-url\>/swagger/v1/swagger.json***
 
-***\<your-root-url\>/api-docs/ui***
+***\<your-root-url\>/swagger/ui***
 
 ## Mobile
 React-Native cross-platform app configured for Android and iOS.
