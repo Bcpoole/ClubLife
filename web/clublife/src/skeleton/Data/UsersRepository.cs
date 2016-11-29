@@ -24,6 +24,7 @@ namespace skeleton.Data {
       database = client.GetDatabase("clublife-db");
     }
 
+    #region GET
     public IEnumerable<User> GetAllUsers() {
       return database.GetCollection<User>("users").AsQueryable();
     }
@@ -32,8 +33,8 @@ namespace skeleton.Data {
       return GetAllUsers().Where(x => x.Id == id).FirstOrDefault();
     }
 
-    public IEnumerable<User> FindUserByUsername(string username) {
-      return GetAllUsers().Where(x => x.Username.ToLower().Contains(username.ToLower()));
+    public User FindUserByUsername(string username) {
+      return GetAllUsers().Where(x => x.Username.ToLower() == username.ToLower()).SingleOrDefault();
     }
 
     public IEnumerable<User> FindUserByName(string name) {
@@ -41,7 +42,42 @@ namespace skeleton.Data {
     }
 
     public IEnumerable<User> FindUsersInClubById(ObjectId id) {
-      return GetAllUsers().Where(x => x.Clubs.Contains(id));
+      return GetAllUsers().Where(x => x.Clubs.Contains(id.ToString()));
+    }
+    #endregion
+
+    public async void UpdateUserAsync(User user) {
+      var coll = database.GetCollection<User>("users");
+
+      var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
+      var update = Builders<User>.Update
+        .Set(x => x.Name, user.Name)
+        .Set(x => x.Clubs, user.Clubs);
+      await coll.UpdateOneAsync(filter, update);
+    }
+
+    public async void CreateNewUserAsync(User user) {
+      var coll = database.GetCollection<User>("users");
+
+      await coll.InsertOneAsync(user);
+
+      var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
+      var update = Builders<User>.Update
+        .Set(x => "salt", Guid.NewGuid().ToString())
+        .Set(x => "password", "implment OAuth on Frontend please so I can just store tokens");
+      await coll.UpdateOneAsync(filter, update);
+    }
+
+    public void LeaveClub(ObjectId userId, ObjectId clubId) {
+      var user = GetUserById(userId);
+      user.Clubs.Remove(clubId.ToString());
+
+      var orgRepo = new OrganizationsRepository();
+      var org = orgRepo.GetOrganizationById(clubId);
+      org.Members.Remove(org.Members.Where(x => x == userId.ToString()).Single());
+
+      orgRepo.UpdateOrganizationAsync(org);
+      UpdateUserAsync(user);
     }
   }
 }

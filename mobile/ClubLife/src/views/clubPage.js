@@ -15,26 +15,63 @@ class ClubPage extends Component {
         super(props);
         this.state = {selectedTab: 'home'};
     }
-    
-    render (){
-        
+
+
+    _resultsView(){
+
+
         var TouchableElement = TouchableNativeFeedback;
-        return(
-           <View>
-           
-           <Text>{"\n\n"}Mah CLOOBS: </Text>
-           
-           <TouchableElement style = {styles.button} onPress = {this.props.onGoClub}>
-              <View><Text>Club 1</Text></View>
-           </TouchableElement>
-           
-           </View>
-            
-            
-        );
+        //var userClubs = this.props.route.state.user.clubs;
+        var user = this.props.route.state.user;
+        var userClubs = user.clubs;
+        var returnVal = [];
+        var data = this.props.clubList;
+
+        //console.log(data);
+        //console.log(data.filter((club)=>club.id===userClubs[0]));
+        returnVal.push(<Text key={"title-key"} style = {styles.welcome}>My Clubs</Text>);
         
+        for (var i =0;i<userClubs.length;i++){
+
+
+            var clubObj =data.filter((club)=>club.id===userClubs[i]);
+
+
+            returnVal.push(
+
+                clubObj.map(club=>{
+                    var content = (
+                        <TouchableElement key={"myclub-"+i} style = {styles.button} onPress = {()=>this._navigateToClub(club)}>
+                            <View><Text style = {styles.instructions}>{club.name}</Text></View>
+                        </TouchableElement>);
+                    return content;
+                })
+            );
+
+        }
+        //returnVal.push(</View>);
+        return returnVal;
+
+
     }
-    
+
+    render (){
+
+        return (
+            <View  style = {{marginTop: 30, paddingBottom: 30}}>
+                {this._resultsView()}
+            </View>
+        );
+    }
+
+    _navigateToClub(clubName) {
+        this.props.navigator.push({
+            type: "club",
+            index: this.props.route.index+1,
+            state: Object.assign({}, this.props.route.state, {club: clubName})
+        });
+    }
+
 }
 
 
@@ -55,9 +92,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   instructions: {
-    textAlign: 'center',
+    //textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+    marginLeft: 5
   },
   button: {
     textAlign: 'center',

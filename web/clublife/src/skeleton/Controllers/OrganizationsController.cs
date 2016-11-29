@@ -15,6 +15,7 @@ namespace skeleton.Controllers {
       Repo = repo;
     }
 
+    #region Organizations
     // GET api/organizations
     [HttpGet]
     public IEnumerable<Organization> Get() {
@@ -23,13 +24,24 @@ namespace skeleton.Controllers {
 
     // GET api/organizations/581b77c29534b37d50c51b6c
     [HttpGet("{id}")]
-    [Route("{id}", Name = "GetOrganizationItemByIdRoute")]
     public Organization Get(string id) {
       return Repo.GetOrganizationById(new ObjectId(id));
     }
 
+    // PUT api/organizations/new
+    [HttpPut("new")]
+    public void CreateNewOrganization([FromBody] Organization org) {
+      Repo.CreateNewOrganizationAsync(org);
+    }
+    // POST api/organizations/581b77c29534b37d50c51b6c
+    /// <param name="id">club id</param>
+    [HttpPost("{id}")]
+    public void UpdateOrganization([FromBody] Organization org) {
+      Repo.UpdateOrganizationAsync(org);
+    }
+
     // GET api/organizations/name?name=japan
-    [Route("name")]
+    [HttpGet("name")]
     public IActionResult GetOrganizationByName(string name) {
       var orgs = Repo.FindOrganizationByName(name);
       if (orgs == null) {
@@ -39,7 +51,7 @@ namespace skeleton.Controllers {
     }
 
     // TODO: look at Jonthan's Cleandate proprty, add that to the model, and do fancy stuff
-    [Route("meetingTime")]
+    [HttpGet("meetingTime")]
     public IActionResult GetOrganizationByMeetingTime(string day, string time) {
       var orgs = Repo.FindOrganizationByDayAndTime(day, time);
       if (orgs == null) {
@@ -49,7 +61,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/organizations/tag?tag=computer
-    [Route("tag")]
+    [HttpGet("tag")]
     public IActionResult GetOrganizationByTag(string tag) {
       var orgs = Repo.FindOrganizationByTag(tag);
       if (orgs == null) {
@@ -57,9 +69,37 @@ namespace skeleton.Controllers {
       }
       return Ok(orgs);
     }
+    #endregion
 
-    // GET api/organizations/posts?id=581b77c29534b37d50c51b6c
-    [Route("posts")]
+    #region Posts
+    // GET api/organizations/posts/5824ebbb17b44627c34fa678
+    /// <param name="id">post id</param>
+    [HttpGet("posts/{id}")]
+    public IActionResult GetPost(string id) {
+      var post = Repo.GetPost(new ObjectId(id));
+      if (post == null) {
+        return NotFound();
+      }
+      return Ok(post);
+    }
+    // POST api/organizations/posts/5824ebbb17b44627c34fa678
+    /// <param name="id">post id</param>
+    [HttpPost("posts/{id}")]
+    public void UpdatePost(string id, [FromBody] Post post) {
+      post.Id = new ObjectId(id);
+      Repo.UpdatePostAsync(post);
+    }
+
+    // PUT api/organizations/581b77c29534b37d50c51b6c/posts/new
+    /// <param name="id">club id</param>
+    [HttpPut("{id}/posts/new")]
+    public void CreateNewPost([FromBody] Post post) {
+      Repo.CreateNewPostAsync(post);
+    }
+
+    // GET api/organizations/581b77c29534b37d50c51b6c
+    /// <param name="id">club id</param>
+    [HttpGet("{id}/posts")]
     public IActionResult GetPostsByOrganization(string id) {
       var posts = Repo.FindPostsByOrganization(new ObjectId(id));
       if (posts == null) {
@@ -67,9 +107,37 @@ namespace skeleton.Controllers {
       }
       return Ok(posts);
     }
+    #endregion
 
-    // GET api/organizations/events?id=581b77c29534b37d50c51b6c
-    [Route("events")]
+    #region Events
+    // GET api/organizations/events/5824ebbb17b44627c34fa678
+    /// <param name="id">event id</param>
+    [HttpGet("events/{id}")]
+    public IActionResult GetEvent(string id) {
+      var @event = Repo.GetEvent(new ObjectId(id));
+      if (@event == null) {
+        return NotFound();
+      }
+      return Ok(@event);
+    }
+    // POST api/organizations/events/5824eb7817b44627c34fa676
+    /// <param name="id">event id</param>
+    [HttpPost("events/{id}")]
+    public void UpdateEvent(string id, [FromBody] Event @event) {
+      @event.Id = new ObjectId(id);
+      Repo.UpdateEventAsync(@event);
+    }
+
+    // PUT api/organizations/581b77c29534b37d50c51b6c/events/new
+    /// <param name="id">club id</param>
+    [HttpPut("{id}/events/new")]
+    public void CreateNewEvent([FromBody]Event @event) {
+      Repo.CreateNewEventAsync(@event);
+    }
+
+    // GET api/organizations/581b77c29534b37d50c51b6c/events
+    /// <param name="id">club id</param>
+    [HttpGet("{id}/events")]
     public IActionResult GetEventsByOrganization(string id) {
       var events = Repo.FindEventsByOrganization(new ObjectId(id));
       if (events == null) {
@@ -79,7 +147,7 @@ namespace skeleton.Controllers {
     }
 
     // GET api/organizations/publicEvents
-    [Route("publicEvents")]
+    [HttpGet("publicEvents")]
     public IActionResult GetPublicEvents() {
       var events = Repo.FindPublicEvents();
       if (events == null) {
@@ -87,5 +155,14 @@ namespace skeleton.Controllers {
       }
       return Ok(events);
     }
+    #endregion
+
+    #region Members
+    // POST api/organizations/581b77c29534b37d50c51b6c/approve/5824e62917b44627c34fa66e?approved=true
+    [HttpPost("{clubId}/approve/{userId}")]
+    public void ApprovePendingUser(string userId, string clubId, bool approved) {
+      Repo.ApproveMember(new ObjectId(userId), new ObjectId(clubId), approved);
+    }
+    #endregion
   }
 }

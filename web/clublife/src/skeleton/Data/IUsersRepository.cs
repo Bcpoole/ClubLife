@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using skeleton.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,12 @@ namespace skeleton.Data {
     IEnumerable<User> GetAllUsers();
     User GetUserById(ObjectId id);
     IEnumerable<User> FindUserByName(string name);
-    IEnumerable<User> FindUserByUsername(string username);
+    User FindUserByUsername(string username);
     IEnumerable<User> FindUsersInClubById(ObjectId id);
+
+    void UpdateUserAsync(User user);
+    void CreateNewUserAsync(User user);
+
+    void LeaveClub(ObjectId userId, ObjectId clubId);
   }
 }

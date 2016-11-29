@@ -1,10 +1,12 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
 namespace skeleton.Models {
   public class Event : IPost {
+    [JsonConverter(typeof(ObjectIdConverter))]
     public ObjectId Id { get; set; }
     [BsonElement("subject")]
     public string Subject { get; set; }
@@ -20,5 +22,9 @@ namespace skeleton.Models {
     public IEnumerable<ObjectId> RSVP { get; set; }
     [BsonElement("isPublic")]
     public bool IsPublic { get; set; }
+    [BsonElement("author")]
+    public string Author { get; set; }
+    [BsonElement("club")]
+    public string Club { get; set; }
   }
 }

@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableNativeFeedback,
-  Image,
-  TouchableOpacity,
+  AppRegistry, StyleSheet, Text, View, TextInput,
+  TouchableNativeFeedback, Image, TouchableOpacity,
 } from 'react-native';
 
 const MIN_PASSWORD_LENGTH = 1;
@@ -17,10 +11,35 @@ class Signup extends Component {
         super(props);
         this.state = {
             email: '',
+            name: '',
             passwordPlainText: '', //not sure how else to store the state...
             confirmPasswordPlainText: ''
         };
-        this.onSignup = this._onSignup.bind(this);
+        this._onSignup = this._onSignup.bind(this);
+        this._navigateSignup = this._navigateSignup.bind(this);
+        this._addUser = this._addUser.bind(this);
+    }
+
+    /*
+        @param more time this semester for better authentication
+        ...I wish :'(
+    */
+    _addUser() {
+        let url = "http://skeleton20161103012840.azurewebsites.net/api/Users/new";
+        let body = {
+            "username": this.state.email,
+            "name": this.state.name,
+            //password: "pls do not look at this code",
+            "clubs": []
+        };
+        let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+        fetch(url, {method: "PUT", headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+            body: JSON.stringify(body)})
+            .then(parseResponse)
+            .then(json => {
+                //console.log("Added user lmao");
+            })
+            .catch(e => console.error(e));
     }
 
     _hashString(s){
@@ -39,10 +58,19 @@ class Signup extends Component {
         return hash+""; //Convert final result back to a string
     }
 
-    _onSignup(){
-        if(this.state.passwordPlainText && (this.state.passwordPlainText.length >= MIN_PASSWORD_LENGTH) &&
+    _navigateSignup() {
+        this.props.navigator.push({
+            "type": "login",
+            index: this.props.route.index+1,
+            state: this.props.route.state
+        });
+    }
+
+    _onSignup() {
+        if((this.state.passwordPlainText.length >= MIN_PASSWORD_LENGTH) &&
             (this.state.passwordPlainText === this.state.confirmPasswordPlainText) && this.state.email) {
-                this.props.onSignup();
+                this._addUser();
+                this._navigateSignup();
         }
     }
 
@@ -65,6 +93,12 @@ class Signup extends Component {
                     value={this.state.email}
                     keyboardType={"email-address"}
                 />
+                <Text>Name:</Text>
+                <TextInput
+                    style={{height: 40}}
+                    onChangeText={(text)=>{this.setState({name: text})}}
+                    value={this.state.name}
+                />
                 <Text>Password:</Text>
                 <TextInput
                     style={{height: 40}}
@@ -79,7 +113,7 @@ class Signup extends Component {
                 />
                 <Text>...</Text>
                 <Text>{validMatchingPasswordsText}</Text>
-                <TouchableElement onPress={this.onSignup}>
+                <TouchableElement onPress={()=>this._onSignup()}>
                     <View><Text>SIGN ME UP</Text></View>
                 </TouchableElement>
             </View>
