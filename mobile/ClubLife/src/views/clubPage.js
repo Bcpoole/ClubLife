@@ -16,48 +16,47 @@ class ClubPage extends Component {
         this.state = {selectedTab: 'home'};
     }
 
-    
+
     _resultsView(){
-        
-        
+
+
         var TouchableElement = TouchableNativeFeedback;
         //var userClubs = this.props.route.state.user.clubs;
         var user = this.props.route.state.user;
         var userClubs = user.clubs;
         var returnVal = [];
         var data = this.props.clubList;
-        
+
         //console.log(data);
-        console.log(data.filter((club)=>club.id===userClubs[0]));
-        
-        returnVal.push(<Text style = {styles.welcome}>My Clubs</Text>);
+        //console.log(data.filter((club)=>club.id===userClubs[0]));
+        returnVal.push(<Text key={"title-key"} style = {styles.welcome}>My Clubs</Text>);
         
         for (var i =0;i<userClubs.length;i++){
-           
-           
+
+
             var clubObj =data.filter((club)=>club.id===userClubs[i]);
-            
-            
+
+
             returnVal.push(
-                
+
                 clubObj.map(club=>{
                     var content = (
-                        <TouchableElement style = {styles.button} onPress = {()=>this._navigateToClub(club)}>
+                        <TouchableElement key={"myclub-"+i} style = {styles.button} onPress = {()=>this._navigateToClub(club)}>
                             <View><Text style = {styles.instructions}>{club.name}</Text></View>
                         </TouchableElement>);
                     return content;
-                }) 
+                })
             );
-   
+
         }
         //returnVal.push(</View>);
         return returnVal;
-        
-        
+
+
     }
-    
+
     render (){
-        
+
         return (
             <View  style = {{marginTop: 30, paddingBottom: 30}}>
                 {this._resultsView()}
