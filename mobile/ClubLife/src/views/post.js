@@ -43,8 +43,6 @@ export default class Post extends Component {
             <View>
                 <Text>{timeText}</Text>
             </View>
-            <Button onPress={()=>this._onGoBack()} style={{fontSize: 20, color: 'green'}}>
-                    Go back</Button>
             <View>
                 {goToEdit}
             </View>

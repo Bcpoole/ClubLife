@@ -74,7 +74,7 @@ class Club extends Component {
         var officers = club.officers;
         var members = club.members;
         var leaders = club.leaders;
-        var email = club.email;
+        var email = club.organizationEmail;
 
         var user = this.props.route.state.user;
 
@@ -94,20 +94,20 @@ class Club extends Component {
         var addPost = <Text></Text>;
 
         // officer (and by extension, leader) options: post to club, approve members
-        var offOps = <Text></Text>;
+        var offOps = null;
         if (isOfficer || isLeader){
             offOps = (
                     <TouchableElement onPress = {()=>this._onGoPendingMembers()}>
-                        <View style = {{height:50}}>
+                        <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/pending.png')} />
-                            <Text  >Pending Members</Text>
-                    </View>
+                            <Text style={{textAlign:'center',fontWeight:'bold',fontSize:15}}>Pending Members</Text>
+                        </View>
                     </TouchableElement>
          
             );
 
             addPost = ( <TouchableElement onPress={()=>this._onPostToClub()}>
-                        <View style = {{height:50,width: 365, flexDirection: 'row',
+                        <View style = {{height:80,width: 365, flexDirection: 'row',
                     flexWrap: 'wrap',paddingLeft:10}}>
                             <Image style={styles.bottomIcon} source={require('./images/plus.png')} />
                             <Text style = {styles.button}>Create Post{"\n\n"}</Text>
@@ -119,20 +119,20 @@ class Club extends Component {
 
         // member options: {if !member allow to join club}
         var memberOps =  <TouchableElement onPress = {()=>this._addToPending(user.id)}>
-                <View style = {{height:50}}>
+                <View style = {styles.clubIcon}>
                     <Image style={styles.bottomIcon} source={require('./images/plus.png')} />
-                    <Text>Join Club</Text>
+                    <Text style = {{fontWeight:'bold',fontSize:15}}>Join Club</Text>
                 </View>
             </TouchableElement>;
         
         if (isLeader || isOfficer){
-            memberOps = <View></View>;
+            memberOps = null;
         }
         else if (isMember){
-            memberOps =<TouchableElement onPress = {() =>Communications.email([user.username,email],null,null,'This person wants to join club','please let me join, i love club.')}>
-                          <View style = {{height:50}}>
+                    memberOps =<TouchableElement onPress = {() =>Communications.email([email,email],null,null,null,null)}>
+                        <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/mail.png')} />
-                            <Text>Contact an Officer</Text>
+                            <Text style={{textAlign:'center',fontWeight:'bold',fontSize:15}}>Contact an Officer</Text>
                         </View>
                     </TouchableElement>;
         }
@@ -146,10 +146,14 @@ class Club extends Component {
 
         <ScrollView style={styles.container}>
             <View style={styles.box}>
-                <Image source={{uri: picURL}} style={{height: 200, width: 200, resizeMode: 'contain'}} />
+                
+                <Image 
+                    source={{uri: picURL}} 
+                    style={{height: 300, width: 300,  resizeMode: 'contain',borderWidth:20, backgroundColor:'white', borderColor:'grey'}} 
+                />
 
                 <View style={styles.longBox}>
-                    <Text style={{fontSize: 25, color:'#800000', textAlign: 'center', marginLeft: 10}}>
+                    <Text style={{fontSize: 25, color:'#800000', textAlign: 'center', fontWeight:'bold'}}>
                     {name}
                     </Text>
                 </View>
@@ -157,17 +161,17 @@ class Club extends Component {
                 
             
                 <View style={{width: 365, height: 30, flexDirection: 'row',
-                    justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap',marginBottom:20}}>
+                    justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap',marginBottom:40}}>
                     <TouchableElement onPress={()=>this._onGoEvents(this.state.events)}>
-                        <View style = {{height:50}}>
+                         <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/Events-Icon.jpeg')} />
-                           <Text>Events</Text>
+                           <Text style = {{fontWeight:'bold',fontSize:15}}>Events</Text>
                         </View>
                     </TouchableElement>
                     <TouchableElement onPress = {()=>this._onGoClubInfo()}>
-                        <View style = {{height:50}}>
+                         <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/info.png')} />
-                            <Text>Info</Text>
+                            <Text style = {{fontWeight:'bold',fontSize:15}}>Info</Text>
                         </View>
                     </TouchableElement>
 
@@ -177,9 +181,14 @@ class Club extends Component {
 
                 </View>
             </View>
-            <Text style = {{fontSize: 20,margin: 10,color:'#800000'}}>Club Posts:</Text>
+
+            <View style = {styles.posts}>    
+            <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Posts:</Text>
             {addPost}
             {this._messages()}
+            </View>
+        
+        
         </ScrollView>
         );
         }
@@ -221,7 +230,7 @@ class Club extends Component {
                     //the post is an event
                     return (
                         <TouchableElement key={"p"+i} onPress={() => this._onGoEvent(post)}>
-                             <View style = {{borderWidth: 1,borderStyle: 'dotted',marginBottom:10}}>
+                             <View style = {{borderWidth: 1,borderStyle: 'dotted',marginBottom:10,marginLeft:3,marginRight:3,paddingRight:3,paddingLeft:3}}>
                                 <Text>{"EVENT: "+post.subject+"\n"}</Text>
                             </View>
                         </TouchableElement>
@@ -231,7 +240,7 @@ class Club extends Component {
                     //the post is a post
                     return (
                         <TouchableElement key={"p"+i} onPress = {() => this._onGoPost(post, authorName(post.author))}>
-                            <View style = {{borderWidth: 1,borderStyle: 'dotted',marginBottom:10}}>
+                           <View style = {{borderWidth: 1,borderStyle: 'dotted',marginBottom:10,marginLeft:3,marginRight:3,paddingRight:3,paddingLeft:3}}>
                                 <Text>{"POST by "+authorName(post.author)+": "+post.subject+"\n"}</Text>
                             </View>
                         </TouchableElement>
@@ -375,9 +384,25 @@ const styles = StyleSheet.create({
     flex: 1,
     //justifyContent: 'center',
     //alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    //backgroundColor: '#F5FCFF',
     marginTop: 40,
  },
+  clubIcon:{
+    height:80, 
+    justifyContent:'center',
+    alignItems:'center',
+    width:100,
+    borderWidth: 1, 
+    borderRadius:5,
+    borderColor: 'grey',
+    marginBottom:10,
+    marginTop: 10
+
+
+  },
+
+  posts: {borderWidth:1,borderRadius: 5,borderColor:'grey', marginTop:40, marginLeft:10, marginRight:10,paddingRight:3,paddingLeft:3},
+  
   welcome: {
     fontSize: 20,
     textAlign: 'center',
@@ -402,87 +427,51 @@ const styles = StyleSheet.create({
   padding: {
       paddingBottom: 10,
   },
-
     BottomBar: {
-
       fontSize: 12,
-
       color: 'black',
-
-      backgroundColor: 'powderblue',
-
+      //backgroundColor: 'powderblue',
   },
-
   bottomIcon: {
-
       width: 25,
-
       height: 25,
-      justifyContent:'center',
-      alignItems:'center'
+      justifyContent: 'center',
+      alignItems: 'center',
+      
 
       //backgroundColor: 'powderblue',
-
   },
-
   pad: {
-
       justifyContent: 'center',
-
       alignItems: 'center',
 
-
-
   },
-
   message: {
-
       borderWidth: 1,
-
   },
-
   edit: {
-
       height: 25,
-
       width: 25,
 
 
-
   },
-
   textEdit: {
-
     height: 40,
-
     width: 200,
-
     borderColor: 'grey',
-
     backgroundColor: 'white',
-
     borderWidth: 1
-
   },
-
   box: {
-
       alignItems: 'center',
-
       flexDirection: 'column',
-
       flexWrap: 'wrap'
 
-
-
   },
-
   longBox: {
-
-      height: 125
-
-
+      height: 75,
+      marginTop:20
+    
 
   }
-
 });
