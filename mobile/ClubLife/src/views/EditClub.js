@@ -67,8 +67,6 @@ class EditClub extends Component {
         let body = Object.assign({}, club, this.state);
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
         let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
-        console.log(url);
-        console.log(JSON.stringify(body));
         fetch(url, {method: "POST", headers: headers, body: JSON.stringify(body)})
             .then(parseResponse)
             .then(json => {
