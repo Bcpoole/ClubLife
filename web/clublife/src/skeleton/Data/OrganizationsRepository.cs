@@ -190,10 +190,10 @@ namespace skeleton.Data {
       if (approved) {
         var userRepo = new UsersRepository();
         var user = userRepo.GetUserById(userId);
-        user.Clubs.Append(clubId.ToString());
+        user.Clubs.Add(clubId.ToString());
         userRepo.UpdateUserAsync(user);
 
-        org.Members.Append(userId.ToString());
+        org.Members.Add(userId.ToString());
       }
 
       UpdateOrganizationAsync(org);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Alert,
   AppRegistry,
   StyleSheet,
   Text,
@@ -33,7 +34,9 @@ class Club extends Component {
         var club = this.state.data[0];
         //if we're already in the pending members, no op and alert the user
         if(club.pendingRequests.indexOf(userId) > -1) {
-            alert("You have already requested to join the club. Be patient!");
+            Alert.alert("Hey now","You have already requested to join the club. Be patient!", [
+                {"text": "Sorry!", onPress: () => {}}
+            ]);
             //alert(this.state.data[0].pendingRequests);
             return;
         }
@@ -41,10 +44,12 @@ class Club extends Component {
         pending.push(userId);
         var newClub = Object.assign({}, club, {pendingRequests: pending});
         var url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/"+club.id;
-        fetch(url, {method: "POST", body: JSON.stringify(newClub)})
-            .then(()=>{
-                 alert("You have requested to join "+club.name);
-
+        let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+        let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+        fetch(url, {method: "POST", headers: headers, body: JSON.stringify(newClub)})
+            .then(parseResponse)
+            .then(json=>{
+                alert("You have requested to join "+club.name);
                 // set our state to be the new club as well
                 this.setState({
                     data: newClub
@@ -177,8 +182,7 @@ class Club extends Component {
             let authorName = id => {
                 for(let user of this.state.users) {
                     if(user.id === id) {
-
-                       return user.name;
+                        return user.name;
                     }
                 }
                 return "Unknown author";
@@ -257,17 +261,14 @@ class Club extends Component {
 
         _fetchClubEvents() {
             let club = this.state.data;
-           let url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+club.id+"/events";
+            let url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+club.id+"/events";
             fetch(url)
-
-               .then(res => res.json())
+                .then(res => res.json())
                 .then(json => {
-                   this.setState({
+                    this.setState({
                         events: json
-
-                  });
-
-               })
+                    });
+                })
                 .catch(e => console.error(e));
 
         }
@@ -279,8 +280,7 @@ class Club extends Component {
                 index: this.props.route.index+1,
                 state: this.props.route.state
             });
-
-       }
+        }
 
         _onGoClubInfo() {
             this.props.navigator.push({
@@ -294,18 +294,16 @@ class Club extends Component {
             this.props.navigator.push({
                 type: "pendingMembers",
                 index: this.props.route.index+1,
-                state: this.props.route.state
+                state: Object.assign({}, this.props.route.state, {userList: this.state.users})
             });
         }
 
         _onPostToClub() {
-
-           this.props.navigator.push({
+            this.props.navigator.push({
                 type: "postToClubOptions",
                 index: this.props.route.index+1,
                 state: this.props.route.state
-
-           });
+            });
         }
 
         _onGoEvents(events) {
@@ -315,7 +313,6 @@ class Club extends Component {
                 state: Object.assign({},this.props.route.state,{events:events})
             });
         }
-
 
         _onGoPost(post, authorName) {
             this.props.navigator.push({
@@ -329,8 +326,7 @@ class Club extends Component {
             this.props.navigator.push({
                 type: "event",
                 index: this.props.route.index+1,
-
-               state: Object.assign({}, this.props.route.state, {event: event})
+                state: Object.assign({}, this.props.route.state, {event: event})
             });
         }
 }
@@ -341,25 +337,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     //justifyContent: 'center',
-
-   //alignItems: 'center',
+    //alignItems: 'center',
     backgroundColor: '#F5FCFF',
  },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-
-   margin: 10,
+    margin: 10,
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
-
- },
+  },
   button: {
-
-  textAlign: 'center',
+   textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
@@ -396,7 +388,7 @@ const styles = StyleSheet.create({
 
       justifyContent: 'center',
 
-     alignItems: 'center',
+      alignItems: 'center',
 
 
 
@@ -428,8 +420,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: 'white',
 
-
-   borderWidth: 1
+    borderWidth: 1
 
   },
 
@@ -438,7 +429,6 @@ const styles = StyleSheet.create({
       alignItems: 'center',
 
       flexDirection: 'column',
-
 
       flexWrap: 'wrap'
 
@@ -452,7 +442,6 @@ const styles = StyleSheet.create({
 
 
 
-
- }
+  }
 
 });
