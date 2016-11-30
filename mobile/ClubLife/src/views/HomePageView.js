@@ -24,7 +24,7 @@ export default class HomePage extends Component {
           return "...";
       }
     return (
-      <View>
+      <View style={{paddingTop: 40}}>
         <Text style={styles.ClubLife}>Club Life</Text>
         <Text style={styles.announcements}>Recent Activity</Text>
         <ScrollView style={{width: 375, height: 370, backgroundColor: 'powderblue'}}>
@@ -194,5 +194,6 @@ const styles = StyleSheet.create({
   },
   newsFeedPadding: {
       paddingBottom: 20,
-  },
+  }
+
 });
