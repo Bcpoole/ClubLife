@@ -18,16 +18,15 @@ import Button from 'react-native-button';
 export default class EditEvent extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            hasData: false,
-            data: {},
-            eventSubject:"",
-            eventContent:"",
-            eventStartTime:"",
-            eventStartDate:"",
+        this._type = this.props.type || ""; // edit or create
+        this.state = {         
+            eventSubject: this._type === "edit" ? this.props.route.state.event.subject : "",
+            eventContent: this._type === "edit" ? this.props.route.state.event.content : "",
+            eventStartTime:this._type === "edit" ? this.props.route.state.event.startTime : "",
+            eventStartDate:this._type === "edit" ? this.props.route.state.event.startTime : "",
             
         };
-        this._type = this.props.type || ""; // edit or create
+        
     }
 
     render() {
@@ -105,25 +104,25 @@ export default class EditEvent extends Component {
         return content;
     }
 
-    componentDidMount() {
-        if(this._type === "edit") {
-            let eventId = this.props.route.state.eventId;
-            let url = "";
-            fetch(url)
-                .then(res => res.json())
-                .then(json => {
-                    this.setState({
-                        hasData: true,
-                        data: json,
-                        eventContent: json.content,
-                        eventSubject: json.subject,
-                        startTime: json.startTime, // FIX HERE
-                        startDate: json.startTime,
-                    });
-                })
-                .catch(e => console.error(e));
-        }
-    }
+    // componentDidMount() {
+    //     if(this._type === "edit") {
+    //         let eventId = this.props.route.state.eventId;
+    //         let url = "";
+    //         fetch(url)
+    //             .then(res => res.json())
+    //             .then(json => {
+    //                 this.setState({
+    //                     hasData: true,
+    //                     data: json,
+    //                     eventContent: json.content,
+    //                     eventSubject: json.subject,
+    //                     startTime: json.startTime, // FIX HERE
+    //                     startDate: json.startTime,
+    //                 });
+    //             })
+    //             .catch(e => console.error(e));
+    //     }
+    // }
 
     _onSubmit() {
         switch(this._type) {
@@ -180,7 +179,6 @@ export default class EditEvent extends Component {
         //alert("here");
         let clubId = this.props.route.state.club.id;
         let url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+clubId+"/events/new";
-        //alert(this._setDateTime(this.state.eventStartDate,this.state.eventStartTime).toJSON());
         let body = {
             subject: this.state.eventSubject,
             content: this.state.eventContent,
@@ -221,36 +219,37 @@ export default class EditEvent extends Component {
             });
     }
 
-    // _makeUpdateRequest() {
-    //     let clubId = this.props.route.state.club.id;
-    //     let url = "http://skeleton20161103012840.azurewebsites.net/api/Orgnanizations/events/"+this.state.data.id;
-    //     let body = Object.assign({}, this.state.data,
-    //         {author: this.props.route.state.user.id, subject: this.state.postSubject, content: this.state.postContent});
-    //     let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
-    //     let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
-    //     fetch(url, {method: "POST", headers: headers, body: body})
-    //         .then(parseResponse)
-    //         .then(json => {
-    //             Alert.alert(
-    //                 "Succesfully edited post",
-    //                 "Click OK to return",
-    //                 [
-    //                     {text: "OK", onPress: () => this.props.navigator.pop()}
-    //                 ]
-    //             );
-    //         })
-    //         .catch(e => {
-    //             Alert.alert(
-    //                 "Oops!",
-    //                 "An error occurred.",
-    //                 [
-    //                     {text: "Return", onPress: () => this.props.navigator.pop()}
-    //                 ]
-    //             );
-    //         });
-    // }
+ _makeUpdateRequest() {
+        let clubId = this.props.route.state.club.id;
+        let url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/events/"+this.props.route.state.event.id;
+        let body = Object.assign({}, this.props.route.state.event,
+            {author: this.props.route.state.user.id, subject: this.state.eventSubject, content: this.state.eventContent});
+        let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+        let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+        fetch(url, {method: "POST", headers: headers, body: JSON.stringify(body)})
+            .then(parseResponse)
+            .then(json => {
+                Alert.alert(
+                    "Succesfully edited event",
+                    "Click OK to return",
+                    [
+                        {text: "OK", onPress: () => this.props.navigator.pop()}
+                    ]
+                );
+            })
+            .catch(e => {
+                Alert.alert(
+                    "Oops!",
+                    "An error occurred.",
+                    [
+                        {text: "Return", onPress: () => this.props.navigator.pop()}
+                    ]
+                );
+            });
+    }
 
-    // _onCancel() {
-    //     this.props.navigator.pop();
-    // }
+
+    _onCancel() {
+        this.props.navigator.pop();
+    }
 }

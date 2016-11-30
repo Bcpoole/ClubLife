@@ -84,7 +84,8 @@ class Event extends Component {
           this.props.navigator.push({
               type: "editEvent",
               index: this.props.route.index+1,
-              state: this.props.route.state
+              state:this.props.route.state
+              //state: Object.assign({}, this.props.route.state, {event: this.props.route.state.event})
           })
       }
 
