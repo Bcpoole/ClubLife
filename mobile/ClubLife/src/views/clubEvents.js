@@ -29,40 +29,40 @@ export default class ClubEvents extends Component {
 
 
         var TouchableElement = TouchableNativeFeedback;
-        
-        var eventsList = []; 
+
+        var eventsList = [];
         var events = this.props.route.state.events;
         for (let event of events){
             eventsList.push(
                 //  <TouchableElement onPress={() => this._onGoEvent(event)}>
                  <View>
-                 
+
                  <Button onPress={()=>this._onGoEvent(event)} style={{fontSize: 20, color:'gray', textAlign: 'left', marginLeft: 20}}>
-                     {event.subject+"\n\n"} 
+                     {event.subject+"\n\n"}
                  </Button>
-                 
+
                  </View>
-                
-               
-                
-                
+
+
+
+
             );
-            
+
         }
-       
-       
+
+
         return (
-            
+
             <ScrollView style = {{marginTop: 40, paddingBottom: 30}}>
                 <View>
                     <Text  style={{fontSize: 25, color:'#800000', textAlign: 'center', marginLeft: 10}}>{this.props.route.state.club.name} Events: {"\n\n"}</Text>
                     {eventsList}
                 </View>
-                                  
+
             </ScrollView>
-            
-            
-            
+
+
+
         );
     }
 

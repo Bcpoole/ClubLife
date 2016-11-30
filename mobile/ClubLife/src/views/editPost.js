@@ -64,7 +64,7 @@ export default class EditPost extends Component {
             />
         );
         var content = (
-            <View>
+            <View style={{marginTop: 40}}>
                 {titleNode}
                 <Text>Subject</Text>
                 {subjectInput}

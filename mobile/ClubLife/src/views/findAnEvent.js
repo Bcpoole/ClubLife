@@ -53,7 +53,7 @@ export default class FindAnEvent extends Component {
         }
         var defaultImg = "https://avatars2.githubusercontent.com/u/12243827?v=3&s=40"
         var content = (
-            <View>
+            <View style={{marginTop: 40}}>
                 <TextInput
                     style={{paddingTop: 20}}
                     placeholder={"filter events by name"}
@@ -61,7 +61,7 @@ export default class FindAnEvent extends Component {
                     >
                 </TextInput>
                 <ScrollView>
-                    {data.map(event => {
+                    {data.map((event,i) => {
                         return (
                             <View key={event.name} style={{flex: 1, flexDirection: 'row'}}>
                                 <Text>
