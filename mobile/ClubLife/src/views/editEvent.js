@@ -27,7 +27,7 @@ export default class EditEvent extends Component {
             eventStartDate:"",
             
         };
-        this._type = this.props.componenttype || ""; // edit or create
+        this._type = this.props.type || ""; // edit or create
     }
 
     render() {
@@ -56,7 +56,6 @@ export default class EditEvent extends Component {
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({eventSubject: text})}}
                 value={this.state.eventSubject}
-                keyboardType={"email-address"}
             />
         );
         var contentInput = (
@@ -64,7 +63,6 @@ export default class EditEvent extends Component {
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({eventContent: text})}}
                 value={this.state.eventContent}
-                keyboardType={"email-address"}
             />
         );
          var startDate = (
@@ -72,7 +70,6 @@ export default class EditEvent extends Component {
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({eventStartDate: text})}}
                 value={this.state.evenStartDate}
-                keyboardType={"email-address"}
             />
 
         );
@@ -82,7 +79,6 @@ export default class EditEvent extends Component {
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({eventStartTime: text})}}
                 value={this.state.evenStartTime}
-                keyboardType={"email-address"}
             />
 
         );
@@ -92,7 +88,6 @@ export default class EditEvent extends Component {
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({eventEndTime: text})}}
                 value={this.state.evenEndTime}
-                keyboardType={"email-address"}
             />
 
         );
@@ -153,8 +148,9 @@ export default class EditEvent extends Component {
         }
     }
 
-    _setDateTime(dateStr, time) {
+    _setDateTime(dateStr, time) { // date = "11/30/2011"  time="09.17 PM" or AM
         var date = Date.parse(dateStr);
+        alert(dateStr);
 
         var index = time.indexOf("."); // replace with ":" for differently displayed time.
         var index2 = time.indexOf(" ");
@@ -164,7 +160,7 @@ export default class EditEvent extends Component {
 
         var mer = time.substring(index2 + 1, time.length);
         if (mer == "PM"){
-        hours = hours + 12;
+            hours = hours + 12;
         }
 
 
@@ -178,14 +174,15 @@ export default class EditEvent extends Component {
 
 
     _makePostRequest() {
+        //alert("here");
         let clubId = this.props.route.state.club.id;
         let url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+clubId+"/events/new";
         let body = {
-            subject: this.state.postSubject,
-            content: this.state.postContent,
+            subject: this.state.eventSubject,
+            content: this.state.eventContent,
             created: new Date().toJSON(),
-            startTime:_setDateTime(this.state.startTime,this.state.startDate),
-            endTime:_setDateTime(this.state.endTime,this.state.endDate),
+            startTime:this._setDateTime(this.state.startTime,this.state.eventStartDate),
+            endTime:this._setDateTime(this.state.endTime,this.state.eventStartDate),
             rsvp:"",
             isPublic:true,
             author: this.props.route.state.user.id,
@@ -215,36 +212,36 @@ export default class EditEvent extends Component {
             });
     }
 
-    _makeUpdateRequest() {
-        let clubId = this.props.route.state.club.id;
-        let url = "http://skeleton20161103012840.azurewebsites.net/api/Orgnanizations/events/"+this.state.data.id;
-        let body = Object.assign({}, this.state.data,
-            {author: this.props.route.state.user.id, subject: this.state.postSubject, content: this.state.postContent});
-        let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
-        let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
-        fetch(url, {method: "POST", headers: headers, body: body})
-            .then(parseResponse)
-            .then(json => {
-                Alert.alert(
-                    "Succesfully edited post",
-                    "Click OK to return",
-                    [
-                        {text: "OK", onPress: () => this.props.navigator.pop()}
-                    ]
-                );
-            })
-            .catch(e => {
-                Alert.alert(
-                    "Oops!",
-                    "An error occurred.",
-                    [
-                        {text: "Return", onPress: () => this.props.navigator.pop()}
-                    ]
-                );
-            });
-    }
+    // _makeUpdateRequest() {
+    //     let clubId = this.props.route.state.club.id;
+    //     let url = "http://skeleton20161103012840.azurewebsites.net/api/Orgnanizations/events/"+this.state.data.id;
+    //     let body = Object.assign({}, this.state.data,
+    //         {author: this.props.route.state.user.id, subject: this.state.postSubject, content: this.state.postContent});
+    //     let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+    //     let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+    //     fetch(url, {method: "POST", headers: headers, body: body})
+    //         .then(parseResponse)
+    //         .then(json => {
+    //             Alert.alert(
+    //                 "Succesfully edited post",
+    //                 "Click OK to return",
+    //                 [
+    //                     {text: "OK", onPress: () => this.props.navigator.pop()}
+    //                 ]
+    //             );
+    //         })
+    //         .catch(e => {
+    //             Alert.alert(
+    //                 "Oops!",
+    //                 "An error occurred.",
+    //                 [
+    //                     {text: "Return", onPress: () => this.props.navigator.pop()}
+    //                 ]
+    //             );
+    //         });
+    // }
 
-    _onCancel() {
-        this.props.navigator.pop();
-    }
+    // _onCancel() {
+    //     this.props.navigator.pop();
+    // }
 }
