@@ -29,7 +29,7 @@ class EditClub extends Component {
         };
         //this.setState({hasValues:false});
     }
-    
+
 
 
     _resultsView(){
@@ -95,16 +95,16 @@ class EditClub extends Component {
                                     }
 
                                     value = {hey(prop,club[prop])}
-                                     > 
+                                     >
                                 </TextInput>
                             </View>);
                         i++;                }
 
                 }, this) // end of map
             return returnValue;
-            
+
         }
-        
+
         // var content = (<ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
 
         //     {clubValue()}
@@ -113,7 +113,7 @@ class EditClub extends Component {
 
         // }
 
-        var content = (<ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
+        var content = (<ScrollView style = {{marginTop: 40, paddingBottom: 30}}>
 
             {clubValue()}
             <Text>{this.state.newValues[0]}</Text>
@@ -162,9 +162,9 @@ class EditClub extends Component {
             .then(function(data){ alert( JSON.stringify( data ) ) })
 
 
-        
+
     }
-    
+
 
     _processSubmit(){
         var jsonString = '{';
@@ -178,13 +178,13 @@ class EditClub extends Component {
                 else{
                     jsonString+="\"" + prop + "\":" + club[prop] + ",";
                 }
-                
+
             }
         })
         jsonString+='}';
-        
+
         var updatedData = JSON.parse(jsonString);
-        
+
         const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/name?name="+
                 this.props.route.state.club.name.replace(" ","+");
         fetch(url,
@@ -194,11 +194,11 @@ class EditClub extends Component {
             })
             .then(function(res){ return res.json(); })
             .then(function(data){ alert( JSON.stringify( data ) ) })
-        
-    }
-    
 
-    
+    }
+
+
+
 
 
     render() {

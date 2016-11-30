@@ -20,7 +20,7 @@ export default class ChooseSearch extends Component {
 
     render() {
         return (
-            <View style={{backgroundColor: '#F5FCFF'}}>
+            <View style={{backgroundColor: '#F5FCFF', marginTop: 40}}>
                 <Text style={styles.title}>Which would you like to search?</Text>
 
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10}}>

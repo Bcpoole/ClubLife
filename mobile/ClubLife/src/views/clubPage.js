@@ -30,7 +30,7 @@ class ClubPage extends Component {
         //console.log(data);
         //console.log(data.filter((club)=>club.id===userClubs[0]));
         returnVal.push(<Text key={"title-key"} style = {styles.welcome}>My Clubs</Text>);
-        
+
         for (var i =0;i<userClubs.length;i++){
 
 
@@ -58,7 +58,7 @@ class ClubPage extends Component {
     render (){
 
         return (
-            <View  style = {{marginTop: 30, paddingBottom: 30}}>
+            <View  style = {{marginTop: 40, paddingBottom: 30}}>
                 {this._resultsView()}
             </View>
         );

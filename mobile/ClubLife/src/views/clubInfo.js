@@ -81,7 +81,7 @@ class ClubInfo extends Component {
 
 
         return (
-        <ScrollView style = {{marginTop: 30, paddingBottom: 30}}>
+        <ScrollView style = {{marginTop: 40, paddingBottom: 30}}>
             <Text style = {{fontSize:20, paddingLeft:10, justifyContent: 'center'}}>Club Information:</Text>
             <Text style = {{fontSize:15, paddingLeft:10}}>Club: {this.props.route.state.club.name}{"\n\n"}</Text>
             {leaderOps}

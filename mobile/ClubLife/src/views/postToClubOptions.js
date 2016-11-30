@@ -24,7 +24,7 @@ export default class PostToClubOptions extends Component {
         var info = "User\n"+JSON.stringify(user)+"\nClubData\n"+JSON.stringify(clubData);
 
         var content = (
-            <View>
+            <View style={{paddingTop: 40}}>
                 <View style={{height: 40}}>
                     <Text>Choose an action:</Text>
                 </View>
