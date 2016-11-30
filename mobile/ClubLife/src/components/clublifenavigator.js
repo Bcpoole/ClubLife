@@ -81,7 +81,8 @@ export default class ClubLifeNavigator extends Component {
                     break;
                 case "homepage":
                     scene = (
-                        <HomePage navigator={navigator} route={route} />
+                        <HomePage navigator={navigator} route={route}
+                            clubList={this.state.clubList}/>
                     );
                     break;
                 case "club":
