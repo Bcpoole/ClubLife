@@ -32,10 +32,11 @@ export default class ClubEvents extends Component {
 
         var eventsList = [];
         var events = this.props.route.state.events;
+        let i = 0;
         for (let event of events){
             eventsList.push(
                 //  <TouchableElement onPress={() => this._onGoEvent(event)}>
-                 <View>
+                 <View key={"eeevent"+i}>
 
                  <Button onPress={()=>this._onGoEvent(event)} style={{fontSize: 20, color:'gray', textAlign: 'left', marginLeft: 20}}>
                      {event.subject+"\n\n"}
@@ -47,7 +48,7 @@ export default class ClubEvents extends Component {
 
 
             );
-
+            i++;
         }
 
 

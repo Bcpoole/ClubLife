@@ -176,7 +176,7 @@ namespace skeleton.Data {
       await database.GetCollection<Event>("events").InsertOneAsync(@event);
 
       var org = GetOrganizationById(new ObjectId(@event.Club));
-      org.Posts.Add(@event.Id.ToString());
+      org.Events.Add(@event.Id.ToString());
 
       UpdateOrganizationAsync(org);
     }
