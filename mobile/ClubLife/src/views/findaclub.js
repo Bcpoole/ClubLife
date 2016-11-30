@@ -53,7 +53,7 @@ export default class FindAClub extends Component {
                                 <TouchableElement
                                     onPress={()=>this._navigateToClub(club)}>
                                     <View>
-                                        <Text style={{fontSize: 17, margin: 2}}>
+                                        <Text style={{fontSize: 17, margin: 2, color: '#800000'}}>
                                             {club.name}
                                         </Text>
                                     </View>

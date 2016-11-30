@@ -87,15 +87,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 25,
     textAlign: 'center',
     margin: 10,
+    fontWeight: 'bold',
+    color: '#800000',
+
   },
   instructions: {
     //textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
-    marginLeft: 5
+    //marginBottom: 5,
+    marginLeft: 3,
+    paddingLeft: 3,
+    marginRight: 3,
+    borderColor: 'black',
+    borderWidth: 2,
+    fontSize: 17,
+    fontWeight: 'bold',
+
   },
   button: {
     textAlign: 'center',
@@ -104,7 +114,7 @@ const styles = StyleSheet.create({
   },
   profilepic: {
       height: 100,
-      width: 100
+      width: 100,
 
   },
   pad: {

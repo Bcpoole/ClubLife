@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    color: '#800000',
   },
   instructions: {
     textAlign: 'center',

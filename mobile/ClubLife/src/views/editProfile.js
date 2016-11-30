@@ -199,15 +199,18 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
+    textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
+    color: '#800000',
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     justifyContent: 'center',
     marginBottom: 5,
+    paddingRight: 10,
   },
   button: {
     textAlign: 'center',
