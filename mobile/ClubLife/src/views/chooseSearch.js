@@ -85,12 +85,14 @@ const styles = StyleSheet.create({
 
     subtitles: {
         fontSize: 15,
+        color: '#800000',
         fontWeight: 'bold',
     },
 
     title: {
         textAlign: 'center',
         fontWeight: 'bold',
+        color: '#800000',
         fontSize: 20,
         paddingTop: 50,
         paddingBottom: 50,
