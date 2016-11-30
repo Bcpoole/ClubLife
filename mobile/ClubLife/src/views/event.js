@@ -19,8 +19,8 @@ class Event extends Component {
             data: [],
         };
     }
-    
-   
+
+
     render() {
         var event = this.props.route.state.event;
         let timeText = `${new Date(event.startTime).toString()}`;
@@ -28,9 +28,9 @@ class Event extends Component {
         var club = this.props.route.state.club;
         var officerOps = <Text></Text>;
         var TouchableElement = TouchableNativeFeedback;
-        
+
         if(club.leaders.indexOf(user.id)>-1 || club.officers.indexOf(user.id)){
-            officerOps = 
+            officerOps =
                 <TouchableElement onPress={()=>this._onGoEditEvent()}>
                     <View>
                         <Text style ={{textAlign:'right', marginRight:10, marginTop:10}}>
@@ -38,17 +38,17 @@ class Event extends Component {
                         </Text>
                     </View>
                 </TouchableElement>
-                
-            
+
+
         }
-        
-        
+
+
         return (
-          <View>
+          <View style={{marginTop: 40}}>
             <Text style={styles.ClubLife}>Club Life</Text>
             {officerOps}
             <Text style={{fontSize: 30, color:'#800000', textAlign: 'center'}}>{"\n"+event.subject+":\n\n"}</Text>
-            <View style={{width: 375, height: 65}}>               
+            <View style={{width: 375, height: 65}}>
                 <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>Date and Time:</Text>
                 <Text style ={{textAlign:'left',marginLeft:20}}>{timeText}</Text>
                 <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>{"\n\n"}Description:</Text>
@@ -87,10 +87,10 @@ class Event extends Component {
               state: this.props.route.state
           })
       }
-      
+
     }
-    
-    
+
+
     module.exports = Event;
 
     const styles = StyleSheet.create({

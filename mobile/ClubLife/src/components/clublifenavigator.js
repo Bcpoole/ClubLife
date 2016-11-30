@@ -9,7 +9,6 @@ import Club from '../views/club';
 import Profile from '../views/profile';
 import FindAClub from '../views/findaclub';
 import FindAnEvent from '../views/findAnEvent';
-import AllViews from '../views/allviews';
 import EditClub from '../views/EditClub';
 import ClubPage from '../views/clubPage';
 import ClubInfo from '../views/clubInfo';
@@ -81,7 +80,8 @@ export default class ClubLifeNavigator extends Component {
                     break;
                 case "homepage":
                     scene = (
-                        <HomePage navigator={navigator} route={route} />
+                        <HomePage navigator={navigator} route={route}
+                            clubList={this.state.clubList}/>
                     );
                     break;
                 case "club":
@@ -130,26 +130,6 @@ export default class ClubLifeNavigator extends Component {
                             eventList={this.state.eventList}/>
                     );
                     break;
-                case "allviews":
-                    //link to all views debug page TODO: add all the views lmao
-                    scene = (
-                        <AllViews navigator={navigator} route={route}
-                            views={[{
-                                name: "login",
-                                pressCallback: ()=> {navigator.resetTo({type: 'login', index: 0});}
-                            }, {
-                                name: "signup",
-                                pressCallback: ()=> {navigator.resetTo({type: "signup", index: 0});}
-                            }, {
-                                name: "homepage",
-                                pressCallback: ()=> {navigator.resetTo({type: "homepage", index: 0});}
-                            }, {
-                                name: "findaclub",
-                                pressCallback: ()=> {navigator.resetTo({type: "findaclub", index: 0});}
-                            }]}
-                        />
-                    );
-                    break;
                 case "clubPage":
                     scene = (
                         <ClubPage navigator={navigator} route={route} clubList={this.state.clubList} />
@@ -160,32 +140,27 @@ export default class ClubLifeNavigator extends Component {
                         <EditClub navigator = {navigator} route={route} />
                     );
                     break;
-
                 case "clubInfo":
                     scene = (
                         <ClubInfo navigator = {navigator} route={route} />
                     );
                     break;
-
                 case "pendingMembers":
                     scene = (
                         <PendingMembers navigator = {navigator} route={route} />
                     );
                     break;
-
                 case "postToClubOptions":
                     scene = (
                         <PostToClubOptions navigator={navigator} route={route} />
                     );
                     break;
-
                 case "editEvent":
                     scene = (
                         <EditEvent navigator={navigator} route={route}
                             type = {"edit"} />
                     );
                     break;
-
                 case "createEvent":
                     scene = (
                         <EditEvent navigator={navigator} route={route}
@@ -226,13 +201,11 @@ export default class ClubLifeNavigator extends Component {
                         <MyEvents navigator={navigator} route={route} />
                     );
                     break;
-
                 case "post":
                     scene = (
                         <Post navigator={navigator} route={route} />
                     );
                     break;
-
                 default:
                     //oh shi-
                     scene = (
@@ -264,9 +237,30 @@ export default class ClubLifeNavigator extends Component {
 }
 
 const styles = StyleSheet.create({
-    navbar: {
-        marginBottom: 40
-    }
+  navBar: {
+      height: 40
+  },
+
+  navBarText: {
+      marginVertical: 2,
+      color: 'gray',
+      textAlignVertical: 'center',
+  },
+
+  navBarTitleText: {
+      color: 'gray',
+      fontWeight: '500',
+      marginVertical: 1,
+      textAlign: 'right',
+  },
+
+  navBarLeftButton: {
+      paddingLeft: 15,
+  },
+
+  navBarRightButton: {
+      paddingRight: 15,
+  }
 });
 
 var navbar = (
@@ -275,41 +269,36 @@ var navbar = (
             LeftButton: (route, navigator, index, navState) => {
                 var button = "";
                 button = (route.index ?
-                    <TouchableElement onPress={()=>{navigator.pop()}}>
+                    <TouchableElement style={styles.navBarLeftButton} onPress={()=>{navigator.pop()}}>
                         <View>
-                            <Text>⤾</Text>
+                            <Text style={styles.navBarText}>BACK</Text>
                         </View>
                     </TouchableElement> :
-                    <View>
-                        <Text>⚾</Text>
-                    </View>
+                    <TouchableElement style={styles.navBarLeftButton} onPress={()=>{console.log("Secret")}}>
+                        <View>
+                            <Text style={styles.navBarText}>Welcome to:</Text>
+                        </View>
+                    </TouchableElement>
                 );
                 return button;
             },
             RightButton: (route, navigator, index, navState) => {
                 var button = "";
-                switch(route.type) {
-                    case "login":
-                        // if we're on the login page, the snowman button takes you to allviews aka merk's super secret sexy debug menu
-                         button = (
-                            <TouchableElement onPress={()=>{navigator.resetTo({type: "allviews", index: 0})}}>
-                                <View>
-                                    <Text>☃</Text>
-                                </View>
-                            </TouchableElement>
-                         );
-                         break;
-                    default:
-                        button = (
-                            <View><Text>☃</Text></View>
-                        )
-                }
+                //switch(route.type) {
+                //    default:
+                //        button = (
+                //            <View><Text>☃</Text></View>
+                //        )
+                //}
                 return button;
             },
             Title: (route, navigator, index, navState) => {
-                return (<View><Text>ClubLife</Text></View>);
+                return (<TouchableElement onPress={()=>{route.type !== "login" && route.type !== "signup" && navigator.push({type: "homepage", index: route.index+1, state: route.state})}}>
+                    <View><Text style={styles.navBarTitleText}>ClubLife</Text></View>
+                </TouchableElement>);
             },
         }}
-        style={styles.navbar}
+        style={styles.navBar}
+        navigationStyles={Navigator.NavigationBar.StylesIOS}
     />
 );

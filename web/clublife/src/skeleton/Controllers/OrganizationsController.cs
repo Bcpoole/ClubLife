@@ -135,6 +135,12 @@ namespace skeleton.Controllers {
       Repo.CreateNewEventAsync(@event);
     }
 
+    // POST api/organizations/events/5824eb7817b44627c34fa676/rsvp?userId=5824e62917b44627c34fa66e
+    [HttpPost("events/{eventId}/rsvp")]
+    public void RSVPToEvent(string eventId, string userId) {
+      Repo.RSVPToEvent(new ObjectId(eventId), new ObjectId(userId));
+    }
+
     // GET api/organizations/581b77c29534b37d50c51b6c/events
     /// <param name="id">club id</param>
     [HttpGet("{id}/events")]

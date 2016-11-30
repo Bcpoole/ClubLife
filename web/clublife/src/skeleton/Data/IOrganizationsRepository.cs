@@ -23,6 +23,7 @@ namespace skeleton.Data {
     IEnumerable<Event> FindPublicEvents();
     void UpdateEventAsync(Event @event);
     void CreateNewEventAsync(Event @event);
+    void RSVPToEvent(ObjectId eventId, ObjectId userId);
 
     void ApproveMember(ObjectId userId, ObjectId clubId, bool approved);
   }

@@ -38,7 +38,7 @@ export default class FindAClub extends Component {
 
         var TouchableElement = TouchableNativeFeedback;
         var content = (
-            <View style={{backgroundColor: '#F5FCFF'}}>
+            <View style={{backgroundColor: '#F5FCFF', marginTop: 40}}>
                 <TextInput
                     style={{paddingTop: 20, backgroundColor: 'white'}}
                     placeholder={"filter clubs by name"}
