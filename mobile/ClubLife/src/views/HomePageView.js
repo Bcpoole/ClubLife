@@ -28,7 +28,7 @@ export default class HomePage extends Component {
     return (
       <View style={{paddingTop: 40}}>
         <Text style={styles.ClubLife}>Club Life</Text>
-        <Image style={{flex: 1, resizeMode: 'stretch', width: 375, height: 410, opacity: 1}} source={require('./images/sponge.jpeg')}>
+        <Image style={{flex: 1, resizeMode: 'stretch', width: 375, height: 410, opacity: 1}} source={require('./images/Denny-Chimes1.jpg')}>
             <Text style={styles.announcements}>Recent Activity</Text>
             <ScrollView style={{width: 375, height: 340, backgroundColor: 'rgba(0,0,0,0)', paddingLeft: 5}}>
             {

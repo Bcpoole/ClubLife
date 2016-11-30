@@ -91,37 +91,49 @@ class Club extends Component {
         var isMember = isInArray(members); //members.includes(user.id)
         var isOfficer = isInArray(officers); //officers.includes(user.id)
         var isLeader = isInArray(leaders); //leaders.includes(user.id)
-
+        var addPost = <Text></Text>;
 
         // officer (and by extension, leader) options: post to club, approve members
         var offOps = <Text></Text>;
         if (isOfficer || isLeader){
             offOps = (
-                <View style = {{width: 215, height: 30, flexDirection: 'row',
-                    justifyContent: 'space-around', flexWrap: 'wrap'}}>
-                    <TouchableElement onPress={()=>this._onPostToClub()}>
-                        <View><Text style = {styles.button}>Create Post</Text></View>
-                    </TouchableElement>
-                    <TouchableElement onPress={()=>this._onGoEditEvent()}>
-                        <View><Text style = {styles.button}>Create Event</Text></View>
-                    </TouchableElement>
                     <TouchableElement onPress = {()=>this._onGoPendingMembers()}>
-                        <View><Text style = {styles.button} >Pending Members</Text></View>
+                        <View style = {{height:50}}>
+                            <Image style={styles.bottomIcon} source={require('./images/pending.png')} />
+                            <Text  >Pending Members</Text>
+                    </View>
                     </TouchableElement>
-                </View>
+         
             );
+
+            addPost = ( <TouchableElement onPress={()=>this._onPostToClub()}>
+                        <View style = {{height:50,width: 365, flexDirection: 'row',
+                    flexWrap: 'wrap',paddingLeft:10}}>
+                            <Image style={styles.bottomIcon} source={require('./images/plus.png')} />
+                            <Text style = {styles.button}>Create Post{"\n\n"}</Text>
+                        </View>
+                    </TouchableElement>);
         }
+
+
 
         // member options: {if !member allow to join club}
         var memberOps =  <TouchableElement onPress = {()=>this._addToPending(user.id)}>
-                <View><Text style = {styles.button}>Join Club</Text></View>
+                <View style = {{height:50}}>
+                    <Image style={styles.bottomIcon} source={require('./images/plus.png')} />
+                    <Text>Join Club</Text>
+                </View>
             </TouchableElement>;
+        
         if (isLeader || isOfficer){
-            memberOps = <Text></Text>;
+            memberOps = <View></View>;
         }
         else if (isMember){
             memberOps =<TouchableElement onPress = {() =>Communications.email([user.username,email],null,null,'This person wants to join club','please let me join, i love club.')}>
-                        <View><Text style = {styles.button}>Contact an Officer</Text></View>
+                          <View style = {{height:50}}>
+                            <Image style={styles.bottomIcon} source={require('./images/mail.png')} />
+                            <Text>Contact an Officer</Text>
+                        </View>
                     </TouchableElement>;
         }
 
@@ -137,26 +149,36 @@ class Club extends Component {
                 <Image source={{uri: picURL}} style={{height: 200, width: 200, resizeMode: 'contain'}} />
 
                 <View style={styles.longBox}>
-                    <Text style={styles.welcome}>
+                    <Text style={{fontSize: 25, color:'#800000', textAlign: 'center', marginLeft: 10}}>
                     {name}
                     </Text>
                 </View>
 
+                
+            
                 <View style={{width: 365, height: 30, flexDirection: 'row',
-                    justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap'}}>
+                    justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap',marginBottom:20}}>
                     <TouchableElement onPress={()=>this._onGoEvents(this.state.events)}>
-                        <View><Text style={styles.button}>Events</Text></View>
+                        <View style = {{height:50}}>
+                            <Image style={styles.bottomIcon} source={require('./images/Events-Icon.jpeg')} />
+                           <Text>Events</Text>
+                        </View>
                     </TouchableElement>
-                    <TouchableElement style = {styles.button} onPress = {()=>this._onGoClubInfo()}>
-                        <View><Text style = {styles.button}>Info</Text></View>
+                    <TouchableElement onPress = {()=>this._onGoClubInfo()}>
+                        <View style = {{height:50}}>
+                            <Image style={styles.bottomIcon} source={require('./images/info.png')} />
+                            <Text>Info</Text>
+                        </View>
                     </TouchableElement>
 
+                    {offOps}
                    {memberOps}
-                   {offOps}
+                   
 
                 </View>
             </View>
-            <Text style = {styles.welcome}>Club Posts:</Text>
+            <Text style = {{fontSize: 20,margin: 10,color:'#800000'}}>Club Posts:</Text>
+            {addPost}
             {this._messages()}
         </ScrollView>
         );
@@ -181,13 +203,10 @@ class Club extends Component {
             // actual post objects
             var postArray = [].concat(posts, events);
             postArray = JSON.parse(JSON.stringify(postArray));
-            console.log(postArray);
             postArray.sort(function(a,b){
                 return new Date(b.created) - new Date(a.created);
             });
             
-            //postArray.sort((a,b)=>{-1*a.created.localeCompare(b.created)}); // not working
-            console.log(postArray);
             var TouchableElement = TouchableNativeFeedback;
             let authorName = id => {
                 for(let user of this.state.users) {
@@ -202,8 +221,8 @@ class Club extends Component {
                     //the post is an event
                     return (
                         <TouchableElement key={"p"+i} onPress={() => this._onGoEvent(post)}>
-                            <View style = {[styles.box,  styles.message]}>
-                                <Text>{"EVENT: "+post.subject}</Text>
+                             <View style = {{borderWidth: 1,borderStyle: 'dotted',marginBottom:10}}>
+                                <Text>{"EVENT: "+post.subject+"\n"}</Text>
                             </View>
                         </TouchableElement>
                     );
@@ -212,8 +231,8 @@ class Club extends Component {
                     //the post is a post
                     return (
                         <TouchableElement key={"p"+i} onPress = {() => this._onGoPost(post, authorName(post.author))}>
-                            <View style = {[styles.box,  styles.message]}>
-                                <Text>{"POST by "+authorName(post.author)+": "+post.subject}</Text>
+                            <View style = {{borderWidth: 1,borderStyle: 'dotted',marginBottom:10}}>
+                                <Text>{"POST by "+authorName(post.author)+": "+post.subject+"\n"}</Text>
                             </View>
                         </TouchableElement>
                     )
@@ -363,8 +382,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-    fontWeight: 'bold',
-    color: '#800000',
   },
   instructions: {
     textAlign: 'center',
@@ -372,9 +389,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   button: {
-   textAlign: 'center',
+   //textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+    marginLeft: 10
   },
   profilepic: {
       height: 100,
@@ -391,7 +409,7 @@ const styles = StyleSheet.create({
 
       color: 'black',
 
-      backgroundColor: 'skyblue',
+      backgroundColor: 'powderblue',
 
   },
 
@@ -400,8 +418,10 @@ const styles = StyleSheet.create({
       width: 25,
 
       height: 25,
+      justifyContent:'center',
+      alignItems:'center'
 
-      backgroundColor: 'skyblue',
+      //backgroundColor: 'powderblue',
 
   },
 

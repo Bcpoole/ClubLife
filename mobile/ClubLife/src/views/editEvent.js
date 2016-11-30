@@ -33,7 +33,7 @@ export default class EditEvent extends Component {
                 var startTime = this.props.route.state.event.startTime;
                 var timeObj = startTime.split("T");
                 var timeArr = timeObj[1].split(":");
-                var time=timeArr[0]+":"+timeArr[1];
+                var time=timeArr[0]+":"+timeArr[1]+ " AM";
                 return time;
             })()  : "",
             
@@ -141,10 +141,10 @@ export default class EditEvent extends Component {
         var hours = time.substring(0, index);
         var minutes = time.substring(index + 1, index2);
 
-        // var mer = time.substring(index2 + 1, time.length);
-        // if (mer == "PM"){
-        //     hours = parseInt(hours) + 12;
-        // }
+        var mer = time.substring(index2 + 1, time.length);
+        if (mer == "PM"){
+            hours = parseInt(hours) + 12;
+        }
 
         
         date.setHours(hours);
