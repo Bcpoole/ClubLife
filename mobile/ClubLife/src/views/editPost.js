@@ -46,7 +46,6 @@ export default class EditPost extends Component {
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({postSubject: text})}}
                 value={this.state.postSubject}
-                keyboardType={"email-address"}
             />
         );
         var contentInput = (
@@ -54,7 +53,6 @@ export default class EditPost extends Component {
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({postContent: text})}}
                 value={this.state.postContent}
-                keyboardType={"email-address"}
             />
         );
         var content = (
@@ -88,11 +86,11 @@ export default class EditPost extends Component {
         let clubId = this.props.route.state.club.id;
         let url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+clubId+"/posts/new";
         let body = {
-            subject: this.state.postSubject,
-            content: this.state.postContent,
-            created: new Date().toJSON(),
-            author: this.props.route.state.user.id,
-            club: clubId
+            "subject": this.state.postSubject,
+            "content": this.state.postContent,
+            "created": new Date().toJSON(),
+            "author": this.props.route.state.user.id,
+            "club": clubId
         };
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
         let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
@@ -120,7 +118,7 @@ export default class EditPost extends Component {
 
     _makeUpdateRequest() {
         let clubId = this.props.route.state.club.id;
-        let url = "http://skeleton20161103012840.azurewebsites.net/api/Orgnanizations/posts/"+this.props.route.state.post.id;
+        let url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/posts/"+this.props.route.state.post.id;
         let body = Object.assign({}, this.props.route.state.post,
             {author: this.props.route.state.user.id, subject: this.state.postSubject, content: this.state.postContent});
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
