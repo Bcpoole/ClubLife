@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     marginLeft: 3,
     paddingLeft: 3,
     marginRight: 3,
+    marginBottom:10,
     borderColor: 'black',
     borderWidth: 2,
     fontSize: 17,

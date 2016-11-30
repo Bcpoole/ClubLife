@@ -23,7 +23,20 @@ class Event extends Component {
 
     render() {
         var event = this.props.route.state.event;
-        let timeText = `${new Date(event.startTime).toString()}`;
+        let timeText =  (()=>{
+                var startTime = this.props.route.state.event.startTime;
+                var timeObj = startTime.split("T");
+                var timeArr = timeObj[1].split(":");
+                var time=timeArr[0]+":"+timeArr[1];
+                return time;
+            })();//`${new Date(event.startTime).toString()}`;
+        let dateText = (()=>{
+                var startTime = this.props.route.state.event.startTime;
+                var timeObj = startTime.split("T");
+                var dateArr = timeObj[0].split("-");
+                var date=dateArr[1]+"/"+dateArr[2]+"/"+dateArr[0];
+                return date;
+            })();
         var user = this.props.route.state.user;
         var club = this.props.route.state.club;
         var officerOps = <Text></Text>;
@@ -45,11 +58,13 @@ class Event extends Component {
 
         return (
           <View style={{marginTop: 40}}>
-            <Text style={styles.ClubLife}>Club Life</Text>
+            
             {officerOps}
             <Text style={{fontSize: 30, color:'#800000', textAlign: 'center'}}>{"\n"+event.subject+":\n\n"}</Text>
             <View style={{width: 375, height: 65}}>
-                <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>Date and Time:</Text>
+                <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>Date:</Text>
+                <Text style ={{textAlign:'left',marginLeft:20}}>{dateText}</Text>
+                <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>{"\n\n"}Time (Military time)</Text>
                 <Text style ={{textAlign:'left',marginLeft:20}}>{timeText}</Text>
                 <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>{"\n\n"}Description:</Text>
                 <Text style={{marginLeft:20}}>{event.content}</Text>
@@ -84,7 +99,8 @@ class Event extends Component {
           this.props.navigator.push({
               type: "editEvent",
               index: this.props.route.index+1,
-              state: this.props.route.state
+              state:this.props.route.state
+              //state: Object.assign({}, this.props.route.state, {event: this.props.route.state.event})
           })
       }
 
