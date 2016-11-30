@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Alert
 } from 'react-native';
 import LoadingView from '../components/loadingview';
 //import TabNavigator from 'react-native-tab-navigator';
@@ -23,7 +24,6 @@ export default class EditEvent extends Component {
             eventSubject:"",
             eventContent:"",
             eventStartTime:"",
-            eventEndTime:"",
             eventStartDate:"",
             
         };
@@ -69,7 +69,7 @@ export default class EditEvent extends Component {
             <TextInput
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({eventStartDate: text})}}
-                value={this.state.evenStartDate}
+                value={this.state.eventStartDate}
             />
 
         );
@@ -78,20 +78,12 @@ export default class EditEvent extends Component {
             <TextInput
                 style={{height: 40}}
                 onChangeText={(text)=>{this.setState({eventStartTime: text})}}
-                value={this.state.evenStartTime}
+                value={this.state.eventStartTime}
             />
 
         );
 
-          var endTime = (
-            <TextInput
-                style={{height: 40}}
-                onChangeText={(text)=>{this.setState({eventEndTime: text})}}
-                value={this.state.evenEndTime}
-            />
-
-        );
-
+  
 
 
         var content = (
@@ -105,8 +97,7 @@ export default class EditEvent extends Component {
                 {startDate}
                 <Text>Start Time</Text>
                 {startTime}
-                <Text>End Time</Text>
-                {endTime}
+                
                 {submitButton}
                 {cancelButton}
             </View>
@@ -128,7 +119,6 @@ export default class EditEvent extends Component {
                         eventSubject: json.subject,
                         startTime: json.startTime, // FIX HERE
                         startDate: json.startTime,
-                        endTime: json.endTime
                     });
                 })
                 .catch(e => console.error(e));
@@ -149,8 +139,20 @@ export default class EditEvent extends Component {
     }
 
     _setDateTime(dateStr, time) { // date = "11/30/2011"  time="09.17 PM" or AM
-        var date = Date.parse(dateStr);
-        alert(dateStr);
+        var dateArr = dateStr.split("/");
+        
+         //alert(dateStr[1] + dateStr[0]+dateStr[2]);
+        //var date =  new Date(2011,10,1);
+        var date =  new Date();
+        date.setDate(dateArr[1]);
+        date.setMonth(parseInt(dateArr[0])-1);
+        date.setFullYear(dateArr[2]);
+
+       
+
+        //var date = Date.parse(dateStr);
+        
+        //alert("day: "+date.getYear());
 
         var index = time.indexOf("."); // replace with ":" for differently displayed time.
         var index2 = time.indexOf(" ");
@@ -163,7 +165,8 @@ export default class EditEvent extends Component {
             hours = hours + 12;
         }
 
-
+        alert(hours+" "+minutes);
+        alert( dateStr);
         date.setHours(hours);
         date.setMinutes(minutes);
         date.setSeconds("00");
@@ -177,24 +180,30 @@ export default class EditEvent extends Component {
         //alert("here");
         let clubId = this.props.route.state.club.id;
         let url = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+clubId+"/events/new";
+        //alert(this._setDateTime(this.state.eventStartDate,this.state.eventStartTime).toJSON());
         let body = {
             subject: this.state.eventSubject,
             content: this.state.eventContent,
             created: new Date().toJSON(),
-            startTime:this._setDateTime(this.state.startTime,this.state.eventStartDate),
-            endTime:this._setDateTime(this.state.endTime,this.state.eventStartDate),
-            rsvp:"",
+            startTime:this._setDateTime(this.state.eventStartDate,this.state.eventStartTime).toJSON(),
+            endTime:new Date(2038,1,1).toJSON(),
+            rsvp:[],
             isPublic:true,
             author: this.props.route.state.user.id,
             club: clubId
         };
+        console.log(JSON.stringify(body));
+        
+        
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
         let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+        
         fetch(url, {method: "PUT", headers: headers, body: JSON.stringify(body)})
+            
             .then(parseResponse)
             .then(json => {
                 Alert.alert(
-                    "Succesfully made post",
+                    "Succesfully made event",
                     "Click OK to return",
                     [
                         {text: "OK", onPress: () => this.props.navigator.pop()}
