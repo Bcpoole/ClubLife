@@ -180,6 +180,13 @@ namespace skeleton.Data {
 
       UpdateOrganizationAsync(org);
     }
+
+    public void RSVPToEvent(ObjectId eventId, ObjectId userId) {
+      var @event = GetEvent(eventId);
+      @event.RSVP.Add(userId.ToString());
+
+      UpdateEventAsync(@event);
+    }
     #endregion
 
     #region Members

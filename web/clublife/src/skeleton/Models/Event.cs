@@ -19,7 +19,7 @@ namespace skeleton.Models {
     [BsonElement("endTime")]
     public DateTime EndTime { get; set; }
     [BsonElement("rsvp")]
-    public IEnumerable<ObjectId> RSVP { get; set; }
+    public IList<string> RSVP { get; set; }
     [BsonElement("isPublic")]
     public bool IsPublic { get; set; }
     [BsonElement("author")]
