@@ -18,20 +18,14 @@ import Button from 'react-native-button';
 export default class EditPost extends Component {
     constructor(props) {
         super(props);
+        this._type = this.props.type || ""; //expecting "edit" or "create"...Dr. Gray, I'm so sorry
         this.state = {
-            hasData: false,
-            data: {},
-            postSubject: "",
-            postContent: "",
+            postSubject: this._type === "edit" ? this.props.route.state.post.subject : "",
+            postContent: this._type === "edit" ? this.props.route.state.post.content : "",
         };
-        this._type = this.props.componenttype || ""; //expecting "edit" or "create"
     }
 
     render() {
-        if(this._type === "edit" && !this.state.hasData) {
-            return <LoadingView/>;
-        }
-
         var TouchableElement = TouchableOpacity;
         var titleText = this._type + " post"; //smelly code
         var titleNode = (
@@ -75,24 +69,6 @@ export default class EditPost extends Component {
             </View>
         );
         return content;
-    }
-
-    componentDidMount() {
-        if(this._type === "edit") {
-            let postId = this.props.route.state.postId;
-            let url = "";
-            fetch(url)
-                .then(res => res.json())
-                .then(json => {
-                    this.setState({
-                        hasData: true,
-                        data: json,
-                        postContent: json.content,
-                        postSubject: json.subject
-                    });
-                })
-                .catch(e => console.error(e));
-        }
     }
 
     _onSubmit() {
@@ -144,12 +120,12 @@ export default class EditPost extends Component {
 
     _makeUpdateRequest() {
         let clubId = this.props.route.state.club.id;
-        let url = "http://skeleton20161103012840.azurewebsites.net/api/Orgnanizations/posts/"+this.state.data.id;
-        let body = Object.assign({}, this.state.data,
+        let url = "http://skeleton20161103012840.azurewebsites.net/api/Orgnanizations/posts/"+this.props.route.state.post.id;
+        let body = Object.assign({}, this.props.route.state.post,
             {author: this.props.route.state.user.id, subject: this.state.postSubject, content: this.state.postContent});
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
         let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
-        fetch(url, {method: "POST", headers: headers, body: body})
+        fetch(url, {method: "POST", headers: headers, body: JSON.stringify(body)})
             .then(parseResponse)
             .then(json => {
                 Alert.alert(

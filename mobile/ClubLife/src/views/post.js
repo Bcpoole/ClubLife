@@ -19,6 +19,16 @@ export default class Post extends Component {
         let headerText = `Post by ${this.authorName} in ${this.club.name}:`;
         let timeText = `Posted ${new Date(this.post.created).toString()}`;
 
+        var goToEdit = <Text></Text>;
+        var userId = this.props.route.state.user.id;
+        if(this.club.leaders.includes(userId) || this.club.officers.includes(userId)) {
+            goToEdit = (
+                <Button onPress={()=>this._onGoEditPost()} style={{fontSize: 20, color: 'blue'}}>
+                    Edit this post
+                </Button>
+            );
+        }
+
         return (
           <View style={{paddingTop: 40}}>
             <View>
@@ -35,12 +45,23 @@ export default class Post extends Component {
             </View>
             <Button onPress={()=>this._onGoBack()} style={{fontSize: 20, color: 'green'}}>
                     Go back</Button>
+            <View>
+                {goToEdit}
+            </View>
           </View>
         );
       }
 
       _onGoBack() {
           this.props.navigator.pop();
+      }
+
+      _onGoEditPost() {
+          this.props.navigator.push({
+              type: 'editPost',
+              index: this.props.route.index+1,
+              state: Object.assign({}, this.props.route.state, {post: this.post})
+          });
       }
 }
 
