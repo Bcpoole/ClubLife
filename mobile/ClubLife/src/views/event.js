@@ -45,7 +45,7 @@ class Event extends Component {
 
         return (
           <View style={{marginTop: 40}}>
-            <Text style={styles.ClubLife}>Club Life</Text>
+            
             {officerOps}
             <Text style={{fontSize: 30, color:'#800000', textAlign: 'center'}}>{"\n"+event.subject+":\n\n"}</Text>
             <View style={{width: 375, height: 65}}>

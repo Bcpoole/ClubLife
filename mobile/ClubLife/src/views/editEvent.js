@@ -22,8 +22,20 @@ export default class EditEvent extends Component {
         this.state = {         
             eventSubject: this._type === "edit" ? this.props.route.state.event.subject : "",
             eventContent: this._type === "edit" ? this.props.route.state.event.content : "",
-            eventStartTime:this._type === "edit" ? this.props.route.state.event.startTime : "",
-            eventStartDate:this._type === "edit" ? this.props.route.state.event.startTime : "",
+            eventStartDate:this._type === "edit" ? (()=>{
+                var startTime = this.props.route.state.event.startTime;
+                var timeObj = startTime.split("T");
+                var dateArr = timeObj[0].split("-");
+                var date=dateArr[1]+"/"+dateArr[2]+"/"+dateArr[0];
+                return date;
+            })()  : "",
+            eventStartTime:this._type === "edit" ? (()=>{
+                var startTime = this.props.route.state.event.startTime;
+                var timeObj = startTime.split("T");
+                var timeArr = timeObj[1].split(":");
+                var time=timeArr[0]+":"+timeArr[1];
+                return time;
+            })()  : "",
             
         };
         
@@ -31,9 +43,7 @@ export default class EditEvent extends Component {
 
     render() {
         
-        if(this._type === "edit" && !this.state.hasData) {
-            return <LoadingView/>;
-        }
+      
         
         var TouchableElement = TouchableOpacity;
         var titleText = this._type + " event"; //smelly code
@@ -104,25 +114,6 @@ export default class EditEvent extends Component {
         return content;
     }
 
-    // componentDidMount() {
-    //     if(this._type === "edit") {
-    //         let eventId = this.props.route.state.eventId;
-    //         let url = "";
-    //         fetch(url)
-    //             .then(res => res.json())
-    //             .then(json => {
-    //                 this.setState({
-    //                     hasData: true,
-    //                     data: json,
-    //                     eventContent: json.content,
-    //                     eventSubject: json.subject,
-    //                     startTime: json.startTime, // FIX HERE
-    //                     startDate: json.startTime,
-    //                 });
-    //             })
-    //             .catch(e => console.error(e));
-    //     }
-    // }
 
     _onSubmit() {
         switch(this._type) {
@@ -137,35 +128,25 @@ export default class EditEvent extends Component {
         }
     }
 
-    _setDateTime(dateStr, time) { // date = "11/30/2011"  time="09.17 PM" or AM
+    _setDateTime(dateStr, time) { // date = "11/30/2011"  time="09:17 PM" or AM
         var dateArr = dateStr.split("/");
-        
-         //alert(dateStr[1] + dateStr[0]+dateStr[2]);
-        //var date =  new Date(2011,10,1);
         var date =  new Date();
         date.setDate(dateArr[1]);
         date.setMonth(parseInt(dateArr[0])-1);
         date.setFullYear(dateArr[2]);
 
-       
-
-        //var date = Date.parse(dateStr);
-        
-        //alert("day: "+date.getYear());
-
-        var index = time.indexOf("."); // replace with ":" for differently displayed time.
+        var index = time.indexOf(":"); // replace with ":" for differently displayed time.
         var index2 = time.indexOf(" ");
 
         var hours = time.substring(0, index);
         var minutes = time.substring(index + 1, index2);
 
-        var mer = time.substring(index2 + 1, time.length);
-        if (mer == "PM"){
-            hours = hours + 12;
-        }
+        // var mer = time.substring(index2 + 1, time.length);
+        // if (mer == "PM"){
+        //     hours = parseInt(hours) + 12;
+        // }
 
-        alert(hours+" "+minutes);
-        alert( dateStr);
+        
         date.setHours(hours);
         date.setMinutes(minutes);
         date.setSeconds("00");
@@ -190,7 +171,7 @@ export default class EditEvent extends Component {
             author: this.props.route.state.user.id,
             club: clubId
         };
-        console.log(JSON.stringify(body));
+        
         
         
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
@@ -223,7 +204,7 @@ export default class EditEvent extends Component {
         let clubId = this.props.route.state.club.id;
         let url = "http://skeleton20161103012840.azurewebsites.net/api/Organizations/events/"+this.props.route.state.event.id;
         let body = Object.assign({}, this.props.route.state.event,
-            {author: this.props.route.state.user.id, subject: this.state.eventSubject, content: this.state.eventContent});
+            {author: this.props.route.state.user.id, subject: this.state.eventSubject, content: this.state.eventContent, startTime:this._setDateTime(this.state.eventStartDate,this.state.eventStartTime).toJSON(),});
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
         let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
         fetch(url, {method: "POST", headers: headers, body: JSON.stringify(body)})

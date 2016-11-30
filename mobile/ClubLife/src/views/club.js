@@ -180,7 +180,14 @@ class Club extends Component {
             var returnValue = [];
             // actual post objects
             var postArray = [].concat(posts, events);
-            postArray.sort((a,b)=>{a.created.localeCompare(b.created)}); // not working
+            postArray = JSON.parse(JSON.stringify(postArray));
+            console.log(postArray);
+            postArray.sort(function(a,b){
+                return new Date(b.created) - new Date(a.created);
+            });
+            
+            //postArray.sort((a,b)=>{-1*a.created.localeCompare(b.created)}); // not working
+            console.log(postArray);
             var TouchableElement = TouchableNativeFeedback;
             let authorName = id => {
                 for(let user of this.state.users) {
