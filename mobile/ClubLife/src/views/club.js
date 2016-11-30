@@ -100,7 +100,10 @@ class Club extends Component {
                 <View style = {{width: 215, height: 30, flexDirection: 'row',
                     justifyContent: 'space-around', flexWrap: 'wrap'}}>
                     <TouchableElement onPress={()=>this._onPostToClub()}>
-                        <View><Text style = {styles.button}>Post to Club</Text></View>
+                        <View><Text style = {styles.button}>Create Post</Text></View>
+                    </TouchableElement>
+                    <TouchableElement onPress={()=>this._onGoEditEvent()}>
+                        <View><Text style = {styles.button}>Create Event</Text></View>
                     </TouchableElement>
                     <TouchableElement onPress = {()=>this._onGoPendingMembers()}>
                         <View><Text style = {styles.button} >Pending Members</Text></View>
@@ -117,7 +120,7 @@ class Club extends Component {
             memberOps = <Text></Text>;
         }
         else if (isMember){
-            memberOps =<TouchableElement onPress = {() =>Communications.email([email,user.username],null,null,'This person wants to join club','please let me join, i love club.')}>
+            memberOps =<TouchableElement onPress = {() =>Communications.email([user.username,email],null,null,'This person wants to join club','please let me join, i love club.')}>
                         <View><Text style = {styles.button}>Contact an Officer</Text></View>
                     </TouchableElement>;
         }
@@ -327,6 +330,14 @@ class Club extends Component {
                 type: "event",
                 index: this.props.route.index+1,
                 state: Object.assign({}, this.props.route.state, {event: event})
+            });
+        }
+
+        _onGoEditEvent(){
+            this.props.navigator.push({
+                type:"createEvent",
+                index: this.props.route.index+1,
+                state: this.props.route.state,
             });
         }
 }
