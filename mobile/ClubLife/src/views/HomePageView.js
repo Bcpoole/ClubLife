@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
 
 export default class HomePage extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            posts: []
+        };
         /* don't think these are needed, uncomment if needed */
         this._onGoHome = this._onGoHome.bind(this);
         this._onGoClubList = this._onGoClubList.bind(this);
@@ -12,20 +15,30 @@ export default class HomePage extends Component {
         this._onGoProfile = this._onGoProfile.bind(this);
     }
   render() {
+      let nameFromClubId = id => {
+          for(let club of this.props.clubList) {
+              if(club.id === id) {
+                  return club.name;
+              }
+          }
+          return "...";
+      }
     return (
       <View>
         <Text style={styles.ClubLife}>Club Life</Text>
-        <Text style={styles.announcements}>Announcements</Text>
-        <View style={{width: 375, height: 370, backgroundColor: 'powderblue'}}>
-            <Text style={styles.newsFeed, styles.bold}>Video Game Development Club Meeting</Text>
-            <Text style={styles.newsFeed, styles.newsFeedPadding}>Thursday, Nov. 3rd, 5:30pm - 7:30pm, SERC 3048</Text>
-            <Text style={styles.newsFeed, styles.bold}>ABXY Riverside Night</Text>
-            <Text style={styles.newsFeed, styles.newsFeedPadding}>Friday, Nov. 4th, 6:00pm - 8:00pm, RCC</Text>
-            <Text style={styles.newsFeed, styles.bold}>ACM Object Oriented Programming Workshop</Text>
-            <Text style={styles.newsFeed, styles.newsFeedPadding}>Tuesday, Nov. 8th, 5:15pm - 7:00pm, SERC 1014</Text>
-            <Text style={styles.newsFeed, styles.bold}>Thanksgiving Break</Text>
-            <Text style={styles.newsFeed, styles.newsFeedPadding}>Wednesday-Sunday, Nov. 23rd - 27th</Text>
-        </View>
+        <Text style={styles.announcements}>Recent Activity</Text>
+        <ScrollView style={{width: 375, height: 370, backgroundColor: 'powderblue'}}>
+            {
+                this.state.posts.map((item, i) => {
+                    return (
+                        <View key={"content"+i}>
+                            <Text style={styles.newsFeed, styles.bold}>{nameFromClubId(item.id) || "..."}</Text>
+                            <Text style={styles.newsFeed, styles.newsFeedPadding}>{item.postData.subject}</Text>
+                        </View>
+                    );
+                })
+            }
+        </ScrollView>
         <View style={{width: 375, height: 65, backgroundColor: 'skyblue'}}>
             <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 5, paddingRight: 15, paddingTop: 3}}>
                 <Image style={styles.bottomIcon} source={require('./images/Home-Icon.jpg')} />
@@ -96,6 +109,37 @@ export default class HomePage extends Component {
           index: this.props.route.index+1,
           state: this.props.route.state
       })
+  }
+
+  componentDidMount() {
+      // this is totally and completely horrible but we can't have static fake content on the homepage because that's ridiculous.
+      // get all posts and all events for all clubs that the user has.
+      let fetchPostsAndEventsFromClub = (id) => {
+          //fetch the posts and add them to the content state
+              let url1 = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+id+"/posts";
+              fetch(url1)
+                  .then(res => res.json())
+                  .then(json => {
+                      let p = [...this.state.posts];
+                      this.setState({
+                          posts: p.concat(json.map(j => ({id: id, type: "post", postData: j})))
+                      });
+                  })
+                  .catch(e => console.error(e));
+              let url2 = "http://skeleton20161103012840.azurewebsites.net/api/organizations/"+id+"/events";
+              fetch(url2)
+                  .then(res => res.json())
+                  .then(json => {
+                      let p = [...this.state.posts];
+                      this.setState({
+                          posts: p.concat(json.map(j => ({id: id, type: "event", postData: j})))
+                      });
+                  })
+                  .catch(e => console.error(e));
+      };
+      for(let clubId of this.props.route.state.user.clubs) {
+          fetchPostsAndEventsFromClub(clubId);
+      }
   }
 }
 
