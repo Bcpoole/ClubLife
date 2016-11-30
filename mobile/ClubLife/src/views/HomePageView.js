@@ -23,13 +23,15 @@ export default class HomePage extends Component {
           }
           return "...";
       }
+      let posts = this.state.posts;
+      posts.sort((a,b) => -1/*for newest first*/*a.postData.created.localeCompare(b.postData.created));
     return (
       <View style={{paddingTop: 40}}>
         <Text style={styles.ClubLife}>Club Life</Text>
         <Text style={styles.announcements}>Recent Activity</Text>
         <ScrollView style={{width: 375, height: 370, backgroundColor: 'powderblue'}}>
             {
-                this.state.posts.map((item, i) => {
+                posts.map((item, i) => {
                     return (
                         <View key={"content"+i}>
                             <Text style={styles.newsFeed, styles.bold}>{nameFromClubId(item.id) || "..."}</Text>
