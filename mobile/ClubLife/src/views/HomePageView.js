@@ -28,8 +28,9 @@ export default class HomePage extends Component {
     return (
       <View style={{paddingTop: 40}}>
         <Text style={styles.ClubLife}>Club Life</Text>
-        <Text style={styles.announcements}>Recent Activity</Text>
-        <ScrollView style={{width: 375, height: 370, backgroundColor: 'powderblue'}}>
+        <Image style={{flex: 1, resizeMode: 'stretch', width: 375, height: 410, opacity: 1}} source={require('./images/Denny-Chimes1.jpg')}>
+            <Text style={styles.announcements}>Recent Activity</Text>
+            <ScrollView style={{width: 375, height: 340, backgroundColor: 'rgba(0,0,0,0)', paddingLeft: 5}}>
             {
                 posts.map((item, i) => {
                     return (
@@ -40,16 +41,17 @@ export default class HomePage extends Component {
                     );
                 })
             }
-        </ScrollView>
-        <View style={{width: 375, height: 65, backgroundColor: 'skyblue'}}>
-            <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 5, paddingRight: 15, paddingTop: 3}}>
+            </ScrollView>
+        </Image>
+        <View style={{width: 375, height: 65, backgroundColor: 'crimson'}}>
+            <View style={{width: 365, height: 35, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 5, paddingRight: 15, paddingTop: 3}}>
                 <Image style={styles.bottomIcon} source={require('./images/Home-Icon.jpg')} />
                 <Image style={styles.bottomIcon} source={require('./images/Club-Icon.jpeg')} />
                 <Image style={styles.bottomIcon} source={require('./images/Search-Icon.jpg')} />
                 <Image style={styles.bottomIcon} source={require('./images/Events-Icon.jpeg')} />
                 <Image style={styles.bottomIcon} source={require('./images/Profile-Icon.jpeg')} />
             </View>
-            <View style={{width: 365, height: 30, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
+            <View style={{width: 365, height: 20, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10}}>
                 <TouchableHighlight onPress={()=>this._onGoHome()}><Text style={styles.BottomBar}>Home</Text></TouchableHighlight>
                 <TouchableHighlight onPress={()=>this._onGoClubList()}><Text style={styles.BottomBar}>My Clubs</Text></TouchableHighlight>
                 <TouchableHighlight onPress = {()=>this._onGoChooseSearch()}><Text style={styles.BottomBar}>Search</Text></TouchableHighlight>
@@ -163,20 +165,20 @@ const styles = StyleSheet.create({
       fontSize: 30,
       textAlign: 'center',
       color: 'black',
-      backgroundColor: 'powderblue',
+      backgroundColor: 'rgba(0,0,0,0)',
       paddingTop: 10,
-      paddingBottom: 30,
+      paddingBottom: 15,
       fontWeight: 'bold',
   },
   BottomBar: {
       fontSize: 12,
       color: 'black',
-      backgroundColor: 'skyblue',
+      backgroundColor: 'crimson',
   },
   bottomIcon: {
       width: 25,
       height: 25,
-      backgroundColor: 'skyblue',
+      backgroundColor: 'crimson',
   },
 
   description: {
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       justifyContent: 'center',
       color: 'black',
-      backgroundColor: 'powderblue',
+      backgroundColor: 'rgba(0,0,0,0)',
   },
   bold: {
       fontWeight: 'bold',
