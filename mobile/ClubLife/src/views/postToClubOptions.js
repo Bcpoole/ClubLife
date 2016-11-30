@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import Button from 'react-native-button';
 
 export default class PostToClubOptions extends Component {
     //choose between making a post and making an event
@@ -25,25 +26,17 @@ export default class PostToClubOptions extends Component {
 
         var content = (
             <View style={{paddingTop: 40}}>
-                <View style={{height: 40}}>
-                    <Text>Choose an action:</Text>
+                <View>
+                    <Text style={{textAlign: 'center', fontSize: 40, fontWeight: '500'}}>Choose an action:</Text>
                 </View>
-                <TouchableElement style={{height: 40}} onPress={()=>this._onGoMakePost()}>
-                    <View>
-                        <Text>Make a post!</Text>
-                    </View>
-                </TouchableElement>
-                <View/>
-                <TouchableElement style={{height: 40}} onPress={()=>this._onGoMakeEvent()}>
-                    <View>
-                        <Text>Make an event!</Text>
-                    </View>
-                </TouchableElement>
+                <Button onPress={()=>this._onGoMakePost()} style={{fontSize: 20, color: 'blue'}}>
+                    Make a post!
+                </Button>
+                <Button onPress={()=>this._onGoMakeEvent()} style={{fontSize: 20, color: 'blue'}}>
+                    Make an event!
+                </Button>
                 <View>
                     <Text>Note that events may be better configured from the club events page.</Text>
-                </View>
-                <View>
-                    <Text>{info}</Text>
                 </View>
             </View>
         );
