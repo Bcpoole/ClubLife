@@ -31,15 +31,15 @@ export default class EditPost extends Component {
         var titleText = (this._type === "edit" ? "Edit Post" : "Create Post")
         var titleNode = (
             <View>
-                <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: 'black'}}>{titleText}</Text>
+                <Text style={{...Platform.select({android: {textAlign: 'center'}}), fontWeight: 'bold', fontSize: 30, color: 'black'}}>{titleText}</Text>
             </View>
         );
         var cancelButton = (
-            <Button onPress={()=>this._onCancel()} style={{fontSize: 20, color: 'black', backgroundColor: 'red', borderWidth: 1.5, borderColor: 'black', height: 50, width: 100, textAlignVertical: 'center'}}>
+            <Button onPress={()=>this._onCancel()} style={{fontSize: 20, color: 'black', backgroundColor: 'red', borderWidth: 1.5, borderColor: 'black', height: 50, width: 100, ...Platform.select({android: {textAlignVertical: 'center'}})}}>
                 Cancel</Button>
         );
         var submitButton = (
-            <Button onPress={()=>this._onSubmit()} style={{fontSize: 20, color: 'black', backgroundColor: 'green', borderWidth: 1.5, borderColor: 'black', height: 50, width: 100, textAlignVertical: 'center'}}>
+            <Button onPress={()=>this._onSubmit()} style={{fontSize: 20, color: 'black', backgroundColor: 'green', borderWidth: 1.5, borderColor: 'black', height: 50, width: 100, ...Platform.select({android: {textAlignVertical: 'center'}})}}>
                 Submit</Button>
         );
         var subjectInput = (
