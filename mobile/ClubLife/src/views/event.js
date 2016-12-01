@@ -46,7 +46,7 @@ class Event extends Component {
             android: TouchableNativeFeedback
         });
 
-        if(club.leaders.indexOf(user.id)>-1 || club.officers.indexOf(user.id)){
+        if(club.leaders.indexOf(user.id)>-1 || club.officers.indexOf(user.id)>-1){
             officerOps =
                 <TouchableElement onPress={()=>this._onGoEditEvent()}>
                     <View>
