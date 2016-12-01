@@ -55,7 +55,7 @@ class ClubInfo extends Component {
         if(club.leaders.indexOf(user.id) > -1) {
             leaderOps =
                 <TouchableElement onPress = {()=>this._onGoEditClub()}>
-                    <View><Text style = {styles.button} >Edit Club Info</Text></View>
+                    <View><Text style = {{textAlign:'right', marginRight:10,marginTop:10}} >Edit Club Info</Text></View>
                 </TouchableElement>;
         }
 
@@ -74,7 +74,7 @@ class ClubInfo extends Component {
                     if (prop==="id" || prop === "events" || prop==="posts" || prop==="img" || prop ==="leaders" || prop ==="officers" || prop==="members"||prop==="pendingRequests"){
                         continue;
                     }
-                    returnValue.push(<View key={"clubInfo-"+i}><Text style={styles.welcome}>{variableNames[prop]}:</Text><Text style={styles.instructions}>{club[prop]}</Text></View>);
+                    returnValue.push(<View key={"clubInfo-"+i}><Text style={styles.welcome}>{variableNames[prop]}:</Text><Text style={[styles.instructions,{marginBottom:10}]}>{club[prop]===""? "NONE" : club[prop]}</Text></View>);
                     i++;
                }
            });
@@ -86,14 +86,15 @@ class ClubInfo extends Component {
 
         return (
         <ScrollView style = {{marginTop: 40, paddingBottom: 30}}>
-            <Text style = {{fontSize:20, paddingLeft:10, justifyContent: 'center'}}>Club Information:</Text>
-            <Text style = {{fontSize:15, paddingLeft:10}}>Club: {this.props.route.state.club.name}{"\n\n"}</Text>
             {leaderOps}
+            <Text style={{fontSize: 25, color:'#800000', textAlign: 'center',marginTop:20, marginBottom:40}}>{this.props.route.state.club.name}</Text>
+           
+           
+           
+           
             {clubValue()}
 
-            <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub(this.props.route.clubName)}>
-                <View><Text>Back</Text></View>
-            </TouchableElement>
+           
 
         </ScrollView>
 
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     //...Platform.select({android: {textAlign: 'center'}}),
     //margin: 10,
     paddingLeft:10,
-    color: '#800000'
+    color: 'grey'
   },
   instructions: {
     //...Platform.select({android: {textAlign: 'center'}}),

@@ -177,6 +177,12 @@ class Club extends Component {
                             <Text style = {{fontWeight:'bold',fontSize:15}}>Info</Text>
                         </View>
                     </TouchableElement>
+                    <TouchableElement onPress = {()=>this._onGoClubInfo()}>
+                         <View style = {styles.clubIcon}>
+                            <Image style={styles.bottomIcon} source={require('./images/info.png')} />
+                            <Text style = {{fontWeight:'bold',fontSize:15}}>Officers</Text>
+                        </View>
+                    </TouchableElement>
 
                     {offOps}
                    {memberOps}
@@ -398,7 +404,7 @@ const styles = StyleSheet.create({
     height:80,
     justifyContent:'center',
     alignItems:'center',
-    width:100,
+    width:75,
     borderWidth: 1,
     borderRadius:5,
     borderColor: 'grey',
