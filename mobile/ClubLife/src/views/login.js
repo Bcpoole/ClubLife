@@ -4,7 +4,9 @@ import {
   Text,
   View,
   TextInput,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 
 export default class Login extends Component {
@@ -87,7 +89,7 @@ export default class Login extends Component {
     }
 
     render() {
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
 
         return (
             <View style={styles.container}>
@@ -157,17 +159,17 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     margin: 10,
     color: '#800000',
   },
   instructions: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

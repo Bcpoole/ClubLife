@@ -8,7 +8,8 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
+  Platform,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
 //import TabNavigator from 'react-native-tab-navigator';
@@ -19,7 +20,7 @@ export default class EditEvent extends Component {
     constructor(props) {
         super(props);
         this._type = this.props.type || ""; // edit or create
-        this.state = {         
+        this.state = {
             eventSubject: this._type === "edit" ? this.props.route.state.event.subject : "",
             eventContent: this._type === "edit" ? this.props.route.state.event.content : "",
             eventStartDate:this._type === "edit" ? (()=>{
@@ -36,28 +37,28 @@ export default class EditEvent extends Component {
                 var time=timeArr[0]+":"+timeArr[1]+ " AM";
                 return time;
             })()  : "",
-            
+
         };
-        
+
     }
 
     render() {
-        
-      
-        
+
+
+
         var TouchableElement = TouchableOpacity;
-        var titleText = this._type + " event"; //smelly code
+        var titleText = (this._type === "edit" ? "Edit Event" : "Create Event")
         var titleNode = (
             <View>
-                <Text>{titleText}</Text>
+                <Text style={{...Platform.select({android: {textAlign: 'center'}}), fontWeight: 'bold', fontSize: 30, color: 'black'}}>{titleText}</Text>
             </View>
         );
         var cancelButton = (
-            <Button onPress={()=>this._onCancel()} style={{fontSize: 20, color: 'red'}}>
+            <Button onPress={()=>this._onCancel()} style={{fontSize: 20, color: 'black', backgroundColor: 'red', borderWidth: 1.5, borderColor: 'black', height: 50, width: 100, ...Platform.select({android: {textAlignVertical: 'center'}})}}>
                 Cancel</Button>
         );
         var submitButton = (
-            <Button onPress={()=>this._onSubmit()} style={{fontSize: 20, color: 'green'}}>
+            <Button onPress={()=>this._onSubmit()} style={{fontSize: 20, color: 'black', backgroundColor: 'green', borderWidth: 1.5, borderColor: 'black', height: 50, width: 100, ...Platform.select({android: {textAlignVertical: 'center'}})}}>
                 Submit</Button>
         );
         var subjectInput = (
@@ -92,23 +93,24 @@ export default class EditEvent extends Component {
 
         );
 
-  
+
 
 
         var content = (
-            <View>
+            <View style={{marginTop: 40}}>
                 {titleNode}
-                <Text>Subject</Text>
+                <Text style={{paddingLeft: 5}}>Subject</Text>
                 {subjectInput}
-                <Text>Content</Text>
+                <Text style={{paddingLeft: 5}}>Content</Text>
                 {contentInput}
-                <Text>Date</Text>
+                <Text style={{paddingLeft: 5}}>Date</Text>
                 {startDate}
-                <Text>Start Time</Text>
+                <Text style={{paddingLeft: 5}}>Start Time</Text>
                 {startTime}
-                
-                {submitButton}
-                {cancelButton}
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', height: 75, width: 360}}>
+                    {submitButton}
+                    {cancelButton}
+                </View>
             </View>
         );
         return content;
@@ -146,7 +148,7 @@ export default class EditEvent extends Component {
             hours = parseInt(hours) + 12;
         }
 
-        
+
         date.setHours(hours);
         date.setMinutes(minutes);
         date.setSeconds("00");
@@ -171,14 +173,14 @@ export default class EditEvent extends Component {
             author: this.props.route.state.user.id,
             club: clubId
         };
-        
-        
-        
+
+
+
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
         let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
-        
+
         fetch(url, {method: "PUT", headers: headers, body: JSON.stringify(body)})
-            
+
             .then(parseResponse)
             .then(json => {
                 Alert.alert(

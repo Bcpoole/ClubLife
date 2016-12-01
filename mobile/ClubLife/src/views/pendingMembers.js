@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 
 class PendingMembers extends Component {
@@ -20,7 +21,10 @@ class PendingMembers extends Component {
     }
 
     render (){
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         var pendingRequests = this.state.clubData.pendingRequests;
         var user = this.props.route.state.user;
         var canApprove = (this.state.clubData.leaders.indexOf(user.id) > -1 ||
@@ -175,17 +179,17 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     margin: 10,
   },
   instructions: {
-    //textAlign: 'center',
+    //...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
     marginLeft: 5
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

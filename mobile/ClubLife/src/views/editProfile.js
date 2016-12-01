@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry, Alert, Button, StyleSheet, Text, View, TextInput, ScrollView,
-  TouchableNativeFeedback, Image, TouchableOpacity, TouchableHighlight,
+  TouchableNativeFeedback, Image, TouchableOpacity, TouchableHighlight, Platform,
 } from 'react-native';
 
 export default class EditProfile extends Component {
@@ -34,7 +34,10 @@ export default class EditProfile extends Component {
                 }
             }
         }
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         return (
         <View style={styles.container}>
             <View style={styles.box}>
@@ -91,12 +94,12 @@ export default class EditProfile extends Component {
             <View style = {styles.finalize}>
                 <TouchableHighlight onPress={()=>this._onConfirmChanges()}>
                     <View style = {styles.bottomConfirm}>
-                        <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', textAlign: 'center'}}>Confirm</Text>
+                        <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', ...Platform.select({android: {textAlign: 'center'}})}}>Confirm</Text>
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight onPress={()=>this._onCancelChanges()}>
                     <View style = {styles.bottomCancel}>
-                        <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', textAlign: 'center'}}>Cancel</Text>
+                        <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', ...Platform.select({android: {textAlign: 'center'}})}}>Cancel</Text>
                     </View>
                 </TouchableHighlight>
             </View>
@@ -173,9 +176,6 @@ export default class EditProfile extends Component {
             Function that actually performs the call with the updated information, if we have any updated information.
         */
         _postNewUserInfo() {
-            console.log("aaa");
-            console.log(this.state.nextUserState);
-            console.log("bbb");
             var url = "http://skeleton20161103012840.azurewebsites.net/api/Users/"+this.state.nextUserState.id;
             fetch(url, {method: "POST", body: JSON.stringify(this.state.nextUserState)});
         }
@@ -199,21 +199,21 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
     color: '#800000',
   },
   instructions: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     justifyContent: 'center',
     marginBottom: 5,
     paddingRight: 10,
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

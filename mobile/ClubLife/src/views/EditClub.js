@@ -10,6 +10,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Button from 'react-native-button';
 
@@ -78,7 +79,10 @@ class EditClub extends Component {
     }
 
     render() {
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         return (
             <View style={{paddingTop: 40}}>
                 <View>
@@ -120,16 +124,16 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-  //  textAlign: 'center',
+  //...Platform.select({android: {textAlign: 'center'}}),
     margin: 10,
   },
   instructions: {
-    //textAlign: 'center',
+    //...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

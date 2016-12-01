@@ -10,6 +10,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
 //import TabNavigator from 'react-native-tab-navigator';
@@ -63,7 +64,10 @@ class Club extends Component {
             return <LoadingView/>;
         }
 
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            android: TouchableNativeFeedback,
+            ios: TouchableOpacity
+        });
 
 
          // Club Variables:
@@ -100,17 +104,17 @@ class Club extends Component {
                     <TouchableElement onPress = {()=>this._onGoPendingMembers()}>
                         <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/pending.png')} />
-                            <Text style={{textAlign:'center',fontWeight:'bold',fontSize:15}}>Pending Members</Text>
+                            <Text style={{...Platform.select({android: {textAlign: 'center'}}),fontWeight:'bold',fontSize:15}}>Pending Members</Text>
                         </View>
                     </TouchableElement>
-         
+
             );
 
             addPost = ( <TouchableElement onPress={()=>this._onPostToClub()}>
                         <View style = {{height:30,width: 365, flexDirection: 'row',
                     flexWrap: 'wrap',paddingLeft:10}}>
                             <Image style={styles.bottomIcon} source={require('./images/plus.png')} />
-                            <Text style = {styles.button}>Create Post{"\n\n"}</Text>
+                            <Text style = {styles.button}>Create Event/Post{"\n\n"}</Text>
                         </View>
                     </TouchableElement>);
         }
@@ -124,7 +128,7 @@ class Club extends Component {
                     <Text style = {{fontWeight:'bold',fontSize:15}}>Join Club</Text>
                 </View>
             </TouchableElement>;
-        
+
         if (isLeader || isOfficer){
             memberOps = null;
         }
@@ -132,7 +136,7 @@ class Club extends Component {
                     memberOps =<TouchableElement onPress = {() =>Communications.email([email,email],null,null,null,null)}>
                         <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/mail.png')} />
-                            <Text style={{textAlign:'center',fontWeight:'bold',fontSize:15}}>Contact an Officer</Text>
+                            <Text style={{...Platform.select({android: {textAlign: 'center'}}),fontWeight:'bold',fontSize:15}}>Contact an Officer</Text>
                         </View>
                     </TouchableElement>;
         }
@@ -146,20 +150,19 @@ class Club extends Component {
 
         <ScrollView style={styles.container}>
             <View style={styles.box}>
-                
-                <Image 
-                    source={{uri: picURL}} 
-                    style={{height: 300, width: 300,  resizeMode: 'contain',borderWidth:5, backgroundColor:'white', borderColor:'grey'}} 
+                <Image
+                    source={{uri: picURL}}
+                    style={{height: 300, width: 300,  resizeMode: 'contain',borderWidth:5, backgroundColor:'white', borderColor:'grey'}}
                 />
 
                 <View style={styles.longBox}>
-                    <Text style={{fontSize: 25, color:'#800000', textAlign: 'center', fontWeight:'bold'}}>
+                    <Text style={{fontSize: 25, color:'#800000', ...Platform.select({android: {textAlign: 'center'}}), fontWeight:'bold'}}>
                     {name}
                     </Text>
                 </View>
 
-                
-            
+
+
                 <View style={{width: 365, height: 30, flexDirection: 'row',
                     justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap',marginBottom:40}}>
                     <TouchableElement onPress={()=>this._onGoEvents(this.state.events)}>
@@ -177,18 +180,18 @@ class Club extends Component {
 
                     {offOps}
                    {memberOps}
-                   
+
 
                 </View>
             </View>
 
-            <View style = {styles.posts}>    
-            <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Posts:</Text>
+            <View style = {styles.posts}>
+            <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Events/Posts:</Text>
             {addPost}
             {this._messages()}
             </View>
-        
-        
+
+
         </ScrollView>
         );
         }
@@ -215,8 +218,12 @@ class Club extends Component {
             postArray.sort(function(a,b){
                 return new Date(b.created) - new Date(a.created);
             });
-            
-            var TouchableElement = TouchableNativeFeedback;
+
+            var TouchableElement = Platform.select({
+                android: TouchableNativeFeedback,
+                ios: TouchableOpacity
+            });
+
             let authorName = id => {
                 for(let user of this.state.users) {
                     if(user.id === id) {
@@ -383,16 +390,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     //justifyContent: 'center',
-    //alignItems: 'center',
+    //...Platform.select({android: {textAlign: 'center'}}),
     //backgroundColor: '#F5FCFF',
     marginTop: 40,
  },
   clubIcon:{
-    height:80, 
+    height:80,
     justifyContent:'center',
     alignItems:'center',
     width:100,
-    borderWidth: 1, 
+    borderWidth: 1,
     borderRadius:5,
     borderColor: 'grey',
     marginBottom:10,
@@ -402,19 +409,19 @@ const styles = StyleSheet.create({
   },
 
   posts: {borderWidth:1,borderRadius: 5,borderColor:'grey', marginTop:40, marginLeft:10, marginRight:10,paddingRight:3,paddingLeft:3},
-  
+
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     margin: 10,
   },
   instructions: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },
   button: {
-   //textAlign: 'center',
+   //...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
     marginLeft: 10
@@ -437,7 +444,7 @@ const styles = StyleSheet.create({
       height: 25,
       justifyContent: 'center',
       alignItems: 'center',
-      
+
 
       //backgroundColor: 'powderblue',
   },
@@ -471,7 +478,7 @@ const styles = StyleSheet.create({
   longBox: {
       height: 75,
       marginTop:20
-    
+
 
   }
 });

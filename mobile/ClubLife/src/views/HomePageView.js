@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
+import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight, ScrollView, Platform, TouchableOpacity } from 'react-native';
 
 export default class HomePage extends Component {
     constructor(props) {
@@ -156,14 +156,14 @@ const styles = StyleSheet.create({
   },
   ClubLife: {
       fontSize: 50,
-      textAlign: 'center',
+      ...Platform.select({android: {textAlign: 'center'}}),
       color: 'white',
       backgroundColor: 'black',
       fontWeight: 'bold',
   },
   announcements: {
       fontSize: 30,
-      textAlign: 'center',
+      ...Platform.select({android: {textAlign: 'center'}}),
       color: 'black',
       backgroundColor: 'rgba(0,0,0,0)',
       paddingTop: 10,
@@ -183,12 +183,12 @@ const styles = StyleSheet.create({
 
   description: {
       fontSize: 10,
-      textAlign: 'center',
+      ...Platform.select({android: {textAlign: 'center'}}),
       color: '#FFFFFF'
   },
   newsFeed: {
       fontSize: 25,
-      textAlign: 'center',
+      ...Platform.select({android: {textAlign: 'center'}}),
       justifyContent: 'center',
       color: 'black',
       backgroundColor: 'rgba(0,0,0,0)',

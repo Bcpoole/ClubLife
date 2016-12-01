@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 
 class ClubPage extends Component {
@@ -20,7 +21,10 @@ class ClubPage extends Component {
     _resultsView(){
 
 
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         //var userClubs = this.props.route.state.user.clubs;
         var user = this.props.route.state.user;
         var userClubs = user.clubs;
@@ -88,14 +92,14 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 25,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     margin: 10,
     fontWeight: 'bold',
     color: '#800000',
 
   },
   instructions: {
-    //textAlign: 'center',
+    //...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     //marginBottom: 5,
     marginLeft: 3,
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

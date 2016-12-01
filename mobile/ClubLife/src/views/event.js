@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 
 class Event extends Component {
@@ -40,13 +41,16 @@ class Event extends Component {
         var user = this.props.route.state.user;
         var club = this.props.route.state.club;
         var officerOps = <Text></Text>;
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
 
-        if(club.leaders.indexOf(user.id)>-1 || club.officers.indexOf(user.id)){
+        if(club.leaders.indexOf(user.id)>-1 || club.officers.indexOf(user.id)>-1){
             officerOps =
                 <TouchableElement onPress={()=>this._onGoEditEvent()}>
                     <View>
-                        <Text style ={{textAlign:'right', marginRight:10, marginTop:10}}>
+                        <Text style ={{...Platform.select({android: {textAlign: 'right'}}), marginRight:10, marginTop:10}}>
                             Edit Event
                         </Text>
                     </View>
@@ -58,15 +62,15 @@ class Event extends Component {
 
         return (
           <View style={{marginTop: 40}}>
-            
+
             {officerOps}
-            <Text style={{fontSize: 30, color:'#800000', textAlign: 'center'}}>{"\n"+event.subject+":\n\n"}</Text>
+            <Text style={{fontSize: 30, color:'#800000', ...Platform.select({android: {textAlign: 'center'}})}}>{"\n"+event.subject+":\n\n"}</Text>
             <View style={{width: 375, height: 65}}>
-                <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>Date:</Text>
-                <Text style ={{textAlign:'left',marginLeft:20}}>{dateText}</Text>
-                <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>{"\n\n"}Time (Military time)</Text>
-                <Text style ={{textAlign:'left',marginLeft:20}}>{timeText}</Text>
-                <Text style={{fontSize: 20,textAlign:'left',marginLeft:10}}>{"\n\n"}Description:</Text>
+                <Text style={{fontSize: 20,...Platform.select({android: {textAlign: 'left'}}),marginLeft:10}}>Date:</Text>
+                <Text style ={{...Platform.select({android: {textAlign: 'left'}}),marginLeft:20}}>{dateText}</Text>
+                <Text style={{fontSize: 20,...Platform.select({android: {textAlign: 'left'}}),marginLeft:10}}>{"\n\n"}Time (Military time)</Text>
+                <Text style ={{...Platform.select({android: {textAlign: 'left'}}),marginLeft:20}}>{timeText}</Text>
+                <Text style={{fontSize: 20,...Platform.select({android: {textAlign: 'left'}}),marginLeft:10}}>{"\n\n"}Description:</Text>
                 <Text style={{marginLeft:20}}>{event.content}</Text>
             </View>
           </View>
@@ -117,14 +121,14 @@ class Event extends Component {
       },
       ClubLife: {
           fontSize: 50,
-          textAlign: 'center',
+          ...Platform.select({android: {textAlign: 'center'}}),
           color: 'white',
           backgroundColor: 'black',
           fontWeight: 'bold',
       },
       announcements: {
           fontSize: 30,
-          textAlign: 'center',
+          ...Platform.select({android: {textAlign: 'center'}}),
           color: 'black',
           backgroundColor: 'powderblue',
           paddingTop: 10,
@@ -144,12 +148,12 @@ class Event extends Component {
 
       description: {
           fontSize: 10,
-          textAlign: 'center',
+          ...Platform.select({android: {textAlign: 'center'}}),
           color: '#FFFFFF'
       },
       newsFeed: {
           fontSize: 25,
-          textAlign: 'center',
+          ...Platform.select({android: {textAlign: 'center'}}),
           justifyContent: 'center',
           color: 'black',
           backgroundColor: 'powderblue',

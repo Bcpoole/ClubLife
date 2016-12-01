@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, ScrollView, Image } from 'react-native';
+import LoadingView from '../components/loadingview';
 
 export default class FindAnEvent extends Component {
     constructor(props) {
@@ -13,7 +14,6 @@ export default class FindAnEvent extends Component {
         };
 
         this._errorView = this._errorView.bind(this);
-        this._loadingView = this._loadingView.bind(this);
         this._resultsView = this._resultsView.bind(this);
     }
 
@@ -21,17 +21,7 @@ export default class FindAnEvent extends Component {
         return (
             <View>
                 <Text>
-                An error occurred.
-                </Text>
-            </View>
-        );
-    }
-
-    _loadingView() {
-        return (
-            <View>
-                <Text>
-                    Loading data...
+                    An error occurred. You should go back.
                 </Text>
             </View>
         );
@@ -42,14 +32,15 @@ export default class FindAnEvent extends Component {
         if(this.state.error) {
             return this._errorView();
         }
-        var data = this.state.data;
+        var data = [...this.state.data]; //make a copy so we don't directly mess with the state
         //sort data in-place by name
         if(this.state.sort === 'name'){
-            data.sort((a,b) => a.name.localeCompare(b.name));
+            data.sort(function(a,b){
+                return new Date(b.startTime) - new Date(a.startTime);
+            });
         }
-        //TODO: add more filters
         if(this.state.filterName) {
-            data = data.filter((event) => event.name.startsWith(this.state.filterName));
+            data = data.filter((event) => event.subject.toLowerCase().startsWith(this.state.filterName.toLowerCase()));
         }
         var defaultImg = "https://avatars2.githubusercontent.com/u/12243827?v=3&s=40"
         var content = (
@@ -63,14 +54,17 @@ export default class FindAnEvent extends Component {
                 <ScrollView>
                     {data.map((event,i) => {
                         return (
-                            <View key={event.name} style={{flex: 1, flexDirection: 'row'}}>
+                            <View key={"f"+i} style={{flex: 1, flexDirection: 'row'}}>
                                 <Text>
-                                    {event.name+" EventTime: "+event.startTime}
+                                    {event.subject+" EventTime: "+event.startTime}
                                 </Text>
                             </View>
                         );
                     })}
                 </ScrollView>
+                <View style={{paddingTop: 40}}>
+                    <Text>{`Pressing on events to go to the event page \"coming soon\"`}</Text>
+                </View>
             </View>
         );
         return content;
@@ -85,7 +79,7 @@ export default class FindAnEvent extends Component {
             content = this._errorView();
         }
         if(!this.state.hasData) {
-            content = this._loadingView();
+            content = <LoadingView />;
         }
         else {
             //TODO: figure out what to render once we fetch data

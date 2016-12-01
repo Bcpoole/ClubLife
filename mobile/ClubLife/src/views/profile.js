@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
 
@@ -53,7 +54,10 @@ export default class Profile extends Component {
             username = this.state.memberData.username;
         }
 
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         return (
         <View style={styles.container}>
             <View style={styles.box}>
@@ -158,17 +162,17 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     margin: 10,
     color: '#800000',
   },
   instructions: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

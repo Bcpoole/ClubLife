@@ -10,7 +10,7 @@ export default class LoadingView extends Component {
     constructor(props){super(props);}
     render() {
         return (
-            <View>
+            <View style={{paddingTop: 40}}>
                 <Text>
                     Loading...
                 </Text>
