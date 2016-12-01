@@ -275,7 +275,7 @@ var navbar = (
                 button = (route.index ?
                     <TouchableElement style={styles.navBarLeftButton} onPress={()=>{navigator.pop()}}>
                         <View style={{height: 10,flexDirection:'row', alignItems: 'center'}}>
-                             <Image style={{height:20,width:20,marginLeft:10}} source={require('../views/images/back.jpg')} />
+                             <Image style={{height:20,width:20,marginLeft:10}} source={require('../views/images/back.png')} />
                         </View>
                     </TouchableElement> :
                     <TouchableElement style={styles.navBarLeftButton} onPress={()=>{console.log("Secret")}}>

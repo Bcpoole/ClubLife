@@ -167,7 +167,7 @@ class Club extends Component {
                     justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap',marginBottom:40}}>
                     <TouchableElement onPress={()=>this._onGoEvents(this.state.events)}>
                          <View style = {styles.clubIcon}>
-                            <Image style={styles.bottomIcon} source={require('./images/Events-Icon.jpeg')} />
+                            <Image style={styles.bottomIcon} source={require('./images/Events-Icon.png')} />
                            <Text style = {{fontWeight:'bold',fontSize:15}}>Events</Text>
                         </View>
                     </TouchableElement>

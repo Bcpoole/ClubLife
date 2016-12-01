@@ -62,7 +62,7 @@ export default class EditProfile extends Component {
                         <View style = {styles.clubs} key={'clubbbb-'+i}>
                             <Text style = {styles.instructions}>{club.name}</Text>
                             <TouchableHighlight onPress = {()=>this._confirmClubAlert()}>
-                                <Image style = {styles.deleteButton} source={require('./images/delete.jpg')} />
+                                <Image style = {styles.deleteButton} source={require('./images/delete.png')} />
                             </TouchableHighlight>
                         </View>
                     );
@@ -75,14 +75,14 @@ export default class EditProfile extends Component {
                     <Text style = {styles.instructions}>Jellyfishing Practice</Text>
                     <Text style = {styles.instructions}>[Tues. 6:00 pm]</Text>
                     <TouchableHighlight onPress = {()=>{Alert.alert("Leave Event?", "Are you sure you want to leave this event?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                        <Image style = {styles.deleteButton} source={require('./images/delete.jpg')} />
+                        <Image style = {styles.deleteButton} source={require('./images/delete.png')} />
                     </TouchableHighlight>
                 </View>
                 <View style = {styles.events}>
                     <Text style = {styles.instructions}>Bubble Party</Text>
                     <Text style = {styles.instructions}>[Fri. 8:00 pm]</Text>
                     <TouchableHighlight onPress = {()=>{Alert.alert("Leave Event?", "Are you sure you want to leave this event?",[{text: 'Yes', onPress: () => console.log('Yes Pressed!')}, {text: 'No', onPress: () => console.log('No Pressed')}])}}>
-                        <Image style = {styles.deleteButton} source={require('./images/delete.jpg')} />
+                        <Image style = {styles.deleteButton} source={require('./images/delete.png')} />
                     </TouchableHighlight>
                 </View>
             </ScrollView>*/}
