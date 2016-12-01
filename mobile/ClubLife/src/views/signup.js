@@ -81,15 +81,17 @@ class Signup extends Component {
             ios: TouchableOpacity
         });
 
-        var validMatchingPasswordsText = "Password and confirm password field " + (
-            ((this.state.passwordPlainText === this.state.confirmPasswordPlainText) &&
-                this.state.passwordPlainText.length >= MIN_PASSWORD_LENGTH) ? "" : "do not ") +
+        var passwordsValid = (this.state.passwordPlainText === this.state.confirmPasswordPlainText) &&
+            this.state.passwordPlainText.length >= MIN_PASSWORD_LENGTH;
+
+        var validMatchingPasswordsText = "Password and confirm password field " +
+            (passwordsValid ? "" : "do not ") +
             "match and meet the requirements";
 
         return (
         <View style={styles.container}>
             <View>
-                <Text>(unstyled) signup page</Text>
+                <Text style={{fontWeight: "500", fontSize: 20, ...Platform.select({android: {textAlign: 'center'}})}}>Signup Page:</Text>
                 <Text>Email:</Text>
                 <TextInput
                     style={{height: 40}}
@@ -116,9 +118,9 @@ class Signup extends Component {
                     secureTextEntry={true}
                 />
                 <Text>...</Text>
-                <Text>{validMatchingPasswordsText}</Text>
+                <Text style={{...Platform.select({android: {textAlign: 'center', color: passwordsValid ? 'green' : 'red'}})}}>{validMatchingPasswordsText}</Text>
                 <TouchableElement onPress={()=>this._onSignup()}>
-                    <View><Text>SIGN ME UP</Text></View>
+                    <View><Text style={{fontWeight: "600", fontSize: 16, ...Platform.select({android: {textAlign: 'center'}}), color: passwordsValid ? 'black' : '#F5FCFF'}}>SIGN ME UP!</Text></View>
                 </TouchableElement>
             </View>
         </View>
