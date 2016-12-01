@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
 
@@ -142,17 +143,17 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     margin: 10,
     color: '#800000',
   },
   instructions: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

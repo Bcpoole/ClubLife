@@ -42,7 +42,7 @@ export default class ClubEvents extends Component {
                 //  <TouchableElement onPress={() => this._onGoEvent(event)}>
                  <View key={"eeevent"+i}>
 
-                 <Button onPress={()=>this._onGoEvent(event)} style={{fontSize: 20, color:'gray', textAlign: 'left', marginLeft: 20}}>
+                 <Button onPress={()=>this._onGoEvent(event)} style={{fontSize: 20, color:'gray', ...Platform.select({android: {textAlign: 'left'}}), marginLeft: 20}}>
                      {event.subject+"\n\n"}
                  </Button>
 
@@ -60,7 +60,7 @@ export default class ClubEvents extends Component {
 
             <ScrollView style = {{marginTop: 40, paddingBottom: 30}}>
                 <View>
-                    <Text  style={{fontSize: 25, color:'#800000', textAlign: 'center', marginLeft: 10}}>{this.props.route.state.club.name} Events: {"\n\n"}</Text>
+                    <Text  style={{fontSize: 25, color:'#800000', ...Platform.select({android: {textAlign: 'center'}}), marginLeft: 10}}>{this.props.route.state.club.name} Events: {"\n\n"}</Text>
                     {eventsList}
                 </View>
 
@@ -113,14 +113,14 @@ export default class ClubEvents extends Component {
       },
       ClubLife: {
           fontSize: 50,
-          textAlign: 'center',
+          ...Platform.select({android: {textAlign: 'center'}}),
           color: 'white',
           backgroundColor: 'black',
           fontWeight: 'bold',
       },
       announcements: {
           fontSize: 30,
-          textAlign: 'center',
+          ...Platform.select({android: {textAlign: 'center'}}),
           color: 'black',
           backgroundColor: 'powderblue',
           paddingTop: 10,
@@ -140,12 +140,12 @@ export default class ClubEvents extends Component {
 
       description: {
           fontSize: 10,
-          textAlign: 'center',
+          ...Platform.select({android: {textAlign: 'center'}}),
           color: '#FFFFFF'
       },
       newsFeed: {
           fontSize: 25,
-          textAlign: 'center',
+          ...Platform.select({android: {textAlign: 'center'}}),
           justifyContent: 'center',
           color: 'black',
           backgroundColor: 'powderblue',
