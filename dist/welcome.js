@@ -18,11 +18,9 @@ System.register([], function (_export, _context) {
         function Welcome() {
           _classCallCheck(this, Welcome);
 
-          this.logo = '/assets/logo_transparent.png';
           this.heading = 'ClubLife';
 
-          var localVersion = '/assets/clublifelogo.png';
-
+          var localVersion = '/assets/logo_transparent.png';
           var prodVersion = '/ClubLife/assets/logo_transparent.png';
           if (this.UrlExists(localVersion)) {
             this.logo = localVersion;
