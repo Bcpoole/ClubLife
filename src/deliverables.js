@@ -26,6 +26,6 @@ export class Team {
       'Final Presentation.pptx'
     ];
 
-    this.appFile = 'https://github.com/Bcpoole/ClubLife/blob/master/app-debug.apk';
+    this.appFile = 'app-debug.apk';
   }
 }
