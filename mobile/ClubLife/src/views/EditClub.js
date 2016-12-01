@@ -87,11 +87,9 @@ class EditClub extends Component {
             <View style={{paddingTop: 40}}>
                 <View>
                     <TouchableElement style = {styles.button} onPress = {()=>this._processSubmit()}>
-                        <View><Text style={{color: 'blue'}}>Submit</Text></View>
+                        <View><Text style={{color: 'green', textAlign:'center',marginTop:30}}>Submit</Text></View>
                     </TouchableElement>
-                    <TouchableElement style = {styles.button} onPress = {()=>this._onGoClub()}>
-                        <View><Text style={{color: 'red'}}>Back</Text></View>
-                    </TouchableElement>
+                  
                 </View>
                 <ScrollView>
                     {this._resultsView()}
