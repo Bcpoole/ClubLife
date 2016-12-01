@@ -46,16 +46,16 @@ export default class FindAnEvent extends Component {
         var content = (
             <View style={{marginTop: 40}}>
                 <TextInput
-                    style={{paddingTop: 20}}
+                    style={{paddingTop: 20, backgroundColor: 'white'}}
                     placeholder={"filter events by name"}
                     onChangeText={(filterName)=>{this.setState({filterName: filterName});}}
                     >
                 </TextInput>
-                <ScrollView>
+                <ScrollView style={{backgroundColor: '#D3D3D3', borderWidth: 2, borderColor: 'black'}}>
                     {data.map((event,i) => {
                         return (
-                            <View key={"f"+i} style={{flex: 1, flexDirection: 'row'}}>
-                                <Text>
+                            <View key={"f"+i} style={{flex: 1, flexDirection: 'row', borderWidth: 2, borderColor: 'black'}}>
+                                <Text style={{fontSize: 17, margin: 2, color: '#800000'}}>
                                     {event.subject+" EventTime: "+event.startTime}
                                 </Text>
                             </View>

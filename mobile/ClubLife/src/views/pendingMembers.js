@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   TextInput,
   TouchableNativeFeedback,
   Image,
@@ -32,8 +33,8 @@ class PendingMembers extends Component {
 
         var goBack = (
             <TouchableElement onPress={()=>this._onGoBack()}>
-                <View>
-                    <Text>Go back</Text>
+                <View style={{backgroundColor: '#D3D3D3', borderWidth: 1.5, borderColor: 'black', height: 40, width: 75}}>
+                    <Text style={{fontSize: 15, color: 'black', fontWeight: 'bold', paddingTop: 5, ...Platform.select({android: {textAlignVertical: 'center'}}), ...Platform.select({android: {textAlign: 'center'}})}}>Go back</Text>
                 </View>
             </TouchableElement>
         );
@@ -41,48 +42,53 @@ class PendingMembers extends Component {
         if(pendingRequests.length === 0) {
             pmView = (
                 <View>
-                    <Text>No pending requests for this organization.</Text>
+                    <Text style={{paddingLeft: 5}}>No pending requests for this organization.</Text>
                 </View>
             );
         }
         else {
             pmView = (
-                <View>
+                <ScrollView>
                     {pendingRequests.map((id,i) => {
                         var approveButton = canApprove ? (
                             <TouchableElement onPress={()=>this._approveRequest(id)}>
-                                <View>
-                                    <Text>Approve</Text>
+                                <View style={{height: 25, width: 75, backgroundColor: 'green', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: 'black'}}>
+                                    <Text style={{fontWeight: 'bold', fontSize: 15, ...Platform.select({android: {textAlign: 'center'}}), ...Platform.select({android: {textAlignVertical: 'center'}})}}>Approve</Text>
                                 </View>
                             </TouchableElement>
                         ): <View></View>;
                         var denyButton = canApprove ? (
                             <TouchableElement onPress={()=>this._denyRequest(id)}>
-                                <View>
-                                    <Text>Deny</Text>
+                                <View style={{height: 25, width: 75, backgroundColor: 'red', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: 'black'}}>
+                                    <Text style={{fontWeight: 'bold', fontSize: 15, ...Platform.select({android: {textAlign: 'center'}}), ...Platform.select({android: {textAlignVertical: 'center'}})}}>Deny</Text>
                                 </View>
                             </TouchableElement>
                         ): <View></View>;
                         return (
                             <View key={"fofofo"+i}>
+
                                 <TouchableElement onPress={()=>this._onGoMemberById(id)}>
                                     <View>
-                                        <Text>{this._getMemberById(id).name}</Text>
+                                        <Text style={{paddingLeft: 5, fontSize: 20, color: 'black'}}>{this._getMemberById(id).name}</Text>
                                     </View>
                                 </TouchableElement>
-                                {approveButton}
-                                {denyButton}
+                                <View style={{flex: 1, flexDirection: 'row', height: 50, width: 360, justifyContent: 'space-around', alignItems: 'center'}}>
+                                    {approveButton}
+                                    {denyButton}
+                                </View>
                             </View>
                         );
                     })}
-                </View>
+                </ScrollView>
             );
         }
         return (
             <View style={{paddingTop: 40}}>
-                <Text>Pending membership requests:</Text>
+                <Text style={{...Platform.select({android: {textAlign: 'center'}}), fontWeight: 'bold', fontSize: 20, color: 'black', paddingBottom: 10}}>Pending Membership Requests:</Text>
                 {pmView}
-                {goBack}
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 75, width: 360}}>
+                    {goBack}
+                </View>
             </View>
         );
     }
