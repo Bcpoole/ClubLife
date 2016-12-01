@@ -31,7 +31,7 @@ System.register([], function (_export, _context) {
 
           this.pptxFiles = ['Sales Pitch.pptx', 'PRS-1 Requirements Slides.pptx', 'PRS-2 Design Slides.pptx', 'Final Presentation.pptx'];
 
-          this.appFile = 'TO-DO';
+          this.appFile = 'app-debug.apk';
         };
 
         return Team;
