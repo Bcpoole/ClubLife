@@ -4,8 +4,7 @@ import {
   Text,
   View,
   TextInput,
-  TouchableNativeFeedback,
-  Platform,
+  TouchableNativeFeedback
 } from 'react-native';
 import Button from 'react-native-button';
 
@@ -17,6 +16,8 @@ export default class Post extends Component {
         this.club = this.props.route.state.club;
     }
     render() {
+        var TouchableElement = TouchableNativeFeedback;
+        
         let headerText = `Post by ${this.authorName} in ${this.club.name}:`;
         let timeText = `Posted ${new Date(this.post.created).toString()}`;
 
@@ -24,31 +25,36 @@ export default class Post extends Component {
         var userId = this.props.route.state.user.id;
         if(this.club.leaders.includes(userId) || this.club.officers.includes(userId)) {
             goToEdit = (
-                <Button onPress={()=>this._onGoEditPost()} style={{fontSize: 20, color: 'blue'}}>
-                    Edit this post
-                </Button>
+                      <TouchableElement onPress = {()=>this._onGoEditPost()}>
+                <View style = {styles.topBox}>
+                    <Text>Edit Post</Text>
+                </View>
+            </TouchableElement>
             );
         }
 
         return (
           <View style={{paddingTop: 40}}>
             <View>
-                <Text style={{fontSize: 25, color:'#800000', ...Platform.select({android: {textAlign: 'center'}}),marginTop:20}}>{this.club.name}</Text>
+                <Text style={{fontSize: 25, color:'#800000', textAlign: 'center',marginTop:20, marginBottom:40}}>{this.club.name}</Text>
             </View>
-            <View style = {styles.topBox}>
-                <Text style={{borderWidth:1, borderRadius:5,padding:3, marginRight:5, fontSize:15, fontWeight:'bold',borderColor:'grey'}}>{this.authorName}</Text>
-
-            </View>
-            <Text style={{marginLeft:10}}>{this.post.subject}</Text>
-
-            <View style={[styles.topBox,{borderWidth:1}]}>
-                <Text>{this.post.content}</Text>
+            <Text style={{marginLeft:10,marginTop:10,color:'#800000',fontSize:20}}>Author:</Text>
+            <TouchableElement onPress = {()=>this._onGoProfile()}>
+                <View style = {styles.topBox}>
+                    <Text style={{borderWidth:1, borderRadius:5,padding:3, marginRight:5, fontSize:15, fontWeight:'bold',borderColor:'grey'}}>{this.authorName}</Text>
+                </View>
+            </TouchableElement>
+            {goToEdit}
+            <Text style={{marginLeft:10,marginTop:10,color:'#800000',fontSize:20}}>{this.post.subject}:</Text>
+            
+            <View style={[styles.topBox,{borderWidth:1, minHeight:100}]}>
+                <Text style={{fontSize:15}}>{this.post.content}</Text>
             </View>
             <View>
-                <Text>{timeText}</Text>
+                <Text style = {{marginLeft:10}}>{timeText}</Text>
             </View>
             <View>
-                {goToEdit}
+                
             </View>
           </View>
         );
@@ -65,7 +71,20 @@ export default class Post extends Component {
               state: Object.assign({}, this.props.route.state, {post: this.post})
           });
       }
+
+      _onGoProfile() {
+          this.props.navigator.push({
+              type: 'memberPage',
+              index: this.props.route.index+1,
+              state: Object.assign({}, this.props.route.state, {memberId: this.post.author})
+          });
+      }
+
+      
+
 }
+
+
 
 
 const styles = StyleSheet.create({
@@ -75,28 +94,28 @@ const styles = StyleSheet.create({
       backgroundColor: '#F5FCFF',
   },
   topBox:{
-     // height:25,
-      flexDirection: 'row',
-      //borderWidth:1,
+     // height:25, 
+      flexDirection: 'row', 
+      //borderWidth:1, 
       marginRight:10,
       marginLeft:10,
-      marginTop:20,
+      //marginTop:20,
       flexWrap: 'wrap',
       paddingLeft:10,
       paddingTop:10,
       paddingBottom:10
     },
-
+  
   ClubLife: {
       fontSize: 50,
-      ...Platform.select({android: {textAlign: 'center'}}),
+      textAlign: 'center',
       color: 'white',
       backgroundColor: 'black',
       fontWeight: 'bold',
   },
   announcements: {
       fontSize: 30,
-      ...Platform.select({android: {textAlign: 'center'}}),
+      textAlign: 'center',
       color: 'black',
       backgroundColor: 'powderblue',
       paddingTop: 10,
@@ -116,12 +135,12 @@ const styles = StyleSheet.create({
 
   description: {
       fontSize: 10,
-      ...Platform.select({android: {textAlign: 'center'}}),
+      textAlign: 'center',
       color: '#FFFFFF'
   },
   newsFeed: {
       fontSize: 25,
-      ...Platform.select({android: {textAlign: 'center'}}),
+      textAlign: 'center',
       justifyContent: 'center',
       color: 'black',
       backgroundColor: 'powderblue',
