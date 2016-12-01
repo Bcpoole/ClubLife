@@ -3,7 +3,8 @@ export class Welcome {
   heading = 'ClubLife';
 
   constructor() {
-    let localVersion = '/assets/logo_transparent.png';
+    let localVersion = '/assets/clublifelogo.png';
+    //let localVersion = '/assets/logo_transparent.png';
     let prodVersion = '/ClubLife/assets/logo_transparent.png';
     if (this.UrlExists(localVersion)) {
       this.logo = localVersion;

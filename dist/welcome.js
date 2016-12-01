@@ -21,7 +21,8 @@ System.register([], function (_export, _context) {
           this.logo = '/assets/logo_transparent.png';
           this.heading = 'ClubLife';
 
-          var localVersion = '/assets/logo_transparent.png';
+          var localVersion = '/assets/clublifelogo.png';
+
           var prodVersion = '/ClubLife/assets/logo_transparent.png';
           if (this.UrlExists(localVersion)) {
             this.logo = localVersion;
