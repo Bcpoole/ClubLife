@@ -28,16 +28,15 @@ export default class PostToClubOptions extends Component {
         var content = (
             <View style={{paddingTop: 40}}>
                 <View>
-                    <Text style={{...Platform.select({android: {textAlign: 'center'}}), fontSize: 40, fontWeight: '500'}}>Choose an action:</Text>
+                    <Text style={{textAlign: 'center', fontSize: 40, fontWeight: '500', color: 'black'}}>Choose an action:</Text>
                 </View>
-                <Button onPress={()=>this._onGoMakePost()} style={{fontSize: 20, color: 'blue'}}>
-                    Make a post!
-                </Button>
-                <Button onPress={()=>this._onGoMakeEvent()} style={{fontSize: 20, color: 'blue'}}>
-                    Make an event!
-                </Button>
-                <View>
-                    <Text>Note that events may be better configured from the club events page.</Text>
+                <View style={{flex: 1, flexDirection: 'row', height: 200, width: 360, justifyContent: 'space-around', alignItems: 'center'}}>
+                    <Button onPress={()=>this._onGoMakePost()} style={{height: 100, width: 100, fontSize: 20, color: '#800000', borderWidth: 2, borderColor: 'black', textAlign: 'center', textAlignVertical: 'center'}}>
+                        Make a post!
+                    </Button>
+                    <Button onPress={()=>this._onGoMakeEvent()} style={{height: 100, width: 100, fontSize: 20, color: '#800000', borderWidth: 2, borderColor: 'black', textAlign: 'center', textAlignVertical: 'center'}}>
+                        Make an event!
+                    </Button>
                 </View>
             </View>
         );

@@ -28,18 +28,18 @@ export default class EditPost extends Component {
 
     render() {
         var TouchableElement = TouchableOpacity;
-        var titleText = this._type + " post"; //smelly code
+        var titleText = (this._type === "edit" ? "Edit Post" : "Create Post")
         var titleNode = (
             <View>
-                <Text>{titleText}</Text>
+                <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: 'black'}}>{titleText}</Text>
             </View>
         );
         var cancelButton = (
-            <Button onPress={()=>this._onCancel()} style={{fontSize: 20, color: 'red'}}>
+            <Button onPress={()=>this._onCancel()} style={{fontSize: 20, color: 'black', backgroundColor: 'red', borderWidth: 1.5, borderColor: 'black', height: 50, width: 100, textAlignVertical: 'center'}}>
                 Cancel</Button>
         );
         var submitButton = (
-            <Button onPress={()=>this._onSubmit()} style={{fontSize: 20, color: 'green'}}>
+            <Button onPress={()=>this._onSubmit()} style={{fontSize: 20, color: 'black', backgroundColor: 'green', borderWidth: 1.5, borderColor: 'black', height: 50, width: 100, textAlignVertical: 'center'}}>
                 Submit</Button>
         );
         var subjectInput = (
@@ -59,12 +59,14 @@ export default class EditPost extends Component {
         var content = (
             <View style={{marginTop: 40}}>
                 {titleNode}
-                <Text>Subject</Text>
+                <Text style={{paddingLeft: 5}}>Subject</Text>
                 {subjectInput}
-                <Text>Content</Text>
+                <Text style={{paddingLeft: 5}}>Content</Text>
                 {contentInput}
-                {submitButton}
-                {cancelButton}
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', height: 75, width: 360}}>
+                    {submitButton}
+                    {cancelButton}
+                </View>
             </View>
         );
         return content;
