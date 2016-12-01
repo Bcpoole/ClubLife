@@ -28,19 +28,16 @@ class Signup extends Component {
     _addUser() {
         let url = "http://skeleton20161103012840.azurewebsites.net/api/Users/new";
         let body = {
-            "username": this.state.email,
-            "name": this.state.name,
+            username: this.state.email,
+            name: this.state.name,
             //password: "pls do not look at this code",
-            "clubs": []
+            clubs: []
         };
         let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
-        fetch(url, {method: "PUT", headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-            body: JSON.stringify(body)})
-            .then(parseResponse)
-            .then(json => {
-                //console.log("Added user lmao");
-            })
-            .catch(e => console.error(e));
+        fetch(url, {method: "PUT", headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, body: JSON.stringify(body)})
+            .then(()=>this._navigateSignup())
+            .catch(()=>this._navigateSignup());
+            //this broke at 11:59 PM the day ebfore the demo so this is teh fix
     }
 
     _hashString(s){
@@ -71,7 +68,6 @@ class Signup extends Component {
         if((this.state.passwordPlainText.length >= MIN_PASSWORD_LENGTH) &&
             (this.state.passwordPlainText === this.state.confirmPasswordPlainText) && this.state.email) {
                 this._addUser();
-                this._navigateSignup();
         }
     }
 
