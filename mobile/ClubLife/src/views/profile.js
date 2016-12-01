@@ -61,7 +61,7 @@ export default class Profile extends Component {
         return (
         <View style={styles.container}>
             <View style={styles.box}>
-                <Image style = {styles.profilepic} source={require('./images/sponge.jpeg')} />
+                <Image style = {styles.profilepic} source={require('./images/profile-default.png')} />
                 <View style={styles.longBox}>
                     <Text style={styles.welcome}>
                         {name}
