@@ -49,10 +49,10 @@ export default class FindAClub extends Component {
                     onChangeText={(filterName)=>{this.setState({filterName: filterName});}}
                     >
                 </TextInput>
-                <ScrollView style={{backgroundColor: '#D3D3D3', borderWidth: 2, borderColor: 'black'}}>
+                <ScrollView style={{backgroundColor: '#D3D3D3'}}>
                     {data.map(club => {
                         return (
-                            <View key={club.name} style={{flex: 1, flexDirection: 'row'}}>
+                            <View key={club.name} style={{flex: 1, flexDirection: 'row', borderWidth: 2, borderColor: 'black'}}>
 
                                 <TouchableElement
                                     onPress={()=>this._navigateToClub(club)}>
