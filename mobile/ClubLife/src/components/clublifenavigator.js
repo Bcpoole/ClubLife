@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback, TouchableOpacity, Platform } from 'react-native';
+import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback, Image, TouchableOpacity, Platform } from 'react-native';
 
 
 import HomePage from '../views/HomePageView';
@@ -274,8 +274,8 @@ var navbar = (
                 var button = "";
                 button = (route.index ?
                     <TouchableElement style={styles.navBarLeftButton} onPress={()=>{navigator.pop()}}>
-                        <View>
-                            <Text style={styles.navBarText}>BACK</Text>
+                        <View style={{height: 10,flexDirection:'row', alignItems: 'center'}}>
+                             <Image style={{height:20,width:20,marginLeft:10}} source={require('../views/images/back.jpg')} />
                         </View>
                     </TouchableElement> :
                     <TouchableElement style={styles.navBarLeftButton} onPress={()=>{console.log("Secret")}}>

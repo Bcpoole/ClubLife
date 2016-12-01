@@ -111,7 +111,7 @@ class Club extends Component {
             );
 
             addPost = ( <TouchableElement onPress={()=>this._onPostToClub()}>
-                        <View style = {{height:80,width: 365, flexDirection: 'row',
+                        <View style = {{height:30,width: 365, flexDirection: 'row',
                     flexWrap: 'wrap',paddingLeft:10}}>
                             <Image style={styles.bottomIcon} source={require('./images/plus.png')} />
                             <Text style = {styles.button}>Create Post{"\n\n"}</Text>
@@ -150,10 +150,9 @@ class Club extends Component {
 
         <ScrollView style={styles.container}>
             <View style={styles.box}>
-
                 <Image
                     source={{uri: picURL}}
-                    style={{height: 300, width: 300,  resizeMode: 'contain',borderWidth:20, backgroundColor:'white', borderColor:'grey'}}
+                    style={{height: 300, width: 300,  resizeMode: 'contain',borderWidth:5, backgroundColor:'white', borderColor:'grey'}}
                 />
 
                 <View style={styles.longBox}>
@@ -224,7 +223,7 @@ class Club extends Component {
                 android: TouchableNativeFeedback,
                 ios: TouchableOpacity
             });
-            
+
             let authorName = id => {
                 for(let user of this.state.users) {
                     if(user.id === id) {
