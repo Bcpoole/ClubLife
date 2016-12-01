@@ -104,6 +104,25 @@ export default class Profile extends Component {
         );
     }
 
+      componentDidMount() {
+            const url = "http://skeleton20161103012840.azurewebsites.net/api/Users/"+
+                this.props.route.state.memberId;
+            fetch(url)
+                .then(res=>res.json())
+                .then(json => {
+                    this.setState({
+                        hasMemberData: true,
+                        memberData: json
+                    })
+                })
+                .catch(e => {
+                    console.error(e);
+                    //TODO: figure out how to navigate back out if something went wrong
+                })
+        }
+    
+    
+    
     _onGoEditProfile() {
         this.props.navigator.push({
             type: "editProfile",
