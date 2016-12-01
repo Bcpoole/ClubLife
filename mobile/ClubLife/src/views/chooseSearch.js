@@ -25,8 +25,8 @@ export default class ChooseSearch extends Component {
                 <Text style={styles.title}>Which would you like to search?</Text>
 
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 10}}>
-                    <Image style={styles.pictures} source={require('./images/Club-Icon.jpeg')} />
-                    <Image style={styles.pictures} source={require('./images/Events-Icon.jpeg')} />
+                    <Image style={styles.pictures} source={require('./images/Club-Icon.png')} />
+                    <Image style={styles.pictures} source={require('./images/Events-Icon.png')} />
                 </View>
 
                 <View style={{width: 365, height: 100, flexDirection: 'row', justifyContent: 'space-around', paddingLeft: 13, paddingTop: 75}}>
