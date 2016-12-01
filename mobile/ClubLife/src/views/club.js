@@ -32,7 +32,7 @@ class Club extends Component {
     }
 
     _addToPending(userId){
-        var club = this.state.data[0];
+        var club = this.state.data;
         //if we're already in the pending members, no op and alert the user
         if(club.pendingRequests.indexOf(userId) > -1) {
             Alert.alert("Hey now","You have already requested to join the club. Be patient!", [
