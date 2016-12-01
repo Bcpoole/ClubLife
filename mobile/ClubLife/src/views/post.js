@@ -32,12 +32,15 @@ export default class Post extends Component {
         return (
           <View style={{paddingTop: 40}}>
             <View>
-                <Text>{headerText}</Text>
+                <Text style={{fontSize: 25, color:'#800000', textAlign: 'center',marginTop:20}}>{this.club.name}</Text>
             </View>
-            <View>
-                <Text>{this.post.subject}</Text>
+            <View style = {styles.topBox}>
+                <Text style={{borderWidth:1, borderRadius:5,padding:3, marginRight:5, fontSize:15, fontWeight:'bold',borderColor:'grey'}}>{this.authorName}</Text>
+               
             </View>
-            <View>
+            <Text style={{marginLeft:10}}>{this.post.subject}</Text>
+            
+            <View style={[styles.topBox,{borderWidth:1}]}>
                 <Text>{this.post.content}</Text>
             </View>
             <View>
@@ -70,6 +73,19 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
   },
+  topBox:{
+     // height:25, 
+      flexDirection: 'row', 
+      //borderWidth:1, 
+      marginRight:10,
+      marginLeft:10,
+      marginTop:20,
+      flexWrap: 'wrap',
+      paddingLeft:10,
+      paddingTop:10,
+      paddingBottom:10
+    },
+  
   ClubLife: {
       fontSize: 50,
       textAlign: 'center',
