@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 
 class ClubPage extends Component {
@@ -20,7 +21,10 @@ class ClubPage extends Component {
     _resultsView(){
 
 
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         //var userClubs = this.props.route.state.user.clubs;
         var user = this.props.route.state.user;
         var userClubs = user.clubs;

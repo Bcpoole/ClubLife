@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight, ScrollView } from 'react-native';
+import { AppRegistry, Text, View, Image, StyleSheet, TouchableHighlight, ScrollView, Platform, TouchableOpacity } from 'react-native';
 
 export default class HomePage extends Component {
     constructor(props) {

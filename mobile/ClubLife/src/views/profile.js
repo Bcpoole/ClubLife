@@ -53,7 +53,10 @@ export default class Profile extends Component {
             username = this.state.memberData.username;
         }
 
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         return (
         <View style={styles.container}>
             <View style={styles.box}>

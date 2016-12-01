@@ -4,7 +4,9 @@ import {
   Text,
   View,
   TextInput,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 
 export default class Login extends Component {
@@ -87,7 +89,7 @@ export default class Login extends Component {
     }
 
     render() {
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
 
         return (
             <View style={styles.container}>

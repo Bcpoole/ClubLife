@@ -7,6 +7,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 
 export default class MyEvents extends Component {
@@ -15,14 +16,18 @@ export default class MyEvents extends Component {
     }
 
     render() {
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         return (
             <View style={{paddingTop: 40}}>
                 <Text>Events feature coming soon</Text>
-                <TouchableNativeFeedback onPress={()=>{this._onGoBack()}}>
+                <TouchableElement onPress={()=>{this._onGoBack()}}>
                     <View>
                         <Text>Go back</Text>
                     </View>
-                </TouchableNativeFeedback>
+                </TouchableElement>
             </View>
         )
     }

@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 
 class Event extends Component {
@@ -40,7 +41,10 @@ class Event extends Component {
         var user = this.props.route.state.user;
         var club = this.props.route.state.club;
         var officerOps = <Text></Text>;
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
 
         if(club.leaders.indexOf(user.id)>-1 || club.officers.indexOf(user.id)){
             officerOps =
@@ -58,7 +62,7 @@ class Event extends Component {
 
         return (
           <View style={{marginTop: 40}}>
-            
+
             {officerOps}
             <Text style={{fontSize: 30, color:'#800000', textAlign: 'center'}}>{"\n"+event.subject+":\n\n"}</Text>
             <View style={{width: 375, height: 65}}>
