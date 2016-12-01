@@ -143,7 +143,7 @@ class Club extends Component {
 
         // leader options: edit club info, post to club, approve members
 
-        
+        /*
         var getUser=(userId)=>{
             for (let user of this.state.users){
                 if (user.id === userId){
@@ -153,14 +153,40 @@ class Club extends Component {
             return null;
 
         }
-        
+
         var leader =   <TouchableElement onPress = {()=>this._onGoProfile()}>
                 <View style = {styles.topBox}>
                     <Text style={{borderWidth:1, borderRadius:5,padding:3, marginRight:5, fontSize:15, fontWeight:'bold',borderColor:'grey'}}>{getUser(leaders[0])}</Text>
                 </View>
-            </TouchableElement>;
-        
-        
+            </TouchableElement>; */
+        let leLeaders = [];
+        let leOfficers = [];
+        if(this.state.users.length) {
+            leLeaders = leaders.map((id,i) => {
+                let l = this._getUserById(id);
+                return (
+                    <TouchableElement key={"l"+i}onPress = {()=>this._onGoProfile(l.id)}>
+                            <View style = {styles.topBox}>
+                                <Text style={{padding:3, marginRight:5, fontSize:15, fontWeight:'bold',borderColor:'grey'}}>{l.name}</Text>
+                            </View>
+                    </TouchableElement>
+                );
+            });
+            leOfficers = officers.map((id,i) => {
+                let off = this._getUserById(id);
+                return (
+                    <TouchableElement key={"o"+i} onPress = {()=>this._onGoProfile(off.id)}>
+                            <View style = {styles.topBox}>
+                                <Text style={{padding:3, marginRight:5, fontSize:15, fontWeight:'bold',borderColor:'grey'}}>{off.name}</Text>
+                            </View>
+                    </TouchableElement>
+                );
+            })
+        }
+        let leadersText = leLeaders.length === 1 ? "Leader:" : "Leaders:";
+        let officersText = leOfficers.length === 1 ? "Officer:" : "Officers:";
+
+
         return (
 
 
@@ -194,7 +220,7 @@ class Club extends Component {
                             <Text style = {{fontWeight:'bold',fontSize:15}}>Info</Text>
                         </View>
                     </TouchableElement>
-                   
+
 
                     {offOps}
                    {memberOps}
@@ -209,14 +235,35 @@ class Club extends Component {
             {this._messages()}
             </View>
 
-            <View style={styles.posts}>
-                <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Leader:</Text>
-                {leader}
-            </View>
+            {
+                leLeaders.length ? <View style={styles.posts}>
+                    <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>{leadersText}</Text>
+                    {leLeaders}
+                </View> : <Text></Text>
+            }
+            {
+                leOfficers.length ?             <View style={styles.posts}>
+                                <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>{officersText}</Text>
+                                {leOfficers}
+                            </View> : <Text></Text>
+            }
+
 
 
         </ScrollView>
         );
+        }
+
+        _getUserById(id) {
+            if(!this.state.users.length) {
+                return null;
+            }
+            for(let user of this.state.users) {
+                if(user.id === id) {
+                    return user;
+                }
+            }
+            return null;
         }
 
         _messages() {
