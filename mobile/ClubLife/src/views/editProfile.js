@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry, Alert, Button, StyleSheet, Text, View, TextInput, ScrollView,
-  TouchableNativeFeedback, Image, TouchableOpacity, TouchableHighlight,
+  TouchableNativeFeedback, Image, TouchableOpacity, TouchableHighlight, Platform,
 } from 'react-native';
 
 export default class EditProfile extends Component {
@@ -34,7 +34,10 @@ export default class EditProfile extends Component {
                 }
             }
         }
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         return (
         <View style={styles.container}>
             <View style={styles.box}>
@@ -173,9 +176,6 @@ export default class EditProfile extends Component {
             Function that actually performs the call with the updated information, if we have any updated information.
         */
         _postNewUserInfo() {
-            console.log("aaa");
-            console.log(this.state.nextUserState);
-            console.log("bbb");
             var url = "http://skeleton20161103012840.azurewebsites.net/api/Users/"+this.state.nextUserState.id;
             fetch(url, {method: "POST", body: JSON.stringify(this.state.nextUserState)});
         }

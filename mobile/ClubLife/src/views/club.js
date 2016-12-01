@@ -10,6 +10,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
 //import TabNavigator from 'react-native-tab-navigator';
@@ -63,7 +64,10 @@ class Club extends Component {
             return <LoadingView/>;
         }
 
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            android: TouchableNativeFeedback,
+            ios: TouchableOpacity
+        });
 
 
          // Club Variables:
@@ -103,7 +107,7 @@ class Club extends Component {
                             <Text style={{textAlign:'center',fontWeight:'bold',fontSize:15}}>Pending Members</Text>
                         </View>
                     </TouchableElement>
-         
+
             );
 
             addPost = ( <TouchableElement onPress={()=>this._onPostToClub()}>
@@ -124,7 +128,7 @@ class Club extends Component {
                     <Text style = {{fontWeight:'bold',fontSize:15}}>Join Club</Text>
                 </View>
             </TouchableElement>;
-        
+
         if (isLeader || isOfficer){
             memberOps = null;
         }
@@ -146,10 +150,9 @@ class Club extends Component {
 
         <ScrollView style={styles.container}>
             <View style={styles.box}>
-                
-                <Image 
-                    source={{uri: picURL}} 
-                    style={{height: 300, width: 300,  resizeMode: 'contain',borderWidth:5, backgroundColor:'white', borderColor:'grey'}} 
+                <Image
+                    source={{uri: picURL}}
+                    style={{height: 300, width: 300,  resizeMode: 'contain',borderWidth:5, backgroundColor:'white', borderColor:'grey'}}
                 />
 
                 <View style={styles.longBox}>
@@ -158,8 +161,8 @@ class Club extends Component {
                     </Text>
                 </View>
 
-                
-            
+
+
                 <View style={{width: 365, height: 30, flexDirection: 'row',
                     justifyContent: 'space-around', paddingLeft: 10, paddingRight: 10, flexWrap: 'wrap',marginBottom:40}}>
                     <TouchableElement onPress={()=>this._onGoEvents(this.state.events)}>
@@ -177,18 +180,18 @@ class Club extends Component {
 
                     {offOps}
                    {memberOps}
-                   
+
 
                 </View>
             </View>
 
-            <View style = {styles.posts}>    
+            <View style = {styles.posts}>
             <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Posts:</Text>
             {addPost}
             {this._messages()}
             </View>
-        
-        
+
+
         </ScrollView>
         );
         }
@@ -215,8 +218,12 @@ class Club extends Component {
             postArray.sort(function(a,b){
                 return new Date(b.created) - new Date(a.created);
             });
-            
-            var TouchableElement = TouchableNativeFeedback;
+
+            var TouchableElement = Platform.select({
+                android: TouchableNativeFeedback,
+                ios: TouchableOpacity
+            });
+
             let authorName = id => {
                 for(let user of this.state.users) {
                     if(user.id === id) {
@@ -388,11 +395,11 @@ const styles = StyleSheet.create({
     marginTop: 40,
  },
   clubIcon:{
-    height:80, 
+    height:80,
     justifyContent:'center',
     alignItems:'center',
     width:100,
-    borderWidth: 1, 
+    borderWidth: 1,
     borderRadius:5,
     borderColor: 'grey',
     marginBottom:10,
@@ -402,7 +409,7 @@ const styles = StyleSheet.create({
   },
 
   posts: {borderWidth:1,borderRadius: 5,borderColor:'grey', marginTop:40, marginLeft:10, marginRight:10,paddingRight:3,paddingLeft:3},
-  
+
   welcome: {
     fontSize: 20,
     textAlign: 'center',
@@ -437,7 +444,7 @@ const styles = StyleSheet.create({
       height: 25,
       justifyContent: 'center',
       alignItems: 'center',
-      
+
 
       //backgroundColor: 'powderblue',
   },
@@ -471,7 +478,7 @@ const styles = StyleSheet.create({
   longBox: {
       height: 75,
       marginTop:20
-    
+
 
   }
 });

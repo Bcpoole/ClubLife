@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, ScrollView, Image, TouchableNativeFeedback } from 'react-native';
+import { View, Text, TextInput, ScrollView, Image,
+     TouchableNativeFeedback, Platform, TouchableOpacity } from 'react-native';
 
 export default class FindAClub extends Component {
     constructor(props) {
@@ -36,7 +37,10 @@ export default class FindAClub extends Component {
             data = data.filter((club) => club.name.toLowerCase().indexOf(this.state.filterName.toLowerCase()) > -1);
         }
 
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            ios: TouchableOpacity,
+            android: TouchableNativeFeedback
+        });
         var content = (
             <View style={{backgroundColor: '#F5FCFF', marginTop: 40}}>
                 <TextInput

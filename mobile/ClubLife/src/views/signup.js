@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry, StyleSheet, Text, View, TextInput,
   TouchableNativeFeedback, Image, TouchableOpacity,
+  Platform
 } from 'react-native';
 
 const MIN_PASSWORD_LENGTH = 1;
@@ -75,7 +76,10 @@ class Signup extends Component {
     }
 
     render() {
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            android: TouchableNativeFeedback,
+            ios: TouchableOpacity
+        });
 
         var validMatchingPasswordsText = "Password and confirm password field " + (
             ((this.state.passwordPlainText === this.state.confirmPasswordPlainText) &&

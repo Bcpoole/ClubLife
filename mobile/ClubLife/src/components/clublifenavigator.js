@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback, Image } from 'react-native';
+import { Navigator, Text, StyleSheet, View, TouchableNativeFeedback, Image, TouchableOpacity, Platform } from 'react-native';
 
 
 import HomePage from '../views/HomePageView';
@@ -23,7 +23,11 @@ import MyEvents from '../views/myEvents';
 import Event from '../views/event';
 import Post from '../views/post';
 
-var TouchableElement = TouchableNativeFeedback; //TODO: not this
+var TouchableElement = Platform.select({
+    android: TouchableNativeFeedback,
+    ios: TouchableOpacity
+});
+
 
 
 export default class ClubLifeNavigator extends Component {
@@ -37,7 +41,7 @@ export default class ClubLifeNavigator extends Component {
     }
 
     _fetchClubInfo() {
-        const url = "http://skeleton20161103012840.azurewebsites.net/api/organizations";
+        const url = "https://skeleton20161103012840.azurewebsites.net/api/organizations";
         fetch(url)
             .then(res=>res.json())
             .then(json => {

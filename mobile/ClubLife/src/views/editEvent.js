@@ -8,7 +8,8 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
+  Platform,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
 //import TabNavigator from 'react-native-tab-navigator';
@@ -19,7 +20,7 @@ export default class EditEvent extends Component {
     constructor(props) {
         super(props);
         this._type = this.props.type || ""; // edit or create
-        this.state = {         
+        this.state = {
             eventSubject: this._type === "edit" ? this.props.route.state.event.subject : "",
             eventContent: this._type === "edit" ? this.props.route.state.event.content : "",
             eventStartDate:this._type === "edit" ? (()=>{
@@ -36,15 +37,15 @@ export default class EditEvent extends Component {
                 var time=timeArr[0]+":"+timeArr[1]+ " AM";
                 return time;
             })()  : "",
-            
+
         };
-        
+
     }
 
     render() {
-        
-      
-        
+
+
+
         var TouchableElement = TouchableOpacity;
         var titleText = this._type + " event"; //smelly code
         var titleNode = (
@@ -92,7 +93,7 @@ export default class EditEvent extends Component {
 
         );
 
-  
+
 
 
         var content = (
@@ -106,7 +107,7 @@ export default class EditEvent extends Component {
                 {startDate}
                 <Text>Start Time</Text>
                 {startTime}
-                
+
                 {submitButton}
                 {cancelButton}
             </View>
@@ -146,7 +147,7 @@ export default class EditEvent extends Component {
             hours = parseInt(hours) + 12;
         }
 
-        
+
         date.setHours(hours);
         date.setMinutes(minutes);
         date.setSeconds("00");
@@ -171,14 +172,14 @@ export default class EditEvent extends Component {
             author: this.props.route.state.user.id,
             club: clubId
         };
-        
-        
-        
+
+
+
         let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
         let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
-        
+
         fetch(url, {method: "PUT", headers: headers, body: JSON.stringify(body)})
-            
+
             .then(parseResponse)
             .then(json => {
                 Alert.alert(

@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import LoadingView from '../components/loadingview';
 //import TabNavigator from 'react-native-tab-navigator';
@@ -28,7 +29,10 @@ export default class ClubEvents extends Component {
         var user = this.props.route.state.user;
 
 
-        var TouchableElement = TouchableNativeFeedback;
+        var TouchableElement = Platform.select({
+            android: TouchableNativeFeedback,
+            ios: TouchableOpacity
+        });
 
         var eventsList = [];
         var events = this.props.route.state.events;
