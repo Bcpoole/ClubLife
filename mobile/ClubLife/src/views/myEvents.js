@@ -22,10 +22,10 @@ export default class MyEvents extends Component {
         });
         return (
             <View style={{paddingTop: 40}}>
-                <Text>Events feature coming soon</Text>
+                <Text style={{fontWeight: '500', ...Platform.select({android: {textAlign: 'center'}}), fontSize: 30}}>Events feature coming soon</Text>
                 <TouchableElement onPress={()=>{this._onGoBack()}}>
                     <View>
-                        <Text>Go back</Text>
+                        <Text style={{...Platform.select({android: {textAlign: 'center'}}), color: 'blue'}}>Go back</Text>
                     </View>
                 </TouchableElement>
             </View>
