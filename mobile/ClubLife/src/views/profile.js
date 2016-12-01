@@ -109,6 +109,7 @@ export default class Profile extends Component {
     }
 
       componentDidMount() {
+            if(this.type === "memberPage") {
             const url = "http://skeleton20161103012840.azurewebsites.net/api/Users/"+
                 this.props.route.state.memberId;
             fetch(url)
@@ -124,6 +125,7 @@ export default class Profile extends Component {
                     //TODO: figure out how to navigate back out if something went wrong
                 })
         }
+      }
     
     
     
