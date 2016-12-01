@@ -114,7 +114,7 @@ class Club extends Component {
                         <View style = {{height:30,width: 365, flexDirection: 'row',
                     flexWrap: 'wrap',paddingLeft:10}}>
                             <Image style={styles.bottomIcon} source={require('./images/plus.png')} />
-                            <Text style = {styles.button}>Create Post{"\n\n"}</Text>
+                            <Text style = {styles.button}>Create Event/Post{"\n\n"}</Text>
                         </View>
                     </TouchableElement>);
         }
@@ -186,7 +186,7 @@ class Club extends Component {
             </View>
 
             <View style = {styles.posts}>
-            <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Posts:</Text>
+            <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Events/Posts:</Text>
             {addPost}
             {this._messages()}
             </View>
