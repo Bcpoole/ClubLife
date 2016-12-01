@@ -288,12 +288,13 @@ var navbar = (
             },
             RightButton: (route, navigator, index, navState) => {
                 var button = "";
-                //switch(route.type) {
-                //    default:
-                //        button = (
-                //            <View><Text>☃</Text></View>
-                //        )
-                //}
+                button = (route.index ?
+                    <TouchableElement style={styles.navBarRightButton} onPress={()=>{navigator.resetTo({type: "login", index: 0, state: {}})}}>
+                        <View style={{height: 10,flexDirection:'row', alignItems: 'center'}}>
+                             <Image style={{height:20,width:20,marginRight:10}} source={require('../views/images/logout.png')} />
+                        </View>
+                    </TouchableElement> : ""
+                );
                 return button;
             },
             Title: (route, navigator, index, navState) => {
