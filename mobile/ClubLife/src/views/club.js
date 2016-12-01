@@ -129,17 +129,12 @@ class Club extends Component {
                 </View>
             </TouchableElement>;
 
-        if (isLeader || isOfficer){
+        if (isLeader || isOfficer || isMember){
             memberOps = null;
         }
-        else if (isMember){
-                    memberOps =<TouchableElement onPress = {() =>Communications.email([email,email],null,null,null,null)}>
-                        <View style = {styles.clubIcon}>
-                            <Image style={styles.bottomIcon} source={require('./images/mail.png')} />
-                            <Text style={{...Platform.select({android: {textAlign: 'center'}}),fontWeight:'bold',fontSize:15}}>Contact an Officer</Text>
-                        </View>
-                    </TouchableElement>;
-        }
+        // else if (isMember){
+        //             memberOps =null;
+        // }
 
         // leader options: edit club info, post to club, approve members
 
@@ -218,6 +213,13 @@ class Club extends Component {
                          <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/info.png')} />
                             <Text style = {{fontWeight:'bold',fontSize:15}}>Info</Text>
+                        </View>
+                    </TouchableElement>
+                    
+                     <TouchableElement onPress = {() =>Communications.email([email,email],null,null,null,null)}>
+                        <View style = {styles.clubIcon}>
+                            <Image style={styles.bottomIcon} source={require('./images/mail.png')} />
+                            <Text style={{...Platform.select({android: {textAlign: 'center'}}),fontWeight:'bold',fontSize:15}}>Contact an Officer</Text>
                         </View>
                     </TouchableElement>
 
@@ -478,7 +480,7 @@ const styles = StyleSheet.create({
     height:80,
     justifyContent:'center',
     alignItems:'center',
-    width:100,
+    width:80,
     borderWidth: 1,
     borderRadius:5,
     borderColor: 'grey',
