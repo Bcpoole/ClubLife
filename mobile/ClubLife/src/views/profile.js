@@ -52,6 +52,17 @@ export default class Profile extends Component {
             }
             name = this.state.memberData.name;
             username = this.state.memberData.username;
+            userClubIds = this.state.memberData.clubs;
+            userClubs = [];
+            for(let userClubId of userClubIds) {
+                //in the interest of saving coding time, this code is obviously slow...TODO: optimize later? (e.g. presort clubs by id and binary search?)
+                for(let club of clubList) {
+                    if(club.id === userClubId) {
+                        userClubs.push(club);
+                        break;
+                    }
+                }
+            }
         }
 
         var TouchableElement = Platform.select({
@@ -126,9 +137,9 @@ export default class Profile extends Component {
                 })
         }
       }
-    
-    
-    
+
+
+
     _onGoEditProfile() {
         this.props.navigator.push({
             type: "editProfile",
