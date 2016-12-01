@@ -4,7 +4,9 @@ import {
   Text,
   View,
   TextInput,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Button from 'react-native-button';
 
@@ -16,8 +18,8 @@ export default class Post extends Component {
         this.club = this.props.route.state.club;
     }
     render() {
-        var TouchableElement = TouchableNativeFeedback;
-        
+        var TouchableElement = Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
+
         let headerText = `Post by ${this.authorName} in ${this.club.name}:`;
         let timeText = `Posted ${new Date(this.post.created).toString()}`;
 
@@ -46,7 +48,7 @@ export default class Post extends Component {
             </TouchableElement>
             {goToEdit}
             <Text style={{marginLeft:10,marginTop:10,color:'#800000',fontSize:20}}>{this.post.subject}:</Text>
-            
+
             <View style={[styles.topBox,{borderWidth:1, minHeight:100}]}>
                 <Text style={{fontSize:15}}>{this.post.content}</Text>
             </View>
@@ -54,7 +56,7 @@ export default class Post extends Component {
                 <Text style = {{marginLeft:10}}>{timeText}</Text>
             </View>
             <View>
-                
+
             </View>
           </View>
         );
@@ -80,7 +82,7 @@ export default class Post extends Component {
           });
       }
 
-      
+
 
 }
 
@@ -94,9 +96,9 @@ const styles = StyleSheet.create({
       backgroundColor: '#F5FCFF',
   },
   topBox:{
-     // height:25, 
-      flexDirection: 'row', 
-      //borderWidth:1, 
+     // height:25,
+      flexDirection: 'row',
+      //borderWidth:1,
       marginRight:10,
       marginLeft:10,
       //marginTop:20,
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
       paddingTop:10,
       paddingBottom:10
     },
-  
+
   ClubLife: {
       fontSize: 50,
       textAlign: 'center',
