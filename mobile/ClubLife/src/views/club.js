@@ -143,7 +143,24 @@ class Club extends Component {
 
         // leader options: edit club info, post to club, approve members
 
+        
+        var getUser=(userId)=>{
+            for (let user of this.state.users){
+                if (user.id === userId){
+                    return user;
+                }
+            }
+            return null;
 
+        }
+        
+        var leader =   <TouchableElement onPress = {()=>this._onGoProfile()}>
+                <View style = {styles.topBox}>
+                    <Text style={{borderWidth:1, borderRadius:5,padding:3, marginRight:5, fontSize:15, fontWeight:'bold',borderColor:'grey'}}>{getUser(leaders[0])}</Text>
+                </View>
+            </TouchableElement>;
+        
+        
         return (
 
 
@@ -177,12 +194,7 @@ class Club extends Component {
                             <Text style = {{fontWeight:'bold',fontSize:15}}>Info</Text>
                         </View>
                     </TouchableElement>
-                    <TouchableElement onPress = {()=>this._onGoClubInfo()}>
-                         <View style = {styles.clubIcon}>
-                            <Image style={styles.bottomIcon} source={require('./images/info.png')} />
-                            <Text style = {{fontWeight:'bold',fontSize:15}}>Officers</Text>
-                        </View>
-                    </TouchableElement>
+                   
 
                     {offOps}
                    {memberOps}
@@ -195,6 +207,11 @@ class Club extends Component {
             <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Events/Posts:</Text>
             {addPost}
             {this._messages()}
+            </View>
+
+            <View style={styles.posts}>
+                <Text style = {{fontSize: 20,marginLeft: 10,color:'#800000',marginTop:10, marginBottom:10}}>Club Leader:</Text>
+                {leader}
             </View>
 
 
@@ -333,6 +350,7 @@ class Club extends Component {
             });
         }
 
+
         _onGoClubInfo() {
             this.props.navigator.push({
                 type: "clubInfo",
@@ -388,6 +406,15 @@ class Club extends Component {
                 state: this.props.route.state,
             });
         }
+
+         _onGoProfile(userID) {
+          this.props.navigator.push({
+              type: 'memberPage',
+              index: this.props.route.index+1,
+              state: Object.assign({}, this.props.route.state, {memberId: userID})
+          });
+      }
+
 }
 
 module.exports = Club;
@@ -404,7 +431,7 @@ const styles = StyleSheet.create({
     height:80,
     justifyContent:'center',
     alignItems:'center',
-    width:75,
+    width:100,
     borderWidth: 1,
     borderRadius:5,
     borderColor: 'grey',
