@@ -94,12 +94,12 @@ export default class EditProfile extends Component {
             <View style = {styles.finalize}>
                 <TouchableHighlight onPress={()=>this._onConfirmChanges()}>
                     <View style = {styles.bottomConfirm}>
-                        <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', textAlign: 'center'}}>Confirm</Text>
+                        <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', ...Platform.select({android: {textAlign: 'center'}})}}>Confirm</Text>
                     </View>
                 </TouchableHighlight>
                 <TouchableHighlight onPress={()=>this._onCancelChanges()}>
                     <View style = {styles.bottomCancel}>
-                        <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', textAlign: 'center'}}>Cancel</Text>
+                        <Text style = {{color: 'black', fontSize: 25, fontWeight: 'bold', ...Platform.select({android: {textAlign: 'center'}})}}>Cancel</Text>
                     </View>
                 </TouchableHighlight>
             </View>
@@ -199,21 +199,21 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
     color: '#800000',
   },
   instructions: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     justifyContent: 'center',
     marginBottom: 5,
     paddingRight: 10,
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

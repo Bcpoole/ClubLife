@@ -104,7 +104,7 @@ class Club extends Component {
                     <TouchableElement onPress = {()=>this._onGoPendingMembers()}>
                         <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/pending.png')} />
-                            <Text style={{textAlign:'center',fontWeight:'bold',fontSize:15}}>Pending Members</Text>
+                            <Text style={{...Platform.select({android: {textAlign: 'center'}}),fontWeight:'bold',fontSize:15}}>Pending Members</Text>
                         </View>
                     </TouchableElement>
 
@@ -136,7 +136,7 @@ class Club extends Component {
                     memberOps =<TouchableElement onPress = {() =>Communications.email([email,email],null,null,null,null)}>
                         <View style = {styles.clubIcon}>
                             <Image style={styles.bottomIcon} source={require('./images/mail.png')} />
-                            <Text style={{textAlign:'center',fontWeight:'bold',fontSize:15}}>Contact an Officer</Text>
+                            <Text style={{...Platform.select({android: {textAlign: 'center'}}),fontWeight:'bold',fontSize:15}}>Contact an Officer</Text>
                         </View>
                     </TouchableElement>;
         }
@@ -156,7 +156,7 @@ class Club extends Component {
                 />
 
                 <View style={styles.longBox}>
-                    <Text style={{fontSize: 25, color:'#800000', textAlign: 'center', fontWeight:'bold'}}>
+                    <Text style={{fontSize: 25, color:'#800000', ...Platform.select({android: {textAlign: 'center'}}), fontWeight:'bold'}}>
                     {name}
                     </Text>
                 </View>
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     //justifyContent: 'center',
-    //alignItems: 'center',
+    //...Platform.select({android: {textAlign: 'center'}}),
     //backgroundColor: '#F5FCFF',
     marginTop: 40,
  },
@@ -412,16 +412,16 @@ const styles = StyleSheet.create({
 
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     margin: 10,
   },
   instructions: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },
   button: {
-   //textAlign: 'center',
+   //...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
     marginLeft: 10

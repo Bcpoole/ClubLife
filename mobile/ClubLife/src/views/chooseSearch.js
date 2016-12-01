@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Communications from 'react-native-communications';
 
@@ -90,7 +91,9 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        textAlign: 'center',
+        ...Platform.select({
+            android: {textAlign: 'center'},
+        }),
         fontWeight: 'bold',
         color: '#800000',
         fontSize: 20,

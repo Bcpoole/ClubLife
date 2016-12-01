@@ -152,20 +152,20 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 18,
-    //textAlign: 'center',
+    //...Platform.select({android: {textAlign: 'center'}}),
     //margin: 10,
     paddingLeft:10,
     color: '#800000'
   },
   instructions: {
-    //textAlign: 'center',
+    //...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     paddingLeft: 10,
     paddingBottom: 10
     //marginBottom: 5,
   },
   button: {
-    textAlign: 'center',
+    ...Platform.select({android: {textAlign: 'center'}}),
     color: '#333333',
     marginBottom: 5,
   },

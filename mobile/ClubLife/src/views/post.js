@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TextInput,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  Platform,
 } from 'react-native';
 import Button from 'react-native-button';
 
@@ -32,14 +33,14 @@ export default class Post extends Component {
         return (
           <View style={{paddingTop: 40}}>
             <View>
-                <Text style={{fontSize: 25, color:'#800000', textAlign: 'center',marginTop:20}}>{this.club.name}</Text>
+                <Text style={{fontSize: 25, color:'#800000', ...Platform.select({android: {textAlign: 'center'}}),marginTop:20}}>{this.club.name}</Text>
             </View>
             <View style = {styles.topBox}>
                 <Text style={{borderWidth:1, borderRadius:5,padding:3, marginRight:5, fontSize:15, fontWeight:'bold',borderColor:'grey'}}>{this.authorName}</Text>
-               
+
             </View>
             <Text style={{marginLeft:10}}>{this.post.subject}</Text>
-            
+
             <View style={[styles.topBox,{borderWidth:1}]}>
                 <Text>{this.post.content}</Text>
             </View>
@@ -74,9 +75,9 @@ const styles = StyleSheet.create({
       backgroundColor: '#F5FCFF',
   },
   topBox:{
-     // height:25, 
-      flexDirection: 'row', 
-      //borderWidth:1, 
+     // height:25,
+      flexDirection: 'row',
+      //borderWidth:1,
       marginRight:10,
       marginLeft:10,
       marginTop:20,
@@ -85,17 +86,17 @@ const styles = StyleSheet.create({
       paddingTop:10,
       paddingBottom:10
     },
-  
+
   ClubLife: {
       fontSize: 50,
-      textAlign: 'center',
+      ...Platform.select({android: {textAlign: 'center'}}),
       color: 'white',
       backgroundColor: 'black',
       fontWeight: 'bold',
   },
   announcements: {
       fontSize: 30,
-      textAlign: 'center',
+      ...Platform.select({android: {textAlign: 'center'}}),
       color: 'black',
       backgroundColor: 'powderblue',
       paddingTop: 10,
@@ -115,12 +116,12 @@ const styles = StyleSheet.create({
 
   description: {
       fontSize: 10,
-      textAlign: 'center',
+      ...Platform.select({android: {textAlign: 'center'}}),
       color: '#FFFFFF'
   },
   newsFeed: {
       fontSize: 25,
-      textAlign: 'center',
+      ...Platform.select({android: {textAlign: 'center'}}),
       justifyContent: 'center',
       color: 'black',
       backgroundColor: 'powderblue',

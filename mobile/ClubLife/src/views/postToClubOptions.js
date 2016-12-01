@@ -28,7 +28,7 @@ export default class PostToClubOptions extends Component {
         var content = (
             <View style={{paddingTop: 40}}>
                 <View>
-                    <Text style={{textAlign: 'center', fontSize: 40, fontWeight: '500'}}>Choose an action:</Text>
+                    <Text style={{...Platform.select({android: {textAlign: 'center'}}), fontSize: 40, fontWeight: '500'}}>Choose an action:</Text>
                 </View>
                 <Button onPress={()=>this._onGoMakePost()} style={{fontSize: 20, color: 'blue'}}>
                     Make a post!
