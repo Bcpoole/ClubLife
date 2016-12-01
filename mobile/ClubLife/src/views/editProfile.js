@@ -120,7 +120,7 @@ export default class EditProfile extends Component {
                         nextUserState: Object.assign(this.state.nextUserState, {clubs: arr})
                     });
                 }
-
+                //TODO: delete from club properly? need to fetch and stuff
             };
             Alert.alert("Leave Club?", "Are you sure you want to leave this club?",
                 [
@@ -178,14 +178,36 @@ export default class EditProfile extends Component {
         _postNewUserInfo() {
             var url = "http://skeleton20161103012840.azurewebsites.net/api/Users/"+this.state.nextUserState.id;
             fetch(url, {method: "POST", body: JSON.stringify(this.state.nextUserState)});
+            let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+            let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+            fetch(url, {method: "POST", headers: headers, body: JSON.stringify(this.state.nextUserState)})
+                .then(parseResponse)
+                .then(json => {
+                    Alert.alert("Success","Succesfully updated profile", [{text: "OK", onPress: ()=>{
+                        this.props.navigator.pop();
+                    }}]);
+                })
+                .catch(e => {
+                    Alert.alert("Error","couldn't update profile", [{text: "Dang", onPress: ()=>{
+                                        this.props.navigator.pop();
+                    }}]);});
         }
 
         _removeSelfFromClub(club) {
             var url = "http://skeleton20161103012840.azurewebsites.net/api/Users/" + this.state.nextUserState.id + "/leave/" + club;
-            fetch(url, {method: "POST"})
-                .then(res => res.json())
-                .then(json => console.log("removed self from club, res json " +JSON.stringify(json)))
-                .catch(e => console.error(e));
+            let headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+            let parseResponse = res => res.text().then(text => text ? JSON.parse(text) : {});
+            fetch(url, {method: "POST", headers: headers})
+                .then(parseResponse)
+                .then(json => {
+                    Alert.alert("left club","you left club",[{text: "OK", onPress: ()=>{
+                        this.props.navigator.pop();
+                    }}]);
+                })
+                .catch(e => {
+                    Alert.alert("Error","couldn't leave club", [{text: "WAIT AM I TRAPPED?", onPress: ()=>{
+                                        this.props.navigator.pop();
+                    }}]);});
         }
 }
 
