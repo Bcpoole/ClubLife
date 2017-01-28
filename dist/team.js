@@ -23,7 +23,7 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'fetch'], function
           _classCallCheck(this, Users);
 
           this.heading = 'ClubLife Team';
-          this.collaborators = ['bcpoole', 'JonathanMerklin', 'llamallove12', 'GravDragoon'];
+          this.collaborators = ['bcpoole', 'JonathanMerklin', 'llamallove12', 'zababka'];
           this.team = [];
 
           http.configure(function (config) {
