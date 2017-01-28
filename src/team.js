@@ -5,7 +5,7 @@ import 'fetch';
 @inject(HttpClient)
 export class Users {
   heading = 'ClubLife Team';
-  collaborators = ['bcpoole', 'JonathanMerklin', 'llamallove12', 'GravDragoon'];
+  collaborators = ['bcpoole', 'JonathanMerklin', 'llamallove12', 'zababka'];
   team = [];
 
   constructor(http) {
